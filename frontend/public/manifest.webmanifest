@@ -1,0 +1,11 @@
+{
+  "name": "NirmaanSetu AI — Bhumi Vikas Sahayak",
+  "short_name": "NirmaanSetu",
+  "description": "Source-backed building-rules assistant for permission clerks.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#F5F7FB",
+  "theme_color": "#0A2342",
+  "icons": [{ "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }]
+}

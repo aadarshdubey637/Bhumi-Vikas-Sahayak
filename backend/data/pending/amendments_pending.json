@@ -1,0 +1,20 @@
+{
+  "_comment": "PENDING / UNVERIFIED amendment register. Entries here were taken ONLY from the participant guide (problem statement + repo README). They have NOT been checked against an official gazette notification. Do not change status to 'verified' without a documented human review (docs/rule_verification.md). No amendment text, effective date, or legal effect is recorded because none has been established.",
+  "amendments": [
+    {
+      "amendment_id": "AMD-2026-08-28-R2-5-C",
+      "title": "Amendment to Rule 2(5)(c) - plots up to 500 sq m (as described in the participant guide)",
+      "stated_date": "2026-08-28",
+      "stated_date_kind": "unknown (guide says 'amendment of 28 August 2026'; publication vs. effective date not stated)",
+      "publication_date": null,
+      "effective_date": null,
+      "source_url": "https://teamleaseregtech.com/updates/article/59469/government-of-madhya-pradesh-amendment-to-land-development-rules",
+      "source_kind": "secondary (compliance-news site cited by participant guide); official gazette not located",
+      "verification_status": "pending_verification",
+      "affects": [{"rule": "2", "path": ["5", "c"], "relationship": "amends"}],
+      "summary": "Guide states the rule for plots up to 500 sq m changed on/around 28 August 2026. The text and legal effect of the change are not recorded here.",
+      "original_text": null,
+      "reviewer_notes": "Unreviewed. Sample question 11 (development permission for a 300 sq m plot) depends on this amendment."
+    }
+  ]
+}

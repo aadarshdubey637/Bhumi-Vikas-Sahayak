@@ -1,0 +1,890 @@
+{
+  "input_path": "data\\raw\\bhumi_vikas_rules.jsonl",
+  "dry_run": false,
+  "lines_read": 106,
+  "blank_lines": 0,
+  "records_processed": 106,
+  "records_accepted": 106,
+  "records_rejected": 0,
+  "rejected": [],
+  "issues": [
+    {
+      "code": "RUNNING_HEADER_IN_TEXT",
+      "severity": "info",
+      "message": "PDF running headers embedded; omitted from chunks/index only",
+      "rule": "2",
+      "line_no": 2
+    },
+    {
+      "code": "TABLE_LIKE_UNVERIFIED",
+      "severity": "warning",
+      "message": "table-like content; numeric values unverified against PDF",
+      "rule": "2",
+      "line_no": 2
+    },
+    {
+      "code": "RUNNING_HEADER_IN_TEXT",
+      "severity": "info",
+      "message": "PDF running headers embedded; omitted from chunks/index only",
+      "rule": "3",
+      "line_no": 3
+    },
+    {
+      "code": "TABLE_LIKE_UNVERIFIED",
+      "severity": "warning",
+      "message": "table-like content; numeric values unverified against PDF",
+      "rule": "3",
+      "line_no": 3
+    },
+    {
+      "code": "RUNNING_HEADER_IN_TEXT",
+      "severity": "info",
+      "message": "PDF running headers embedded; omitted from chunks/index only",
+      "rule": "5",
+      "line_no": 5
+    },
+    {
+      "code": "TABLE_LIKE_UNVERIFIED",
+      "severity": "warning",
+      "message": "table-like content; numeric values unverified against PDF",
+      "rule": "5",
+      "line_no": 5
+    },
+    {
+      "code": "RUNNING_HEADER_IN_TEXT",
+      "severity": "info",
+      "message": "PDF running headers embedded; omitted from chunks/index only",
+      "rule": "6",
+      "line_no": 6
+    },
+    {
+      "code": "TABLE_LIKE_UNVERIFIED",
+      "severity": "warning",
+      "message": "table-like content; numeric values unverified against PDF",
+      "rule": "6",
+      "line_no": 6
+    },
+    {
+      "code": "RUNNING_HEADER_IN_TEXT",
+      "severity": "info",
+      "message": "PDF running headers embedded; omitted from chunks/index only",
+      "rule": "9",
+      "line_no": 9
+    },
+    {
+      "code": "AMENDMENT_MARKERS_PRESENT",
+      "severity": "warning",
+      "message": "amendment markers present; amendment content unverified",
+      "rule": "9",
+      "line_no": 9
+    },
+    {
+      "code": "TABLE_LIKE_UNVERIFIED",
+      "severity": "warning",
+      "message": "table-like content; numeric values unverified against PDF",
+      "rule": "9",
+      "line_no": 9
+    },
+    {
+      "code": "RUNNING_HEADER_IN_TEXT",
+      "severity": "info",
+      "message": "PDF running headers embedded; omitted from chunks/index only",
+      "rule": "12",
+      "line_no": 12
+    },
+    {
+      "code": "AMENDMENT_MARKERS_PRESENT",
+      "severity": "warning",
+      "message": "amendment markers present; amendment content unverified",
+      "rule": "12",
+      "line_no": 12
+    },
+    {
+      "code": "TABLE_LIKE_UNVERIFIED",
+      "severity": "warning",
+      "message": "table-like content; numeric values unverified against PDF",
+      "rule": "12",
+      "line_no": 12
+    },
+    {
+      "code": "RUNNING_HEADER_IN_TEXT",
+      "severity": "info",
+      "message": "PDF running headers embedded; omitted from chunks/index only",
+      "rule": "14",
+      "line_no": 14
+    },
+    {
+      "code": "AMENDMENT_MARKERS_PRESENT",
+      "severity": "warning",
+      "message": "amendment markers present; amendment content unverified",
+      "rule": "14",
+      "line_no": 14
+    },
+    {
+      "code": "TABLE_LIKE_UNVERIFIED",
+      "severity": "warning",
+      "message": "table-like content; numeric values unverified against PDF",
+      "rule": "14",
+      "line_no": 14
+    },
+    {
+      "code": "RUNNING_HEADER_IN_TEXT",
+      "severity": "info",
+      "message": "PDF running headers embedded; omitted from chunks/index only",
+      "rule": "16",
+      "line_no": 16
+    },
+    {
+      "code": "AMENDMENT_MARKERS_PRESENT",
+      "severity": "warning",
+      "message": "amendment markers present; amendment content unverified",
+      "rule": "16",
+      "line_no": 16
+    },
+    {
+      "code": "TABLE_LIKE_UNVERIFIED",
+      "severity": "warning",
+      "message": "table-like content; numeric values unverified against PDF",
+      "rule": "16",
+      "line_no": 16
+    },
+    {
+      "code": "RUNNING_HEADER_IN_TEXT",
+      "severity": "info",
+      "message": "PDF running headers embedded; omitted from chunks/index only",
+      "rule": "19",
+      "line_no": 19
+    },
+    {
+      "code": "TABLE_LIKE_UNVERIFIED",
+      "severity": "warning",
+      "message": "table-like content; numeric values unverified against PDF",
+      "rule": "19",
+      "line_no": 19
+    },
+    {
+      "code": "RUNNING_HEADER_IN_TEXT",
+      "severity": "info",
+      "message": "PDF running headers embedded; omitted from chunks/index only",
+      "rule": "21",
+      "line_no": 21
+    },
+    {
+      "code": "TABLE_LIKE_UNVERIFIED",
+      "severity": "warning",
+      "message": "table-like content; numeric values unverified against PDF",
+      "rule": "21",
+      "line_no": 21
+    },
+    {
+      "code": "RUNNING_HEADER_IN_TEXT",
+      "severity": "info",
+      "message": "PDF running headers embedded; omitted from chunks/index only",
+      "rule": "22",
+      "line_no": 22
+    },
+    {
+      "code": "TABLE_LIKE_UNVERIFIED",
+      "severity": "warning",
+      "message": "table-like content; numeric values unverified against PDF",
+      "rule": "22",
+      "line_no": 22
+    },
+    {
+      "code": "RUNNING_HEADER_IN_TEXT",
+      "severity": "info",
+      "message": "PDF running headers embedded; omitted from chunks/index only",
+      "rule": "24",
+      "line_no": 24
+    },
+    {
+      "code": "TABLE_LIKE_UNVERIFIED",
+      "severity": "warning",
+      "message": "table-like content; numeric values unverified against PDF",
+      "rule": "24",
+      "line_no": 24
+    },
+    {
+      "code": "RUNNING_HEADER_IN_TEXT",
+      "severity": "info",
+      "message": "PDF running headers embedded; omitted from chunks/index only",
+      "rule": "25",
+      "line_no": 25
+    },
+    {
+      "code": "TABLE_LIKE_UNVERIFIED",
+      "severity": "warning",
+      "message": "table-like content; numeric values unverified against PDF",
+      "rule": "25",
+      "line_no": 25
+    },
+    {
+      "code": "RUNNING_HEADER_IN_TEXT",
+      "severity": "info",
+      "message": "PDF running headers embedded; omitted from chunks/index only",
+      "rule": "26",
+      "line_no": 26
+    },
+    {
+      "code": "AMENDMENT_MARKERS_PRESENT",
+      "severity": "warning",
+      "message": "amendment markers present; amendment content unverified",
+      "rule": "26",
+      "line_no": 26
+    },
+    {
+      "code": "TABLE_LIKE_UNVERIFIED",
+      "severity": "warning",
+      "message": "table-like content; numeric values unverified against PDF",
+      "rule": "26",
+      "line_no": 26
+    },
+    {
+      "code": "RUNNING_HEADER_IN_TEXT",
+      "severity": "info",
+      "message": "PDF running headers embedded; omitted from chunks/index only",
+      "rule": "26-B",
+      "line_no": 27
+    },
+    {
+      "code": "TABLE_LIKE_UNVERIFIED",
+      "severity": "warning",
+      "message": "table-like content; numeric values unverified against PDF",
+      "rule": "26-B",
+      "line_no": 27
+    },
+    {
+      "code": "RUNNING_HEADER_IN_TEXT",
+      "severity": "info",
+      "message": "PDF running headers embedded; omitted from chunks/index only",
+      "rule": "28",
+      "line_no": 29
+    },
+    {
+      "code": "TABLE_LIKE_UNVERIFIED",
+      "severity": "warning",
+      "message": "table-like content; numeric values unverified against PDF",
+      "rule": "28",
+      "line_no": 29
+    },
+    {
+      "code": "RUNNING_HEADER_IN_TEXT",
+      "severity": "info",
+      "message": "PDF running headers embedded; omitted from chunks/index only",
+      "rule": "31",
+      "line_no": 32
+    },
+    {
+      "code": "TABLE_LIKE_UNVERIFIED",
+      "severity": "warning",
+      "message": "table-like content; numeric values unverified against PDF",
+      "rule": "31",
+      "line_no": 32
+    },
+    {
+      "code": "RUNNING_HEADER_IN_TEXT",
+      "severity": "info",
+      "message": "PDF running headers embedded; omitted from chunks/index only",
+      "rule": "33",
+      "line_no": 34
+    },
+    {
+      "code": "TABLE_LIKE_UNVERIFIED",
+      "severity": "warning",
+      "message": "table-like content; numeric values unverified against PDF",
+      "rule": "33",
+      "line_no": 34
+    },
+    {
+      "code": "RUNNING_HEADER_IN_TEXT",
+      "severity": "info",
+      "message": "PDF running headers embedded; omitted from chunks/index only",
+      "rule": "35",
+      "line_no": 36
+    },
+    {
+      "code": "TABLE_LIKE_UNVERIFIED",
+      "severity": "warning",
+      "message": "table-like content; numeric values unverified against PDF",
+      "rule": "35",
+      "line_no": 36
+    },
+    {
+      "code": "RUNNING_HEADER_IN_TEXT",
+      "severity": "info",
+      "message": "PDF running headers embedded; omitted from chunks/index only",
+      "rule": "36",
+      "line_no": 37
+    },
+    {
+      "code": "TABLE_LIKE_UNVERIFIED",
+      "severity": "warning",
+      "message": "table-like content; numeric values unverified against PDF",
+      "rule": "36",
+      "line_no": 37
+    },
+    {
+      "code": "RUNNING_HEADER_IN_TEXT",
+      "severity": "info",
+      "message": "PDF running headers embedded; omitted from chunks/index only",
+      "rule": "38",
+      "line_no": 39
+    },
+    {
+      "code": "TABLE_LIKE_UNVERIFIED",
+      "severity": "warning",
+      "message": "table-like content; numeric values unverified against PDF",
+      "rule": "38",
+      "line_no": 39
+    },
+    {
+      "code": "RUNNING_HEADER_IN_TEXT",
+      "severity": "info",
+      "message": "PDF running headers embedded; omitted from chunks/index only",
+      "rule": "40",
+      "line_no": 41
+    },
+    {
+      "code": "TABLE_LIKE_UNVERIFIED",
+      "severity": "warning",
+      "message": "table-like content; numeric values unverified against PDF",
+      "rule": "40",
+      "line_no": 41
+    },
+    {
+      "code": "RUNNING_HEADER_IN_TEXT",
+      "severity": "info",
+      "message": "PDF running headers embedded; omitted from chunks/index only",
+      "rule": "42",
+      "line_no": 43
+    },
+    {
+      "code": "TABLE_LIKE_UNVERIFIED",
+      "severity": "warning",
+      "message": "table-like content; numeric values unverified against PDF",
+      "rule": "42",
+      "line_no": 43
+    },
+    {
+      "code": "RUNNING_HEADER_IN_TEXT",
+      "severity": "info",
+      "message": "PDF running headers embedded; omitted from chunks/index only",
+      "rule": "45",
+      "line_no": 46
+    },
+    {
+      "code": "TABLE_LIKE_UNVERIFIED",
+      "severity": "warning",
+      "message": "table-like content; numeric values unverified against PDF",
+      "rule": "45",
+      "line_no": 46
+    },
+    {
+      "code": "RUNNING_HEADER_IN_TEXT",
+      "severity": "info",
+      "message": "PDF running headers embedded; omitted from chunks/index only",
+      "rule": "47",
+      "line_no": 48
+    },
+    {
+      "code": "TABLE_LIKE_UNVERIFIED",
+      "severity": "warning",
+      "message": "table-like content; numeric values unverified against PDF",
+      "rule": "47",
+      "line_no": 48
+    },
+    {
+      "code": "RUNNING_HEADER_IN_TEXT",
+      "severity": "info",
+      "message": "PDF running headers embedded; omitted from chunks/index only",
+      "rule": "48",
+      "line_no": 49
+    },
+    {
+      "code": "TABLE_LIKE_UNVERIFIED",
+      "severity": "warning",
+      "message": "table-like content; numeric values unverified against PDF",
+      "rule": "48",
+      "line_no": 49
+    },
+    {
+      "code": "RUNNING_HEADER_IN_TEXT",
+      "severity": "info",
+      "message": "PDF running headers embedded; omitted from chunks/index only",
+      "rule": "49",
+      "line_no": 50
+    },
+    {
+      "code": "TABLE_LIKE_UNVERIFIED",
+      "severity": "warning",
+      "message": "table-like content; numeric values unverified against PDF",
+      "rule": "49",
+      "line_no": 50
+    },
+    {
+      "code": "RUNNING_HEADER_IN_TEXT",
+      "severity": "info",
+      "message": "PDF running headers embedded; omitted from chunks/index only",
+      "rule": "50",
+      "line_no": 51
+    },
+    {
+      "code": "TABLE_LIKE_UNVERIFIED",
+      "severity": "warning",
+      "message": "table-like content; numeric values unverified against PDF",
+      "rule": "50",
+      "line_no": 51
+    },
+    {
+      "code": "RUNNING_HEADER_IN_TEXT",
+      "severity": "info",
+      "message": "PDF running headers embedded; omitted from chunks/index only",
+      "rule": "52",
+      "line_no": 53
+    },
+    {
+      "code": "TABLE_LIKE_UNVERIFIED",
+      "severity": "warning",
+      "message": "table-like content; numeric values unverified against PDF",
+      "rule": "52",
+      "line_no": 53
+    },
+    {
+      "code": "RUNNING_HEADER_IN_TEXT",
+      "severity": "info",
+      "message": "PDF running headers embedded; omitted from chunks/index only",
+      "rule": "53",
+      "line_no": 54
+    },
+    {
+      "code": "TABLE_LIKE_UNVERIFIED",
+      "severity": "warning",
+      "message": "table-like content; numeric values unverified against PDF",
+      "rule": "53",
+      "line_no": 54
+    },
+    {
+      "code": "RUNNING_HEADER_IN_TEXT",
+      "severity": "info",
+      "message": "PDF running headers embedded; omitted from chunks/index only",
+      "rule": "55",
+      "line_no": 56
+    },
+    {
+      "code": "TABLE_LIKE_UNVERIFIED",
+      "severity": "warning",
+      "message": "table-like content; numeric values unverified against PDF",
+      "rule": "55",
+      "line_no": 56
+    },
+    {
+      "code": "RUNNING_HEADER_IN_TEXT",
+      "severity": "info",
+      "message": "PDF running headers embedded; omitted from chunks/index only",
+      "rule": "56",
+      "line_no": 57
+    },
+    {
+      "code": "TABLE_LIKE_UNVERIFIED",
+      "severity": "warning",
+      "message": "table-like content; numeric values unverified against PDF",
+      "rule": "56",
+      "line_no": 57
+    },
+    {
+      "code": "RUNNING_HEADER_IN_TEXT",
+      "severity": "info",
+      "message": "PDF running headers embedded; omitted from chunks/index only",
+      "rule": "57",
+      "line_no": 58
+    },
+    {
+      "code": "TABLE_LIKE_UNVERIFIED",
+      "severity": "warning",
+      "message": "table-like content; numeric values unverified against PDF",
+      "rule": "57",
+      "line_no": 58
+    },
+    {
+      "code": "RUNNING_HEADER_IN_TEXT",
+      "severity": "info",
+      "message": "PDF running headers embedded; omitted from chunks/index only",
+      "rule": "58",
+      "line_no": 59
+    },
+    {
+      "code": "TABLE_LIKE_UNVERIFIED",
+      "severity": "warning",
+      "message": "table-like content; numeric values unverified against PDF",
+      "rule": "58",
+      "line_no": 59
+    },
+    {
+      "code": "RUNNING_HEADER_IN_TEXT",
+      "severity": "info",
+      "message": "PDF running headers embedded; omitted from chunks/index only",
+      "rule": "60",
+      "line_no": 61
+    },
+    {
+      "code": "TABLE_LIKE_UNVERIFIED",
+      "severity": "warning",
+      "message": "table-like content; numeric values unverified against PDF",
+      "rule": "60",
+      "line_no": 61
+    },
+    {
+      "code": "RUNNING_HEADER_IN_TEXT",
+      "severity": "info",
+      "message": "PDF running headers embedded; omitted from chunks/index only",
+      "rule": "61",
+      "line_no": 62
+    },
+    {
+      "code": "AMENDMENT_MARKERS_PRESENT",
+      "severity": "warning",
+      "message": "amendment markers present; amendment content unverified",
+      "rule": "61",
+      "line_no": 62
+    },
+    {
+      "code": "TABLE_LIKE_UNVERIFIED",
+      "severity": "warning",
+      "message": "table-like content; numeric values unverified against PDF",
+      "rule": "61",
+      "line_no": 62
+    },
+    {
+      "code": "RUNNING_HEADER_IN_TEXT",
+      "severity": "info",
+      "message": "PDF running headers embedded; omitted from chunks/index only",
+      "rule": "65",
+      "line_no": 66
+    },
+    {
+      "code": "TABLE_LIKE_UNVERIFIED",
+      "severity": "warning",
+      "message": "table-like content; numeric values unverified against PDF",
+      "rule": "65",
+      "line_no": 66
+    },
+    {
+      "code": "RUNNING_HEADER_IN_TEXT",
+      "severity": "info",
+      "message": "PDF running headers embedded; omitted from chunks/index only",
+      "rule": "66",
+      "line_no": 67
+    },
+    {
+      "code": "TABLE_LIKE_UNVERIFIED",
+      "severity": "warning",
+      "message": "table-like content; numeric values unverified against PDF",
+      "rule": "66",
+      "line_no": 67
+    },
+    {
+      "code": "RUNNING_HEADER_IN_TEXT",
+      "severity": "info",
+      "message": "PDF running headers embedded; omitted from chunks/index only",
+      "rule": "69",
+      "line_no": 70
+    },
+    {
+      "code": "TABLE_LIKE_UNVERIFIED",
+      "severity": "warning",
+      "message": "table-like content; numeric values unverified against PDF",
+      "rule": "69",
+      "line_no": 70
+    },
+    {
+      "code": "RUNNING_HEADER_IN_TEXT",
+      "severity": "info",
+      "message": "PDF running headers embedded; omitted from chunks/index only",
+      "rule": "71",
+      "line_no": 72
+    },
+    {
+      "code": "TABLE_LIKE_UNVERIFIED",
+      "severity": "warning",
+      "message": "table-like content; numeric values unverified against PDF",
+      "rule": "71",
+      "line_no": 72
+    },
+    {
+      "code": "RUNNING_HEADER_IN_TEXT",
+      "severity": "info",
+      "message": "PDF running headers embedded; omitted from chunks/index only",
+      "rule": "73",
+      "line_no": 74
+    },
+    {
+      "code": "TABLE_LIKE_UNVERIFIED",
+      "severity": "warning",
+      "message": "table-like content; numeric values unverified against PDF",
+      "rule": "73",
+      "line_no": 74
+    },
+    {
+      "code": "RUNNING_HEADER_IN_TEXT",
+      "severity": "info",
+      "message": "PDF running headers embedded; omitted from chunks/index only",
+      "rule": "76",
+      "line_no": 77
+    },
+    {
+      "code": "TABLE_LIKE_UNVERIFIED",
+      "severity": "warning",
+      "message": "table-like content; numeric values unverified against PDF",
+      "rule": "76",
+      "line_no": 77
+    },
+    {
+      "code": "RUNNING_HEADER_IN_TEXT",
+      "severity": "info",
+      "message": "PDF running headers embedded; omitted from chunks/index only",
+      "rule": "77",
+      "line_no": 78
+    },
+    {
+      "code": "TABLE_LIKE_UNVERIFIED",
+      "severity": "warning",
+      "message": "table-like content; numeric values unverified against PDF",
+      "rule": "77",
+      "line_no": 78
+    },
+    {
+      "code": "RUNNING_HEADER_IN_TEXT",
+      "severity": "info",
+      "message": "PDF running headers embedded; omitted from chunks/index only",
+      "rule": "79",
+      "line_no": 80
+    },
+    {
+      "code": "TABLE_LIKE_UNVERIFIED",
+      "severity": "warning",
+      "message": "table-like content; numeric values unverified against PDF",
+      "rule": "79",
+      "line_no": 80
+    },
+    {
+      "code": "RUNNING_HEADER_IN_TEXT",
+      "severity": "info",
+      "message": "PDF running headers embedded; omitted from chunks/index only",
+      "rule": "80",
+      "line_no": 81
+    },
+    {
+      "code": "TABLE_LIKE_UNVERIFIED",
+      "severity": "warning",
+      "message": "table-like content; numeric values unverified against PDF",
+      "rule": "80",
+      "line_no": 81
+    },
+    {
+      "code": "RUNNING_HEADER_IN_TEXT",
+      "severity": "info",
+      "message": "PDF running headers embedded; omitted from chunks/index only",
+      "rule": "82",
+      "line_no": 83
+    },
+    {
+      "code": "TABLE_LIKE_UNVERIFIED",
+      "severity": "warning",
+      "message": "table-like content; numeric values unverified against PDF",
+      "rule": "82",
+      "line_no": 83
+    },
+    {
+      "code": "RUNNING_HEADER_IN_TEXT",
+      "severity": "info",
+      "message": "PDF running headers embedded; omitted from chunks/index only",
+      "rule": "83",
+      "line_no": 84
+    },
+    {
+      "code": "AMENDMENT_MARKERS_PRESENT",
+      "severity": "warning",
+      "message": "amendment markers present; amendment content unverified",
+      "rule": "83",
+      "line_no": 84
+    },
+    {
+      "code": "TABLE_LIKE_UNVERIFIED",
+      "severity": "warning",
+      "message": "table-like content; numeric values unverified against PDF",
+      "rule": "83",
+      "line_no": 84
+    },
+    {
+      "code": "RUNNING_HEADER_IN_TEXT",
+      "severity": "info",
+      "message": "PDF running headers embedded; omitted from chunks/index only",
+      "rule": "87",
+      "line_no": 88
+    },
+    {
+      "code": "TABLE_LIKE_UNVERIFIED",
+      "severity": "warning",
+      "message": "table-like content; numeric values unverified against PDF",
+      "rule": "87",
+      "line_no": 88
+    },
+    {
+      "code": "RUNNING_HEADER_IN_TEXT",
+      "severity": "info",
+      "message": "PDF running headers embedded; omitted from chunks/index only",
+      "rule": "88",
+      "line_no": 89
+    },
+    {
+      "code": "TABLE_LIKE_UNVERIFIED",
+      "severity": "warning",
+      "message": "table-like content; numeric values unverified against PDF",
+      "rule": "88",
+      "line_no": 89
+    },
+    {
+      "code": "RUNNING_HEADER_IN_TEXT",
+      "severity": "info",
+      "message": "PDF running headers embedded; omitted from chunks/index only",
+      "rule": "89",
+      "line_no": 90
+    },
+    {
+      "code": "TABLE_LIKE_UNVERIFIED",
+      "severity": "warning",
+      "message": "table-like content; numeric values unverified against PDF",
+      "rule": "89",
+      "line_no": 90
+    },
+    {
+      "code": "RUNNING_HEADER_IN_TEXT",
+      "severity": "info",
+      "message": "PDF running headers embedded; omitted from chunks/index only",
+      "rule": "93",
+      "line_no": 94
+    },
+    {
+      "code": "TABLE_LIKE_UNVERIFIED",
+      "severity": "warning",
+      "message": "table-like content; numeric values unverified against PDF",
+      "rule": "93",
+      "line_no": 94
+    },
+    {
+      "code": "RUNNING_HEADER_IN_TEXT",
+      "severity": "info",
+      "message": "PDF running headers embedded; omitted from chunks/index only",
+      "rule": "95",
+      "line_no": 96
+    },
+    {
+      "code": "TABLE_LIKE_UNVERIFIED",
+      "severity": "warning",
+      "message": "table-like content; numeric values unverified against PDF",
+      "rule": "95",
+      "line_no": 96
+    },
+    {
+      "code": "RUNNING_HEADER_IN_TEXT",
+      "severity": "info",
+      "message": "PDF running headers embedded; omitted from chunks/index only",
+      "rule": "96",
+      "line_no": 97
+    },
+    {
+      "code": "TABLE_LIKE_UNVERIFIED",
+      "severity": "warning",
+      "message": "table-like content; numeric values unverified against PDF",
+      "rule": "96",
+      "line_no": 97
+    },
+    {
+      "code": "RUNNING_HEADER_IN_TEXT",
+      "severity": "info",
+      "message": "PDF running headers embedded; omitted from chunks/index only",
+      "rule": "98",
+      "line_no": 99
+    },
+    {
+      "code": "TABLE_LIKE_UNVERIFIED",
+      "severity": "warning",
+      "message": "table-like content; numeric values unverified against PDF",
+      "rule": "98",
+      "line_no": 99
+    },
+    {
+      "code": "AMENDMENT_MARKERS_PRESENT",
+      "severity": "warning",
+      "message": "amendment markers present; amendment content unverified",
+      "rule": "99",
+      "line_no": 100
+    },
+    {
+      "code": "RUNNING_HEADER_IN_TEXT",
+      "severity": "info",
+      "message": "PDF running headers embedded; omitted from chunks/index only",
+      "rule": "103",
+      "line_no": 104
+    },
+    {
+      "code": "AMENDMENT_MARKERS_PRESENT",
+      "severity": "warning",
+      "message": "amendment markers present; amendment content unverified",
+      "rule": "103",
+      "line_no": 104
+    },
+    {
+      "code": "TABLE_LIKE_UNVERIFIED",
+      "severity": "warning",
+      "message": "table-like content; numeric values unverified against PDF",
+      "rule": "103",
+      "line_no": 104
+    },
+    {
+      "code": "PAGE_RANGE_EXCEEDS_SOURCE",
+      "severity": "warning",
+      "message": "page_end 109 exceeds source page count 108; page reference needs review",
+      "rule": "105",
+      "line_no": 106
+    },
+    {
+      "code": "EXPECTED_RULE_NOT_FOUND",
+      "severity": "warning",
+      "message": "inserted rule 26-A is listed in the participant guide but was not located in the supplied rule text; not invented",
+      "rule": "26-A",
+      "line_no": null
+    }
+  ],
+  "duplicates": [],
+  "missing_source_pages": [],
+  "embedded_rules_found": [
+    "12 A",
+    "17-a",
+    "25(A)",
+    "42A",
+    "93(a)",
+    "93(b)"
+  ],
+  "guide_listed_rules_not_found_as_records_or_embedded": [
+    "26-A"
+  ],
+  "page_crosscheck": {
+    "performed": 106,
+    "passed": 106,
+    "failed": 0
+  },
+  "verification_summary": {
+    "unverified": 106
+  },
+  "issue_counts": {
+    "RUNNING_HEADER_IN_TEXT": 55,
+    "TABLE_LIKE_UNVERIFIED": 55,
+    "AMENDMENT_MARKERS_PRESENT": 9,
+    "PAGE_RANGE_EXCEEDS_SOURCE": 1,
+    "EXPECTED_RULE_NOT_FOUND": 1
+  },
+  "notes": [
+    "All accepted records are 'unverified'. Ingestion success is not legal verification."
+  ]
+}

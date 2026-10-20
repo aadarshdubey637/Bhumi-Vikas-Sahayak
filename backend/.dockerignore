@@ -1,0 +1,13 @@
+.env
+.env.*
+!.env.example
+*.db
+.venv/
+__pycache__/
+.pytest_cache/
+.ruff_cache/
+tests/
+backups/
+data/raw/*.pdf
+data/processed/
+.runtime/

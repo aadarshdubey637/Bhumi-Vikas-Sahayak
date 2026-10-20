@@ -1,0 +1,58 @@
+# Render Blueprint. Place at the ROOT of the Git repository (this file assumes the backend lives in ./backend;
+# if the repo root IS the backend folder, delete the `rootDir` line).
+services:
+  - type: web
+    name: nirmaansetu-api
+    runtime: docker
+    rootDir: backend
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /api/v1/health
+    autoDeployTrigger: commit
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: DATABASE_URL            # Render supplies postgres://...; the app rewrites it to postgresql+psycopg://
+        fromDatabase:
+          name: nirmaansetu-db
+          property: connectionString
+      - key: AUTH_MODE                # accounts: visitors use the public tools, saving needs a signed-in account (HttpOnly session cookie)
+        value: accounts
+      - key: COOKIE_SAMESITE         # the web app (Vercel) and API (Render) are different sites, so the session cookie must be SameSite=None; Secure
+        value: none
+      - key: FRONTEND_URL            # used in password-reset e-mails: the deployed web app origin, no trailing slash
+        sync: false
+      - key: SMTP_HOST               # needed for password-reset e-mail; without it the API reports e-mail as unavailable
+        sync: false
+      - key: SMTP_USER
+        sync: false
+      - key: SMTP_PASSWORD
+        sync: false
+      - key: SMTP_FROM
+        sync: false
+      - key: CORS_ORIGINS            # the deployed frontend origin(s), comma separated, no trailing slash
+        sync: false
+      - key: INGEST_ON_START         # load the baked-in rules into the empty database on boot (idempotent)
+        value: "1"
+      - key: WEB_CONCURRENCY
+        value: "1"
+      - key: RATE_LIMIT_PER_MINUTE   # per API key (or per IP without one). A whole office may share one key, and each page load makes several calls
+        value: "240"
+      - key: FORWARDED_ALLOW_IPS     # trust Render's proxy so the rate limiter sees real client IPs
+        value: "*"
+      - key: LLM_PROVIDER
+        value: none
+      # --- WhatsApp / phone channels (optional; NOT verified against the real providers) ---
+      # Generated once by Render; it keys the one-way hash that replaces phone numbers in the database. Changing it later
+      # makes existing contacts unrecognisable (they simply start fresh), so do not rotate it casually.
+      - key: PII_HASH_SECRET
+        generateValue: true
+      # After the first deploy set PUBLIC_BASE_URL (https://<this service>.onrender.com) in the dashboard, then add the provider
+      # credentials you actually have: WHATSAPP_VERIFY_TOKEN, WHATSAPP_APP_SECRET, WHATSAPP_ACCESS_TOKEN, WHATSAPP_PHONE_NUMBER_ID,
+      # TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, TWILIO_SMS_FROM, STT_PROVIDER=openai + OPENAI_API_KEY. Unset = that channel stays off.
+      # They are not listed here on purpose: a blueprint cannot declare an optional secret without forcing a value.
+
+databases:
+  - name: nirmaansetu-db
+    databaseName: nirmaansetu
+    user: nirmaansetu
+    plan: free                       # trial tier; check Render's current terms and use a paid plan for real data

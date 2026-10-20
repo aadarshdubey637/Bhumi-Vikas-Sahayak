@@ -1,0 +1,57 @@
+# Local/staging stack: FastAPI + PostgreSQL 16. Secrets come from your shell / .env (never committed).
+#   cp .env.example .env   # then set POSTGRES_PASSWORD (and API_KEY_HASHES for production)
+#   docker compose up --build -d
+#   docker compose --profile tools run --rm ingest        # load the supplied dataset (see docs/ingestion.md)
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: nirmaansetu
+      POSTGRES_USER: nirmaansetu
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in .env}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U nirmaansetu -d nirmaansetu"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    restart: unless-stopped
+
+  backend:
+    build: .
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      APP_ENV: ${APP_ENV:-development}
+      DATABASE_URL: postgresql+psycopg://nirmaansetu:${POSTGRES_PASSWORD}@db:5432/nirmaansetu
+      CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost:5173}
+      AUTH_MODE: ${AUTH_MODE:-none}            # production requires api_key + API_KEY_HASHES
+      API_KEY_HASHES: ${API_KEY_HASHES:-}
+      LLM_PROVIDER: ${LLM_PROVIDER:-none}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      LLM_MODEL: ${LLM_MODEL:-claude-sonnet-5-5}
+      RATE_LIMIT_PER_MINUTE: ${RATE_LIMIT_PER_MINUTE:-60}
+      LOG_LEVEL: ${LOG_LEVEL:-INFO}
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./data:/srv/app/data:ro
+    restart: unless-stopped
+
+  ingest:                # one-off: docker compose --profile tools run --rm ingest
+    build: .
+    profiles: ["tools"]
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql+psycopg://nirmaansetu:${POSTGRES_PASSWORD}@db:5432/nirmaansetu
+    volumes:
+      - ./data:/srv/app/data
+    entrypoint: ["sh", "-c"]
+    command: ["alembic upgrade head && python -m scripts.ingest_jsonl --load-db && python -m scripts.ingest_pdfs --load-db && python -m scripts.build_index"]
+
+volumes:
+  pgdata:

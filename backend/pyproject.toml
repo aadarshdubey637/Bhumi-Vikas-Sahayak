@@ -1,0 +1,22 @@
+[project]
+name = "nirmaansetu-backend"
+version = "0.2.0"
+description = "Evidence-first building-regulation intelligence backend for the MP Bhumi Vikas Rules"
+requires-python = ">=3.12"
+
+[tool.ruff]
+line-length = 140
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM", "C4", "PIE", "RUF"]
+ignore = ["RUF001", "RUF002", "RUF003", "E501", "UP042"]  # Devanagari text intentional; long legal-text lines are fine; keep (str, Enum) for stable JSON values
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+markers = [
+  "real_corpus: needs the supplied official data (data/raw, data/processed)",
+  "postgres: needs a PostgreSQL server (uses the optional pgserver package; skipped when absent)",
+  "live_llm: optional tests that call a live LLM provider (never run by default)",
+]

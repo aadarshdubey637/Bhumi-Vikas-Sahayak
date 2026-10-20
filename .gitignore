@@ -1,0 +1,16 @@
+.shots/
+.venv/
+node_modules/
+dist/
+__pycache__/
+*.pyc
+*.db
+.env
+.env.*
+!.env.example
+.runtime/
+.pytest_cache/
+.ruff_cache/
+.vercel
+*.local
+*.tsbuildinfo

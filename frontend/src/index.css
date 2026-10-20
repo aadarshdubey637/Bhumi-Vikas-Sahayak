@@ -1,0 +1,171 @@
+@import "@fontsource/ibm-plex-sans/400.css";
+@import "@fontsource/ibm-plex-sans/600.css";
+@import "@fontsource/noto-sans-devanagari/400.css";
+@import "@fontsource/noto-sans-devanagari/600.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --c-ink: 15 23 42; --c-ink-soft: 51 65 85; --c-ink-faint: 85 98 118;
+    --c-surface: 255 255 255; --c-surface-sunken: 238 242 248; --c-surface-page: 244 246 250;
+    --c-line: 211 218 230; --c-line-strong: 118 131 154; --c-glassline: 255 255 255;
+    --c-brand: 11 79 168; --c-brand-dark: 8 47 107; --c-brand-tint: 226 236 250; --c-brand-ring: 120 160 220;
+    --c-accent-text: 138 95 0;
+    --c-pending: 138 85 0; --c-pending-tint: 255 244 220; --c-pending-line: 232 194 122;
+    --c-verified: 10 112 56; --c-verified-tint: 226 245 233; --c-verified-line: 134 205 160;
+    --c-danger: 160 30 30; --c-danger-tint: 252 232 232; --c-danger-line: 228 160 160;
+    --c-info: 22 70 150; --c-info-tint: 226 236 250; --c-info-line: 160 188 232;
+    --c-muted: 75 85 99; --c-muted-tint: 238 240 244; --c-muted-line: 196 204 214;
+    --nav-bg: #0b2a5b; --top-bg: #0b2a5b; --nav-line: rgba(255, 255, 255, 0.14);
+    --text-scale: 1;
+  }
+  html[data-theme="dark"] { --nav-bg: #0a1830; --top-bg: #0a1830; --nav-line: #26385a; }
+  /* Dark palette for the header, sidebar and the two side panels of the workbench. Every token-based utility flips with it. */
+  .theme-dark {
+    --c-ink: 232 238 248; --c-ink-soft: 180 192 212; --c-ink-faint: 142 156 180;
+    --c-surface: 17 31 54; --c-surface-sunken: 12 24 44; --c-surface-page: 9 19 36;
+    --c-line: 38 56 88; --c-line-strong: 104 124 158; --c-glassline: 150 175 220;
+    --c-brand: 112 160 255; --c-brand-dark: 176 202 255; --c-brand-tint: 24 44 80; --c-brand-ring: 78 112 186;
+    --c-pending: 246 192 104; --c-pending-tint: 52 42 20; --c-pending-line: 112 88 44;
+    --c-verified: 112 222 162; --c-verified-tint: 17 50 38; --c-verified-line: 42 108 78;
+    --c-danger: 255 152 152; --c-danger-tint: 66 28 34; --c-danger-line: 130 64 70;
+    --c-info: 152 192 255; --c-info-tint: 24 44 80; --c-info-line: 58 88 154;
+    --c-muted: 178 190 208; --c-muted-tint: 24 36 58; --c-muted-line: 64 80 110;
+    --c-accent-text: 245 179 1;
+    color: rgb(var(--c-ink));
+    color-scheme: dark;
+  }
+  .theme-dark .text-brand { color: rgb(140 180 255); }
+  /* High contrast: pure ink on pure surface, strong borders, no pastel fills. Works in both themes. */
+  html.hc:not([data-theme="dark"]),
+  html.hc [data-theme="light"] { --c-ink: 0 0 0; --c-ink-soft: 20 25 35; --c-ink-faint: 45 55 70; --c-line: 90 100 120; --c-line-strong: 30 40 60; --c-brand: 0 50 130; --c-surface-sunken: 232 236 242; }
+  html.hc .theme-dark { --c-ink: 255 255 255; --c-ink-soft: 238 241 248; --c-ink-faint: 210 216 228; --c-line: 150 160 180; --c-line-strong: 210 218 232; }
+  .theme-dark .border-brand-ring { border-color: rgb(var(--c-brand-ring)); }
+  html {
+    @apply bg-surface-page text-ink font-sans antialiased;
+    -webkit-text-size-adjust: 100%;
+    font-size: calc(100% * var(--text-scale, 1));
+  }
+  /* Devanagari reads smaller than Latin at the same size, so Hindi gets a little more. */
+  html[lang="hi"] { font-size: calc(106.25% * var(--text-scale, 1)); }
+  body {
+    line-height: 1.6;
+    overflow-wrap: break-word; /* long citations, rule ids and Devanagari strings must wrap, never overflow */
+  }
+  ::selection {
+    @apply bg-brand-tint text-brand-dark;
+  }
+  h1,
+  h2,
+  h3 {
+    @apply tracking-tight;
+  }
+  :lang(hi) {
+    @apply font-deva;
+  }
+  :focus-visible {
+    @apply outline outline-2 outline-offset-2 outline-brand;
+  }
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+@layer components {
+  /* Glass surfaces. Blur is applied from md up only (phones: solid, cheaper to paint); users who ask for less transparency get solid. */
+  /* Solid surfaces: no blur, no translucency. Hierarchy comes from borders and shadow. */
+  .glass {
+    @apply border border-line bg-surface shadow-card;
+  }
+  .glass-strong {
+    @apply border border-line bg-surface shadow-lift;
+  }
+  .glass-dark {
+    @apply border border-navy-700 bg-navy text-white shadow-lift;
+  }
+  .panel-dark {
+    @apply border border-line bg-surface shadow-lift;
+  }
+  .app-bg {
+    background-color: rgb(var(--c-surface-page));
+  }
+  /* Blueprint drafting grid, used only inside hero/feature panels (never behind body text on the page). */
+  .blueprint {
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.07) 1px, transparent 1px),
+      linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+    background-size: 96px 96px, 96px 96px, 24px 24px, 24px 24px;
+  }
+  .blueprint-light {
+    background-image:
+      linear-gradient(rgba(29, 78, 216, 0.07) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(29, 78, 216, 0.07) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .glass,
+  .glass-strong {
+    background-color: rgb(var(--c-surface));
+    backdrop-filter: none;
+  }
+  .panel-dark {
+    background-color: #0d1829;
+    backdrop-filter: none;
+  }
+  .glass-dark {
+    background-color: #0a2342;
+    backdrop-filter: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@media print {
+  @page {
+    size: A4;
+    margin: 14mm;
+  }
+  body {
+    background: #fff;
+  }
+  .report {
+    border: 0;
+  }
+}
+
+@layer components {
+  /* Landing and sign-in screens: deep navy with soft colour glows and a faint drafting grid. */
+  .landing-bg {
+    background:
+      radial-gradient(900px 520px at 85% -5%, rgba(46, 98, 255, 0.35), transparent 60%),
+      radial-gradient(760px 480px at -5% 25%, rgba(245, 179, 1, 0.14), transparent 60%),
+      radial-gradient(900px 600px at 50% 110%, rgba(20, 184, 166, 0.18), transparent 60%),
+      linear-gradient(180deg, #070e1b 0%, #0a1527 55%, #0b1a30 100%);
+    background-color: #070e1b;
+  }
+  .landing-bg::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+    background-size: 56px 56px;
+    mask-image: linear-gradient(to bottom, black, transparent 75%);
+  }
+}

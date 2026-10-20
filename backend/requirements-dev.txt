@@ -1,0 +1,6 @@
+-r requirements.txt
+pytest==9.1.1
+pytest-asyncio==1.4.0
+httpx==0.28.1
+ruff==0.17.0
+pgserver==0.1.4             # optional: lets the 'postgres' test run a real PostgreSQL 16 without Docker

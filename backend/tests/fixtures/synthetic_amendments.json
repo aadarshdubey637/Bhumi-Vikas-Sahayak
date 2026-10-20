@@ -1,0 +1,26 @@
+{
+ "amendments": [
+  {
+   "amendment_id": "SYN-AMD-1",
+   "title": "SYNTHETIC amendment of Rule 2(5)(c)",
+   "stated_date": "2030-01-01",
+   "publication_date": null,
+   "effective_date": null,
+   "source_url": null,
+   "verification_status": "pending_verification",
+   "affects": [
+    {
+     "rule": "2",
+     "path": [
+      "5",
+      "c"
+     ],
+     "relationship": "amends"
+    }
+   ],
+   "summary": "synthetic",
+   "original_text": null,
+   "reviewer_notes": null
+  }
+ ]
+}

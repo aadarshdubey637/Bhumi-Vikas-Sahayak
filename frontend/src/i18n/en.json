@@ -1,0 +1,1678 @@
+{
+  "app": {
+    "name": "NirmaanSetu AI — Bhumi Vikas Sahayak",
+    "short": "NirmaanSetu"
+  },
+  "disclaimer": "Preliminary pointer to rule text. Not an official approval, not legal advice, not a compliance determination. The clerk decides.",
+  "disclaimerShort": "Preliminary pointer — not an official approval. The clerk decides.",
+  "notFound": {
+    "title": "Page not found",
+    "back": "Go to the start page"
+  },
+  "config": {
+    "title": "This site is not configured",
+    "missing": "The backend address (VITE_API_BASE_URL) is not set for this build.",
+    "invalid": "The backend address (VITE_API_BASE_URL) is not a valid http(s) URL.",
+    "insecure": "The backend address (VITE_API_BASE_URL) must use https in a production build.",
+    "action": "Administrator: set the variable in the hosting settings and redeploy."
+  },
+  "nav": {
+    "main": "Main navigation",
+    "expand": "Expand menu",
+    "collapse": "Collapse menu",
+    "skip": "Skip to content",
+    "dashboard": "Dashboard",
+    "ask": "AI Rule Assistant",
+    "rules": "Rulebook & sources",
+    "calculator": "Calculator",
+    "plotCheck": "Plot Assessment",
+    "projects": "Projects",
+    "feedback": "Feedback",
+    "sources": "Sources",
+    "channels": "WhatsApp & Phone",
+    "about": "About",
+    "groupWork": "Workspace",
+    "groupReference": "Reference",
+    "open": "Open menu",
+    "close": "Close menu",
+    "amendments": "Amendment Tracker",
+    "workbench": "Workbench",
+    "home": "Home"
+  },
+  "footer": {
+    "apiVersion": "Server version {{version}}"
+  },
+  "common": {
+    "assumptions": "Assumptions",
+    "close": "Close",
+    "collapse": "Collapse",
+    "expand": "Expand",
+    "copy": "Copy",
+    "copied": "Copied",
+    "language": "Language",
+    "loading": "Loading…",
+    "next": "Next",
+    "previous": "Previous",
+    "no": "No",
+    "yes": "Yes",
+    "pagination": "Pagination",
+    "requestId": "Request ID",
+    "retry": "Try again",
+    "sending": "Sending…",
+    "showing": "Showing {{from}}–{{to}} of {{total}}",
+    "waitSeconds": "Wait {{seconds}} s"
+  },
+  "backend": {
+    "warming": "Waking the server — this can take up to a minute.",
+    "unreachable": "Cannot reach the server.",
+    "notReady": "The server is not ready.",
+    "noRules": "The server has no rules loaded. Searches and answers will be empty until the administrator ingests the rule corpus.",
+    "state": {
+      "warming": "Waking up",
+      "unreachable": "Unreachable",
+      "not_ready": "Not ready",
+      "no_rules": "No rules loaded",
+      "ok": "Connected"
+    }
+  },
+  "auth": {
+    "disabledBadge": "Auth disabled (dev)",
+    "signOut": "Sign out",
+    "backHome": "Back to home",
+    "brand": {
+      "title": "Your plot, the rules and your house, in one place.",
+      "p1": "Ask about Madhya Pradesh building rules in plain English or Hindi, with the rule number as proof.",
+      "p2": "Enter your plot and watch the proposed house take shape in 3D.",
+      "p3": "Save projects and assessments to your account and come back to them any time."
+    },
+    "continueGuest": "Continue without an account",
+    "login": {
+      "title": "Welcome back",
+      "subtitle": "Sign in to open your projects and saved assessments.",
+      "noAccount": "New to NirmaanSetu?",
+      "createLink": "Create an account",
+      "expired": "Your session expired, so you were signed out. Please sign in again.",
+      "resetDone": "Your password was changed. Sign in with the new password.",
+      "forgot": "Forgot password?",
+      "submit": "Sign in",
+      "loading": "Signing in…"
+    },
+    "signup": {
+      "title": "Create your account",
+      "subtitle": "Free. Save projects and assessments and pick up where you left off.",
+      "haveAccount": "Already have an account?",
+      "loginLink": "Sign in",
+      "submit": "Create account",
+      "loading": "Creating your account…",
+      "privacy": "Your password is stored only as a one-way hash. We never see or keep it."
+    },
+    "forgot": {
+      "title": "Reset your password",
+      "subtitle": "Enter your e-mail and we will send you a one-time link to choose a new password.",
+      "submit": "Send reset link",
+      "loading": "Sending…",
+      "back": "Back to sign in",
+      "sent": "If an account exists for {{email}}, a reset link is on its way. It works once and expires in 30 minutes.",
+      "noEmail": "This server cannot send e-mail yet, so no link was sent. Ask the administrator to configure e-mail (SMTP) or to reset your password.",
+      "consoleNote": "Development mode: e-mail is not delivered. The link was written to the server log.",
+      "smtpNote": "Check your inbox and spam folder."
+    },
+    "reset": {
+      "title": "Choose a new password",
+      "subtitle": "Pick a strong password. You will be signed out on all devices.",
+      "newPassword": "New password",
+      "submit": "Change password",
+      "loading": "Changing…",
+      "requestNew": "Request a new link"
+    },
+    "field": {
+      "email": "E-mail",
+      "password": "Password",
+      "confirm": "Confirm password",
+      "name": "Full name",
+      "passwordHint": "At least {{n}} characters, with a letter and a number."
+    },
+    "showPassword": "Show password",
+    "hidePassword": "Hide password",
+    "strength": {
+      "0": "",
+      "1": "Weak",
+      "2": "Fair",
+      "3": "Good",
+      "4": "Strong"
+    },
+    "err": {
+      "required": "This field is required.",
+      "email": "Enter a valid e-mail address.",
+      "nameLong": "Name is longer than 80 characters.",
+      "mismatch": "The two passwords do not match.",
+      "invalidCredentials": "Invalid e-mail or password.",
+      "locked": "Too many failed attempts. This account is locked for a few minutes; try again later or reset your password.",
+      "rateLimited": "Too many requests. Please wait a moment and try again.",
+      "registrationClosed": "New registrations are closed on this server.",
+      "emailTaken": "An account with this e-mail already exists. Try signing in.",
+      "invalidValue": "Please check the highlighted fields.",
+      "resetInvalid": "This reset link is invalid or has expired. Request a new one.",
+      "generic": "Something went wrong. Please try again.",
+      "network": "Could not reach the server. Check your connection and try again.",
+      "server": "The server had a problem. Please try again in a moment.",
+      "pw": {
+        "too_short": "Use at least 8 characters.",
+        "too_long": "Use at most 128 characters.",
+        "needs_letter_and_digit": "Include at least one letter and one number.",
+        "too_guessable": "That password is too easy to guess, or contains your e-mail name.",
+        "contains_name": "The password should not contain your name."
+      }
+    },
+    "menu": "Account menu",
+    "logout": "Sign out"
+  },
+  "errors": {
+    "corsHint": "The server may not allow this website's address (CORS) — administrator: add this origin to CORS_ORIGINS.",
+    "generic": "Something went wrong.",
+    "internal": "The server had an internal error.",
+    "llmUnavailable": "AI explanation is not available on this server.",
+    "network": "Network problem or server unavailable.",
+    "notFound": "Not found.",
+    "rateLimited": "Too many requests. Please wait a moment.",
+    "timeout": "The request took too long.",
+    "tooLarge": "Input too long.",
+    "unauthorized": "Access key missing or not valid."
+  },
+  "validation": {
+    "required": "This field is required.",
+    "decimal": "Enter a number such as 12 or 12.5.",
+    "useDot": "Use a dot for decimals.",
+    "positive": "Must be greater than zero.",
+    "tooLarge": "Value is too large.",
+    "floors": "Enter a whole number of floors (1 or more).",
+    "text": "1–64 characters, no < or > or control characters.",
+    "questionTooLong": "Question is longer than 1000 characters.",
+    "messageTooLong": "Message is longer than 2000 characters.",
+    "nameTooLong": "Name is longer than 200 characters.",
+    "date": "Use the format YYYY-MM-DD.",
+    "places": "Whole number from 0 to 8.",
+    "nonNegative": "Enter zero or a positive number."
+  },
+  "status": {
+    "answer": {
+      "supported": "Answer quoted from the rule text",
+      "conditional": "Applies under stated assumptions",
+      "pending_verification": "Pointer to rule text — not yet human-verified",
+      "insufficient_information": "More information needed",
+      "source_conflict": "Sources conflict",
+      "not_established": "Not established in the rules"
+    },
+    "answerHelp": {
+      "supported": "Stated from the official rule text (see the exact quotes below). Not yet reviewed by a human.",
+      "conditional": "Holds only under the assumptions listed below.",
+      "pending_verification": "These are pointers to cited rule text. The text has not been checked by a human reviewer.",
+      "insufficient_information": "Some facts are missing; see below.",
+      "source_conflict": "Sources disagree. Consult the official gazette.",
+      "not_established": "The rules provided do not establish an answer, or the question is outside their scope."
+    },
+    "check": {
+      "passed": "Passed",
+      "failed": "Failed",
+      "conditional": "Conditional",
+      "pending_verification": "Pending verification",
+      "not_evaluated": "Not evaluated — no verified rule logic"
+    },
+    "overall": {
+      "failed_checks_present": "Some checks failed",
+      "incomplete": "Incomplete — some requirements not evaluated",
+      "evaluated_checks_passed": "Evaluated checks passed (not a compliance determination)"
+    },
+    "verification": {
+      "unverified": "Unverified source text",
+      "pending_verification": "Pending verification",
+      "verified": "Verified",
+      "rejected": "Rejected"
+    },
+    "unverifiedHelp": "Text was extracted from the official consolidated PDF but has not been checked by a human reviewer.",
+    "version": {
+      "verified_current": "Verified current version",
+      "historical": "An earlier version may apply",
+      "pending_verification": "Version pending verification",
+      "unknown_effective_date": "Effective date unknown",
+      "insufficient_information": "Not enough information to pick a version",
+      "source_conflict": "Sources conflict"
+    }
+  },
+  "evidence": {
+    "chip": "Rule {{rule}}",
+    "rule": "Rule {{rule}}",
+    "details": "Details",
+    "documentId": "Source document",
+    "versionId": "Rule version",
+    "drawerTitle": "Cited rule text",
+    "embedded": "This rule is embedded in a parent rule; its text boundary is not verified.",
+    "notTranslated": "English source text — not translated.",
+    "openPdf": "Open the official PDF",
+    "openPdfAt": "Open the official PDF at page {{pages}}",
+    "openRule": "Open rule",
+    "pageExact": "PDF page {{pages}}",
+    "pageRange": "PDF pages {{pages}} (rule-level range — exact page not located)",
+    "pageShort": "p.{{pages}}",
+    "pageSpan": "PDF pages {{start}}–{{end}}",
+    "pages": "Pages",
+    "reportIssue": "Report an issue with this citation",
+    "score": "Relevance score (not a probability)",
+    "showFull": "Show full chunk",
+    "showLess": "Show less",
+    "sourceDocuments": "Source documents",
+    "tableWarning": "Contains a flattened table — check figures against the official PDF page.",
+    "method": {
+      "exact_rule_number": "Exact rule number",
+      "bm25": "Keyword match (BM25)",
+      "hybrid": "Hybrid",
+      "amendment_link": "Amendment link",
+      "evidence_lookup": "Evidence lookup"
+    }
+  },
+  "flags": {
+    "running_header_in_text": "Running page header inside the text",
+    "amendment_markers_present": "Amendment markers present",
+    "text_does_not_start_with_rule_number": "Text does not start with the rule number",
+    "page_crosscheck_failed": "Page cross-check failed",
+    "page_range_exceeds_source": "Page range exceeds the source document"
+  },
+  "intent": {
+    "rule_lookup": "Rule lookup",
+    "amendment": "Amendment",
+    "fees": "Fees",
+    "setback": "Setback",
+    "floor_area": "Floor area",
+    "height": "Height",
+    "parking": "Parking",
+    "fire_safety": "Fire safety",
+    "definition": "Definition",
+    "permission_applicability": "Permission applicability",
+    "general_rule_question": "General rule question",
+    "out_of_scope": "Outside scope",
+    "unknown": "Unknown"
+  },
+  "ask": {
+    "title": "Ask the rules",
+    "answerLabel": "Answer",
+    "copyAnswer": "Copy answer",
+    "copyCitations": "Copy citations",
+    "evidenceTitle": "Cited rule text",
+    "exactText": "Exact rule text behind this answer",
+    "versionLabel": "Rules version:",
+    "explanationTitle": "AI explanation (checked against the cited rules)",
+    "explanationCaveat": "AI-generated — verify against the rule text.",
+    "noSupportingText": "No supporting rule text found.",
+    "reportProblem": "Report a problem",
+    "historyNote": "This conversation is kept only in this browser tab and is lost on reload. Question text is never stored in the browser.",
+    "newConversation": "New conversation",
+    "tryExample": "Try an example:",
+    "searching": "Searching the rules…",
+    "questionLabel": "Your question",
+    "counter": "{{n}} / 1000",
+    "language": "Question language",
+    "langAuto": "Auto",
+    "langEn": "English",
+    "langHi": "हिन्दी",
+    "langHinglish": "Hinglish",
+    "project": "Project",
+    "noProject": "No project",
+    "asOf": "As of date",
+    "explainToggle": "Add AI explanation (experimental)",
+    "explainUnavailable": "AI explanation isn't available on this server; showing the cited rule pointers.",
+    "knownFacts": "Known facts",
+    "knownFactsHelp": "Optional facts sent with your question (for example plot size).",
+    "send": "Ask"
+  },
+  "facts": {
+    "title": "Facts I understood from your input",
+    "caveat": "Please check them. Extracted is not the same as confirmed.",
+    "name": "Name",
+    "value": "Value",
+    "sourceCol": "Source",
+    "originCol": "Origin",
+    "validation": "Validation",
+    "confidence": "Confidence",
+    "source": {
+      "user_provided": "You provided",
+      "document_derived": "From document",
+      "system_calculated": "Calculated"
+    },
+    "origin": {
+      "question_text": "From your question",
+      "structured_context": "From form"
+    },
+    "valid": {
+      "valid": "Valid",
+      "invalid": "Invalid",
+      "unverified": "Unverified"
+    }
+  },
+  "missing": {
+    "title": "Missing information",
+    "whyNoValue": "Why no value was calculated",
+    "missing": "Missing",
+    "invalid": "Invalid",
+    "unverified": "Unverified"
+  },
+  "warnings": {
+    "title": "Warnings",
+    "showAll": "Show all",
+    "showFewer": "Show fewer"
+  },
+  "rejected": {
+    "title": "Sources the system excluded"
+  },
+  "version": {
+    "title": "Version and amendment status",
+    "rule": "Rule {{rule}}",
+    "asOf": "As of",
+    "consolidated": "Rules consolidated to {{date}} — later changes are not covered.",
+    "consultGazette": "Consult the official gazette.",
+    "effectiveDate": "Effective date",
+    "effectiveUnknown": "Effective date unknown",
+    "statedDate": "Stated date (not confirmed)",
+    "pendingAmendment": "A pending amendment exists; its effective date is unknown.",
+    "amendments": "Linked amendments",
+    "noAmendments": "No linked amendments."
+  },
+  "calc": {
+    "title": "Calculation",
+    "id": "Calculation ID",
+    "type": "Type",
+    "formula": "Formula",
+    "formulaSource": "Formula source",
+    "ruleReference": "Rule reference",
+    "noRule": "None — not a rule-based calculation",
+    "rounding": "Rounding",
+    "inputs": "Inputs",
+    "steps": "Steps",
+    "invalid": "Invalid",
+    "generalArithmetic": "General arithmetic — not a regulatory check",
+    "verified": "Verified",
+    "notVerified": "Not verified",
+    "roundingPolicy": {
+      "ROUND_HALF_UP": "Round half up"
+    },
+    "pageTitle": "Calculator",
+    "pageBody": "Area, FAR and open-space limits for your plot, read from the rule tables.",
+    "tabLimits": "Permissible construction",
+    "tabArea": "Plot area",
+    "needPlot": "Enter the plot length and width, or the plot area.",
+    "calculateLimits": "Calculate limits",
+    "working": "Looking up the rule tables…",
+    "sPlot": "Plot area",
+    "sFar": "Maximum floor area (FAR)",
+    "perFloor": "{{n}} floors: about {{v}} sq m each",
+    "roadBand": "Road band: {{band}}",
+    "nil": "Nil",
+    "sDepth": "Building depth available",
+    "depthHow": "{{d}} m plot depth − {{f}} m front − {{r}} m rear (arithmetic on the stated limits)",
+    "needRoad": "Enter the road width to get the front open space.",
+    "sideNote": "Side open space depends on the building type (detached, semi-detached or row), so it is not calculated here: read Rule 56(3).",
+    "emptyTitle": "Your limits will appear here",
+    "emptyBody": "Enter the plot and road details and press Calculate limits. Every figure comes from the rule text, with its rule number.",
+    "openWorkbench": "Open the Workbench to see this on your plot."
+  },
+  "forms": {
+    "fields": {
+      "plot_area": "Plot area",
+      "plot_length": "Plot length",
+      "plot_width": "Plot width",
+      "road_width": "Road width",
+      "building_height": "Building height",
+      "building_length": "Building length",
+      "building_width": "Building width",
+      "floors": "Number of floors",
+      "building_use": "Building use",
+      "location": "Location"
+    },
+    "unitFor": "Unit for {{field}}",
+    "sections": {
+      "plot": "About the plot",
+      "road": "Road and location",
+      "building": "The proposed building"
+    },
+    "hints": {
+      "plot_area": "Total area of the plot, as in the sale deed or survey.",
+      "plot_length": "Measured along one side of the plot.",
+      "plot_width": "Measured along the other side of the plot.",
+      "road_width": "Width of the road in front of the plot.",
+      "building_height": "Planned overall height of the building.",
+      "building_length": "Length of the building footprint on the plot.",
+      "building_width": "Width of the building footprint on the plot.",
+      "location": "Area, ward or locality (optional).",
+      "floors": "Number of storeys planned, for example 2.",
+      "building_use": "What the building will be used for. Pick one or type your own."
+    },
+    "eg": "e.g. {{value}}",
+    "useChips": "Common building uses",
+    "floorsDec": "One floor fewer",
+    "floorsInc": "One floor more",
+    "use": {
+      "residential": "Residential",
+      "commercial": "Commercial",
+      "industrial": "Industrial",
+      "farm house": "Farm house",
+      "institutional": "Institutional"
+    }
+  },
+  "units": {
+    "m": "m",
+    "cm": "cm",
+    "mm": "mm",
+    "ft": "ft",
+    "in": "in",
+    "yd": "yd",
+    "sqm": "sq m",
+    "sqft": "sq ft",
+    "sqyd": "sq yd",
+    "acre": "acre",
+    "hectare": "hectare"
+  },
+  "feedback": {
+    "title": "Feedback",
+    "new": "New feedback",
+    "mine": "My feedback",
+    "empty": "No feedback sent yet.",
+    "noMessageNote": "The server does not return message text, so only category and status are listed.",
+    "dialogTitle": "Report a problem",
+    "category": "Category",
+    "message": "What is wrong?",
+    "evidenceId": "Evidence ID (optional)",
+    "assessmentId": "Assessment ID (optional)",
+    "submit": "Send feedback",
+    "thanks": "Thank you. Feedback {{id}} was recorded.",
+    "badId": "The server could not find that evidence or assessment ID.",
+    "categories": {
+      "incorrect_answer": "Incorrect answer",
+      "incorrect_citation": "Incorrect citation",
+      "outdated_rule": "Outdated rule",
+      "incorrect_calculation": "Incorrect calculation",
+      "missing_information": "Missing information",
+      "other": "Other"
+    },
+    "resolution": {
+      "open": "Open",
+      "reviewed": "Reviewed",
+      "resolved": "Resolved",
+      "rejected": "Rejected"
+    }
+  },
+  "dashboard": {
+    "title": "Home",
+    "server": "Server status",
+    "rulesLoaded": "Rules loaded",
+    "schemaCurrent": "Schema current",
+    "version": "Server version",
+    "quick": "Quick actions",
+    "newProject": "New project",
+    "examples": "Try an example question",
+    "recentProjects": "Recent projects",
+    "feedbackCount": "Feedback sent",
+    "limits": "What this tool can and cannot do today",
+    "limitsBody": "It points to cited rule text and shows its verification status. It does not decide compliance, and regulatory calculations are not available yet.",
+    "welcomeTitle": "Welcome to Bhumi Vikas Sahayak",
+    "welcomeBody": "Ask a building-rules question or check a plot. Every answer points to cited rule text and shows its verification status.",
+    "askLabel": "Ask the rules",
+    "askPlaceholder": "e.g. What is the fee for building permission?",
+    "askButton": "Ask AI",
+    "startAssessment": "Start a plot check",
+    "statRules": "Rules in the corpus",
+    "statProjects": "Projects",
+    "statFeedback": "Feedback sent",
+    "statServer": "Server",
+    "emptyProjectsBody": "Create a project to save plot details and keep an assessment history.",
+    "createProject": "Create a project",
+    "viewAll": "View all",
+    "capabilities": "What works today",
+    "capLookup": "Cited rule lookup and keyword search",
+    "capStatus": "Verification status shown on every answer",
+    "capArea": "Plot-area arithmetic (not a regulatory check)",
+    "capProjects": "Projects with saved assessments and JSON reports",
+    "capNot": "Not available yet: regulatory setback, FAR, height or fee calculations (no human-verified rule logic), a report list across projects, PDF reports.",
+    "statsError": "Could not load",
+    "checkDatabase": "Database reachable"
+  },
+  "rules": {
+    "title": "Rule search",
+    "query": "Search text",
+    "ruleNumber": "Rule number",
+    "ruleNumberPlaceholder": "e.g. 26-B, 12 A, Rule 2(5)(c)",
+    "any": "Any",
+    "verification": "Verification status",
+    "perPage": "Results per page",
+    "search": "Search",
+    "needOne": "Enter search text or a rule number.",
+    "noResults": "No results.",
+    "notFound": "Rule not found in the ingested corpus.",
+    "ruleHeading": "Rule {{rule}} — {{title}}",
+    "embedded": "Rule {{rule}} is embedded in Rule {{parent}}; the text boundary is not verified.",
+    "openParent": "Open Rule {{parent}}",
+    "afterCorpus": "The rules are consolidated only to {{date}}; later changes are not covered.",
+    "tabs": "Rule sections",
+    "tabSummary": "Summary",
+    "tabVersions": "Versions and source text",
+    "tabChunks": "Related chunks",
+    "noVersions": "No versions returned."
+  },
+  "calculator": {
+    "title": "Plot area calculator",
+    "outputUnit": "Output unit",
+    "places": "Decimal places",
+    "calculate": "Calculate"
+  },
+  "plot": {
+    "title": "Plot sketch",
+    "desc": "Rectangular plot with dimensions {{dims}}",
+    "empty": "Enter plot length and width to draw the plot.",
+    "schematic": "Schematic only — not to scale for drawings or submission.",
+    "notEvaluated": "Not evaluated",
+    "verified": "From verified rules"
+  },
+  "plotCheck": {
+    "title": "Quick plot check",
+    "run": "Run check",
+    "results": "Results",
+    "notSaved": "Not saved. These results exist only on this screen.",
+    "saveAsProject": "Save as project"
+  },
+  "projects": {
+    "title": "Projects",
+    "new": "New project",
+    "create": "Create project",
+    "name": "Project name",
+    "showArchived": "Show archived projects",
+    "empty": "No projects yet.",
+    "notFound": "Project not found.",
+    "status": {
+      "draft": "Draft",
+      "active": "Active",
+      "archived": "Archived"
+    },
+    "statusLabel": "Status",
+    "upsertNote": "Inputs can only be added or overwritten, not removed. To clear a value, overwrite it.",
+    "save": "Save changes",
+    "saved": "Saved.",
+    "inputDetails": "Stored inputs",
+    "history": "Assessment history",
+    "noAssessments": "No assessments yet.",
+    "runAssessment": "Run assessment",
+    "askAbout": "Ask about this project"
+  },
+  "assessment": {
+    "title": "Assessment",
+    "notFound": "Assessment not found.",
+    "viewReport": "View report",
+    "generateReport": "Generate report",
+    "immutable": "Assessments never change. Run a new assessment after editing inputs.",
+    "tabChecks": "Checks",
+    "tabEvidence": "Evidence",
+    "snapshot": "Assessed inputs",
+    "snapshotNote": "This is what was assessed, not the project's current inputs.",
+    "noEvidence": "No stored evidence.",
+    "relatedContext": "Related context (not applied)",
+    "relatedNotApplied": "Related rule text (not applied)",
+    "inputCheckNote": "Input sanity check — not a rule check.",
+    "groupInput": "Input consistency",
+    "groupRegulatory": "Regulatory requirements",
+    "missing": "Missing information"
+  },
+  "report": {
+    "title": "Assessment report",
+    "version": "Report version",
+    "generatedAt": "Generated",
+    "assessmentId": "Assessment ID",
+    "assessmentDate": "Assessment date",
+    "status": "Status",
+    "inputSnapshot": "Assessed inputs",
+    "checks": "Checks",
+    "notEvaluated": "Not evaluated — requires verified rules",
+    "evidence": "Related rule text",
+    "rulesUsed": "Rule versions used",
+    "print": "Print / Save as PDF",
+    "downloadJson": "Download JSON",
+    "regenerate": "Regenerate",
+    "regenerateNote": "Regenerating rebuilds the report from the saved assessment snapshot.",
+    "notGenerated": "No report has been generated yet.",
+    "back": "Back to assessment"
+  },
+  "channels": {
+    "notice": "Real WhatsApp messaging and phone calls have NOT been tested with the actual providers. Nothing on this page means they work. The demos below are simulations that exercise the same answer logic.",
+    "waDemo": "WhatsApp — Rule Dost (simulation)",
+    "waEmpty": "Ask a question, e.g. “What is the fee for building permission?”",
+    "message": "Message",
+    "send": "Send",
+    "callDemo": "Phone — Nirmaan Helpline (simulation)",
+    "callEmpty": "Press “Start call”. Text is typed here; no audio is played or recorded.",
+    "startCall": "Start call",
+    "silence": "Stay silent",
+    "press": "Press",
+    "speak": "What the caller says",
+    "say": "Say",
+    "selftest": "Run offline self-test",
+    "check": "Check provider connections",
+    "demoOff": "Demo mode is disabled on this server.",
+    "languages": "Languages",
+    "setupNeeded": "Setup needed before this channel can work:",
+    "setupWhere": "Set these in backend/.env (local) or your host's environment, then restart. See backend/docs/channels.md.",
+    "webhookUrl": "Webhook URL to register with Meta",
+    "callUrl": "Voice webhook URL to set in Twilio",
+    "voiceNotes": "Voice-note transcription configured",
+    "technical": "Technical details"
+  },
+  "sources": {
+    "title": "Source documents",
+    "empty": "No source documents.",
+    "key": "Document key",
+    "type": "Type",
+    "consolidation": "Consolidated to",
+    "pages": "Pages",
+    "hash": "File hash",
+    "open": "Open source",
+    "hindiNotSearchable": "The Hindi PDF is registered but is not searchable (legacy font encoding)."
+  },
+  "about": {
+    "title": "About and limitations",
+    "purposeTitle": "Purpose",
+    "purpose": "A bilingual, evidence-first assistant for the Madhya Pradesh Bhumi Vikas Rules, 2012. Every answer points to cited rule text with an explicit status.",
+    "limitsTitle": "What is and is not verified",
+    "limits": {
+      "l1": "All ingested rule text is currently unverified by a human reviewer, so answers are pointers, not confirmed answers.",
+      "l2": "No regulatory calculation exists yet: setbacks, FAR/coverage, height, parking and fees are not evaluated.",
+      "l3": "Only English text is searchable; Hindi questions are matched against English rules.",
+      "l4": "The amendment to Rule 2(5)(c) is pending verification and its effective date is unknown.",
+      "l5": "Retrieval is keyword-based and conservative; some valid questions may return no result.",
+      "l6": "This tool is not an official approval, legal advice or a compliance determination."
+    },
+    "statusTitle": "How to read the statuses",
+    "samplesTitle": "Example questions",
+    "privacyTitle": "Privacy",
+    "privacy": "Question text and plot inputs are not stored in the browser. Your access key is kept in memory only."
+  },
+  "accessKey": {
+    "title": "Enter your access key",
+    "help": "The key is given to you by the administrator. It is kept in memory only.",
+    "label": "Access key",
+    "invalid": "That key was not accepted.",
+    "keepTab": "Keep me signed in for this tab",
+    "continue": "Continue"
+  },
+  "toast": {
+    "copied": "Copied to clipboard",
+    "projectCreated": "Project created",
+    "dismiss": "Dismiss notification"
+  },
+  "breadcrumb": {
+    "label": "Breadcrumb",
+    "details": "Details",
+    "assessment": "Assessment",
+    "report": "Report"
+  },
+  "home": {
+    "heroEyebrow": "Source-backed answers · English & हिन्दी",
+    "heroTitle": "Build with Clarity. Plan with Confidence.",
+    "heroSub": "Understand building rules, assess your plot and get information tied to the rule text. Every answer shows its source page and verification status.",
+    "heroSubHi": "भवन निर्माण नियमों को समझें, अपने प्लॉट का आकलन करें और सही जानकारी पाएं।",
+    "coreTitle": "Core tools",
+    "workTitle": "Workspace",
+    "open": "Open",
+    "anatomy": "How an answer is built",
+    "anatExplain": "1 · Plain-language explanation (optional, always labelled)",
+    "anatRule": "2 · Exact rule text, quoted from the stored document",
+    "anatPage": "3 · Rule number and PDF page of the source",
+    "aiTitle": "AI Rule Assistant",
+    "aiBody": "Ask in Hindi, English or Hinglish. Answers point to the exact rule text and PDF page, and say plainly when the rules do not answer.",
+    "plotTitle": "Plot Assessment",
+    "plotBody": "Enter plot area, road width and building details. See your inputs drawn, then a rule-by-rule check that states what is not evaluated.",
+    "calcTitle": "Area Calculator",
+    "calcBody": "Convert plot areas between sq m, sq ft, sq yd, acre and hectare, with every step shown.",
+    "rulesTitle": "Rule Explorer",
+    "rulesBody": "Search by rule number or keyword. See the exact source text, PDF page and verification status.",
+    "reportsTitle": "Reports and Downloads",
+    "reportsBody": "Open a saved assessment's report to print it or save it as PDF, or download it as JSON.",
+    "amendTitle": "Amendment Tracker",
+    "amendBody": "Amendments held in the register and their verification status. Nothing is presented as law until it has been verified.",
+    "amendSummary": "{{total}} recorded · {{verified}} verified · {{pending}} awaiting manual verification",
+    "amendUnavailable": "Amendment register unavailable",
+    "commTitle": "Communication channels",
+    "commManage": "Set up and test",
+    "waTitle": "WhatsApp Assistant — Rule Dost",
+    "waBody": "Ask rule questions on WhatsApp in Hindi or English. Replies carry the same cited rule text.",
+    "voiceTitle": "Voice Helpline — Nirmaan Helpline",
+    "voiceBody": "A phone assistant that answers by voice and can send the written details.",
+    "chan": {
+      "notConfigured": "Not configured",
+      "configured": "Configured · not tested",
+      "connectionOk": "Connection check passed",
+      "connectionFailed": "Connection check failed",
+      "unavailable": "Status unavailable",
+      "noClaim": "Demo mode lets you try it. Real messages and calls are not verified until tested with the providers."
+    },
+    "checklistTitle": "Document Checklist",
+    "checklistBadge": "Not available yet",
+    "checklistBody": "A per-project document checklist is not built: the backend has no checklist data. Nothing is shown rather than an invented list."
+  },
+  "topbar": {
+    "searchLabel": "Search rules",
+    "searchPlaceholder": "Rule number or keyword…",
+    "profileHint": "This server does not require an access key",
+    "rulesChip": "MP Bhumi Vikas Rules, 2012 · {{n}} rules",
+    "rulesChipNone": "No rules loaded"
+  },
+  "voice": {
+    "start": "Start voice input",
+    "stop": "Stop voice input",
+    "privacy": "your browser may send the audio to its own speech service",
+    "error": "Voice input error: {{code}}"
+  },
+  "amend": {
+    "title": "Amendment Tracker",
+    "notice": "Only amendments present in the stored register are listed. None has been checked against an official gazette unless marked verified, and dates are shown exactly as recorded.",
+    "status": {
+      "verified": "Verified",
+      "pending": "Needs manual verification"
+    },
+    "stated": "Date quoted by a source",
+    "published": "Publication date",
+    "effective": "Effective date",
+    "none": "Not recorded",
+    "unknown": "Unknown — not inferred",
+    "affects": "Affects",
+    "ruleChip": "Rule {{rule}}",
+    "sourceLink": "Source link",
+    "sourceNote": "A pointer only — not verified",
+    "corpusTitle": "Rules in the loaded corpus",
+    "corpusBody": "{{n}} rules are loaded and searchable. Each carries its own verification status.",
+    "corpusBodyUnknown": "The rule count is unavailable right now.",
+    "corpusLink": "Browse rules",
+    "verifiedTitle": "Verified amendments ({{n}})",
+    "verifiedEmpty": "No amendment has been verified yet.",
+    "manualTitle": "Potential updates needing manual verification ({{n}})",
+    "manualHelp": "These come from secondary sources or the participant guide. Treat them as leads to check against the official gazette, not as law.",
+    "manualEmpty": "No pending amendments are recorded.",
+    "description": "Amendments held in the register, with dates exactly as recorded. Nothing is treated as law until it has been verified."
+  },
+  "askx": {
+    "panelTitle": "Evidence for this answer",
+    "panelEmpty": "Rule references and source pages for your latest answer will appear here.",
+    "noEvidence": "No supporting rule text was found, so there is nothing to cite.",
+    "tableWarn": "Contains a flattened table: check the figures on the official PDF page.",
+    "openRule": "Open rule",
+    "legendTitle": "How to read an answer",
+    "legendExplain": "Explanation: plain-language help, always labelled. Never the rule itself.",
+    "legendRule": "Rule text: quoted exactly from the stored document.",
+    "legendPage": "Source: rule number and PDF page.",
+    "legendUncertain": "Amber means not yet verified or not established: do not treat it as final.",
+    "welcomeTitle": "Ask a building-rules question",
+    "welcomeBody": "Ask in Hindi, English or Hinglish. Answers are pointers to cited rule text with their verification status. They are not approvals.",
+    "options": "Options: language, project, date, known facts",
+    "description": "Ask in Hindi, English or Hinglish. Every answer points to the exact rule text and PDF page, and says plainly when the rules do not answer.",
+    "moreDetails": "More details: what was understood, assumptions, rejected matches",
+    "showMore": "Show {{n}} more cited passages"
+  },
+  "sketch": {
+    "title": "Plot sketch",
+    "empty": "Plot sketch: enter dimensions to see them drawn",
+    "road": "Road",
+    "enter": "Enter plot size",
+    "sideView": "Floors",
+    "caption": "Drawn only from the values you typed: a visual check of your inputs, not a legal drawing. It shows no setbacks or limits. Those appear in the results below only where the rules support them."
+  },
+  "plotx": {
+    "stepsLabel": "How the check works",
+    "step1": "Enter what you know. Every field is optional.",
+    "step2": "See your inputs drawn, then run the check.",
+    "step3": "Read the result: rules found, what is missing, what is not evaluated.",
+    "description": "Enter what you know about a plot. You will see it drawn, then a rule-by-rule check that states what could not be evaluated."
+  },
+  "rulesx": {
+    "description": "Look up a rule by number or keyword and read the exact source text with its PDF page and verification status."
+  },
+  "sourcesx": {
+    "description": "The source documents behind every rule, with their checksums and verification status."
+  },
+  "projx": {
+    "description": "Save a plot's details, run checks on it and keep the assessment history in one place.",
+    "namePlaceholder": "e.g. Sharma residence, Plot 14",
+    "nameHint": "Any name that helps you find this case later.",
+    "emptyBody": "Create a project to save a plot's details and keep every assessment you run for it."
+  },
+  "calcx": {
+    "description": "Work out a plot's area from its length and width, with every step shown.",
+    "emptyTitle": "Your result will appear here",
+    "emptyBody": "Enter the length and width, choose the unit you want the area in, and press Calculate."
+  },
+  "chanx": {
+    "description": "Check whether WhatsApp and the phone line are configured, try both as clearly labelled simulations, and follow the setup steps.",
+    "tabStatus": "Status",
+    "tabWhatsapp": "Try WhatsApp",
+    "tabCall": "Try phone call",
+    "tabSetup": "Setup guide",
+    "waHeader": "Rule Dost",
+    "waSub": "AI assistant · simulation",
+    "typeMessage": "Type a message",
+    "typeSpeech": "Type what the caller says",
+    "callHeader": "Nirmaan Helpline",
+    "callIdle": "Not in a call",
+    "callLive": "Simulated call in progress",
+    "callEnded": "Call ended",
+    "notCalled": "not configured (nothing was called)",
+    "setup": {
+      "step1Title": "Set the shared secrets",
+      "step1Body": "In backend/.env (or your host's environment) set PII_HASH_SECRET to a long random string and PUBLIC_BASE_URL to the public https address of this server, then restart it.",
+      "step2Title": "Connect WhatsApp (Meta)",
+      "step2Body": "Create a WhatsApp Business app in Meta for Developers. Set WHATSAPP_APP_SECRET, WHATSAPP_ACCESS_TOKEN, WHATSAPP_PHONE_NUMBER_ID and a WHATSAPP_VERIFY_TOKEN of your choice. Register this webhook URL with the same verify token and subscribe to “messages”:",
+      "step3Title": "Connect the phone line (Twilio)",
+      "step3Body": "Set TWILIO_ACCOUNT_SID and TWILIO_AUTH_TOKEN, buy a voice number and point its Voice webhook (HTTP POST) to:",
+      "step4Title": "Run the checks",
+      "step4Body": "On the Status tab run “Check provider connections”. It makes real read-only calls, only for providers you have configured.",
+      "step5Title": "Test with your own phone",
+      "step5Body": "Send a WhatsApp message and call the number from a phone you control. Confirm the answers cite a rule and page, then send STOP to confirm it goes quiet.",
+      "note": "Until step 5 has been done with the real providers, treat WhatsApp and phone as untested. A server on your own computer needs a public https tunnel for Meta and Twilio to reach it."
+    }
+  },
+  "fatal": {
+    "title": "Something went wrong",
+    "body": "The page hit an unexpected problem. Nothing you typed was saved or sent. Reload to try again.",
+    "reload": "Reload the page",
+    "home": "Go to the start page"
+  },
+  "wb": {
+    "title": "Plan your house",
+    "description": "Enter your plot and building details, ask in English or Hindi, and see what the rules say for your case.",
+    "reset": "Reset",
+    "resetConfirm": "Clear inputs, conversation and results?",
+    "resetYes": "Yes, reset",
+    "resetNo": "Cancel",
+    "evaluate": "Check my plot",
+    "evaluating": "Checking…",
+    "needInputs": "Enter at least one plot or building value first.",
+    "pane": {
+      "label": "Workbench sections",
+      "inputs": "Inputs",
+      "ask": "Ask",
+      "canvas": "Canvas",
+      "results": "Results"
+    },
+    "inputs": {
+      "title": "Your details",
+      "example": "Example",
+      "plot": "Your plot",
+      "road": "The road",
+      "building": "Your house",
+      "footprint": "House position",
+      "optional": "Optional",
+      "notSpecified": "Not specified",
+      "roadHint": "The wider the road, the more space you must leave at the front.",
+      "builtUpHint": "Add up the area of every floor.",
+      "footprintHint": "Only needed to draw the house on your plot and check the spaces around it.",
+      "areaDerived": "I worked out your plot area from width × length: {{area}} sq m. Type an area above to use your own number.",
+      "errors": "{{count}} input(s) need fixing. They are left out until corrected."
+    },
+    "f": {
+      "plot_area": "Plot area (only if you know it)",
+      "plot_length": "Length of your plot (going back from the road)",
+      "plot_width": "Width of your plot (the side facing the road)",
+      "road_width": "Width of the road in front of your plot",
+      "building_height": "Height of your house",
+      "built_up_area": "Total built-up area (all floors added together)",
+      "building_width": "House width (the side facing the road)",
+      "building_length": "House length (going back)",
+      "gap_front": "Space between the road side and your house",
+      "gap_left": "Space between the left boundary and your house",
+      "floors": "Number of floors",
+      "building_use": "What is the house used for?",
+      "location": "Location (optional)"
+    },
+    "use": {
+      "residential": "Residential",
+      "commercial": "Commercial",
+      "industrial": "Industrial",
+      "farm_house": "Farm house",
+      "institutional": "Institutional"
+    },
+    "chat": {
+      "title": "Assistant",
+      "placeholder": "Ask in English or Hindi, e.g. “What front open space applies on a 9 m road?”",
+      "usingInputs": "Your question uses {{n}} project input(s).",
+      "noInputs": "No project inputs yet; answers will be general.",
+      "skipped": "{{n}} invalid input(s) not used",
+      "welcomeTitle": "Ask about the building rules",
+      "welcomeBody": "Answers are in simple words, with the rule number and page as proof. Fill in the project inputs first for answers that fit your plot."
+    },
+    "ex1": "What front open space applies on a 9 m road?",
+    "ex2": "What is the maximum floor area for my plot?",
+    "ex3": "What is the building permission fee for a house?",
+    "ex4": "सामने की खुली जगह कितनी छोड़नी होगी?",
+    "inspector": {
+      "title": "Your result",
+      "compliance": "Compliance",
+      "evidence": "Evidence",
+      "history": "History",
+      "emptyTitle": "No check done yet",
+      "emptyBody": "Fill in your plot and house details on the left, then press “Check my plot”.",
+      "evidenceFor": "Rule text found for",
+      "noEvidence": "No rule text yet. Ask a question to see the cited rules here.",
+      "noHistory": "No questions yet.",
+      "historyNote": "Kept only in this browser tab; cleared when you close it.",
+      "failed": "Failed",
+      "clearHistory": "Clear history"
+    },
+    "a": {
+      "label": "Answer",
+      "simple": "In simple words",
+      "applied": "How it was worked out",
+      "nextTitle": "What to do next",
+      "goToField": "Go to field",
+      "sourceTitle": "Source",
+      "rule": "Rule {{rule}}",
+      "page": "p.{{pages}}",
+      "unverifiedNote": "Rule text not yet human-verified.",
+      "exactText": "Exact rule text",
+      "fullText": "Show the full text found",
+      "aiTitle": "AI explanation (checked against the cited rules)",
+      "aiCaveat": "AI-generated: verify against the rule text.",
+      "copy": "Copy answer",
+      "inspect": "Inspect evidence",
+      "report": "Report a problem",
+      "notEstablished": "I can only help with building rules and planning your plot, and I could not find an answer to that in the rulebook, so I won't guess.",
+      "pointer": "I found {{n}} provision(s) that may be relevant, but I cannot state a specific answer from them. Please read the rule text below.",
+      "enter": "Enter {{field}} in the project inputs for an exact answer.",
+      "rephrase": "If it is about building rules, try again with the topic, for example open space, floor area or fees.",
+      "rulebook": "Or look through the Rulebook yourself.",
+      "verify": "Check the figures on the cited PDF page before relying on them: the rule text has not been human-verified yet.",
+      "clerk": "The permission clerk or authority decides. This is guidance, not an approval.",
+      "assumed": "Some inputs were assumed, as stated above.",
+      "version": "Based on: {{v}}.",
+      "ruleSpoken": "Rule {{rule}}, page {{pages}}",
+      "ruleSpokenNoPage": "Rule {{rule}}"
+    },
+    "tts": {
+      "unsupported": "Read-aloud is not supported in this browser.",
+      "group": "Read answer aloud",
+      "listen": "Listen",
+      "pause": "Pause",
+      "resume": "Resume",
+      "stop": "Stop",
+      "playing": "Reading the answer aloud",
+      "paused": "Paused",
+      "noVoiceHi": "No Hindi voice is installed in this browser, so it may not read Hindi correctly.",
+      "noVoiceEn": "No English voice found; the browser default will be used."
+    },
+    "voice": {
+      "unsupported": "Voice input is not supported in this browser (try Chrome or Edge)",
+      "denied": "Microphone permission was denied. Allow it in the browser address bar.",
+      "noSpeech": "No speech heard. Try again.",
+      "listening": "Listening… speak your question."
+    },
+    "cv": {
+      "title": "Plot and building canvas",
+      "view": "View",
+      "view3d": "3D view",
+      "view2d": "2D plan",
+      "controls": "3D controls",
+      "rotateLeft": "Rotate left",
+      "rotateRight": "Rotate right",
+      "zoomIn": "Zoom in",
+      "zoomOut": "Zoom out",
+      "resetView": "Reset view",
+      "legend": "Legend",
+      "legBuilding": "Proposed building (your inputs)",
+      "legGuide": "Minimum open space stated by the rule text (unverified)",
+      "legBad": "Breaks a limit or lies outside the plot",
+      "legAssumed": "Dashed outline: position assumed",
+      "illustrative": "Illustrative preview · not a verified design",
+      "guidesShown": "Rule limits shown (unverified text)",
+      "guidesStale": "Rule limits from earlier inputs",
+      "assumedPos": "Building position assumed",
+      "outside": "Building is outside the plot",
+      "summary": "Plot {{pw}} wide by {{pd}} deep, road {{road}} at the front, building {{b}}, height {{h}}. Illustrative only.",
+      "empty": "Enter the plot width and plot length to draw the plot.",
+      "dragHint": "Drag to rotate, scroll or use + / − to zoom, arrow keys to turn.",
+      "disclaimer": "Drawn from your inputs only. It shows the numbers you typed; it is not a verified design and not an official approval.",
+      "road": "Road {{w}}",
+      "roadUnknown": "Road (width not entered)",
+      "frontMin": "Front ≥ {{v}} (rule text)",
+      "rearMin": "Rear ≥ {{v}} (rule text)",
+      "gapFront": "Front {{v}}",
+      "gapRear": "Rear {{v}}",
+      "plotW": "Plot width {{v}}",
+      "plotD": "Plot depth {{v}}",
+      "height": "Height {{v}}"
+    },
+    "c": {
+      "areaConsistency": "Plot dimensions match the stated area",
+      "fitsPlot": "Building fits inside the plot",
+      "fitsPlotNo": "The footprint ({{bw}} × {{bd}}) placed with your gaps goes beyond the plot boundary ({{pw}} × {{pd}}).",
+      "fitsPlotTooBig": "The footprint ({{bw}} × {{bd}}) is larger than the plot ({{pw}} × {{pd}}).",
+      "fitsPlotAssumed": "The footprint fits; its position was assumed because a gap was not entered.",
+      "fitsPlotYes": "The footprint fits inside the plot with the gaps you entered.",
+      "noAnswer": "The rule lookup did not return a result.",
+      "nonResidential": "Only residential buildings can be compared right now (Rule 56). Other uses are not evaluated.",
+      "tall": "At {{h}} the building is above 12.5 m, so Rule 56's tables do not apply; Rule 56(5) points to Tables 4 and 5 of Rule 42, which are not checked automatically yet.",
+      "noRule": "No numeric limit could be taken from the rule text for these inputs.",
+      "front": "Front open space",
+      "rear": "Rear open space",
+      "side": "Side open space",
+      "far": "Floor area (FAR)",
+      "height": "Building height",
+      "needGapFront": "The rule text gives a minimum of {{limit}}. Enter the gap from the front boundary to compare.",
+      "below": "Your front gap {{measured}} is less than the stated minimum {{limit}}.",
+      "meets": "Your front gap {{measured}} is at least the stated minimum {{limit}}.",
+      "needRoad": "Enter the road width: the front open space depends on it.",
+      "needRear": "The rule text gives a minimum of {{limit}}. Enter plot length, building depth and the front gap to work out the rear gap.",
+      "belowRear": "The rear gap works out to {{measured}} (plot depth − front gap − building depth), less than the stated minimum {{limit}}.",
+      "meetsRear": "The rear gap works out to {{measured}}, at least the stated minimum {{limit}}.",
+      "needPlotArea": "Enter the plot length and width (or the plot area) first.",
+      "sideGaps": "Left gap {{left}}, right gap {{right}}. The side minimum depends on the building type (detached, semi-detached or row) so it is not judged automatically; read Rule 56(3).",
+      "sideNote": "The side minimum depends on the building type (detached, semi-detached or row), so it is not judged automatically. Read Rule 56(3).",
+      "needBuiltUp": "The rule text caps the total floor area at {{limit}}. Enter the proposed built-up area to compare.",
+      "aboveFar": "Your built-up area {{measured}} is more than the stated maximum {{limit}}.",
+      "meetsFar": "Your built-up area {{measured}} is within the stated maximum {{limit}}. Exemptions such as covered parking are not considered.",
+      "heightTall": "{{h}}: above 12.5 m, the open spaces and other limits come from Rule 42, which is not checked automatically yet.",
+      "heightOk": "{{h}}: within the 12.5 m band that Rule 56 covers. Other height limits are not evaluated.",
+      "backend": "{{name}}",
+      "state": {
+        "violation": "Needs fixing",
+        "within": "Looks fine",
+        "needs_input": "Tell me this",
+        "not_evaluated": "Could not check",
+        "info": "Good to know",
+        "geoOk": "Checked"
+      },
+      "yours": "Your figure",
+      "statedLimit": "Rulebook limit",
+      "rule": "Rule",
+      "add": "Add {{field}}",
+      "stale": "You changed something. Press “Check my plot” again.",
+      "verdictLabel": "Overall result",
+      "verdict": {
+        "violations": "Something needs fixing",
+        "preliminary_ok": "Nothing wrong found so far",
+        "cannot_evaluate": "I need a few more details"
+      },
+      "verdictBody": {
+        "violations": "{{v}} thing(s) go beyond the limits in the rulebook. See below what to change.",
+        "preliminary_ok": "{{ok}} thing(s) look fine against the rulebook. {{n}} could not be checked or need more details, so this is not a green light for the whole project.",
+        "cannot_evaluate": "Nothing could be compared yet. Fill in the missing details listed below."
+      },
+      "notApproval": "This is a quick check against the rulebook, not an approval.",
+      "unverified": "The rule text has not yet been checked by a person.",
+      "amendment": "A pending amendment may change these limits; its text is not available, so it was not applied.",
+      "gViolation": "Needs fixing",
+      "gNeeds": "I need to know",
+      "gWithin": "Looks fine so far",
+      "gInfo": "Good to know",
+      "gNot": "Could not check"
+    },
+    "s": {
+      "shrinkFootprint": "Reduce the building width or depth, or change the gaps, so it lies inside the plot.",
+      "moveBack": "Move the building back by at least {{by}} so the front gap is {{limit}} or more.",
+      "shrinkDepth": "Reduce the building depth by at least {{by}}.",
+      "moveForward": "Or move the building {{by}} towards the road (the front gap stays at or above its minimum).",
+      "reduceArea": "Reduce the total built-up area by at least {{by}} (to {{limit}} or less)."
+    },
+    "hero": {
+      "kicker": "Building rules, made simple",
+      "title": "What do you want to build on your plot?",
+      "body": "Ask in English or Hindi, enter your plot, and watch your house take shape in 3D, checked against the Madhya Pradesh Bhumi Vikas Rules.",
+      "examples": "Example questions"
+    },
+    "ex5": "Can I build a three-storey house on my 30 × 40 ft plot?",
+    "qs": {
+      "rulesTitle": "Ask about a rule",
+      "rulesBody": "Setbacks, floor area, fees: answers in plain words.",
+      "assessTitle": "Assess my plot",
+      "assessBody": "Enter plot, road and building details.",
+      "calcTitle": "Open the calculator",
+      "calcBody": "Area, FAR and open-space limits.",
+      "demoTitle": "Try a sample house (30 × 40 ft)",
+      "demoBody": "Loads a sample, checks it and builds it in 3D."
+    },
+    "anim": {
+      "title": "Construction animation",
+      "play": "Play",
+      "pause": "Pause",
+      "resume": "Resume",
+      "playAgain": "Play again",
+      "replay": "Replay",
+      "reset": "Reset",
+      "resetHint": "Back to the empty site",
+      "finish": "Skip to the finished building",
+      "scrub": "Construction progress",
+      "speed": "Speed",
+      "stage": "Stage",
+      "noModel": "Enter the building width and depth to see it built."
+    },
+    "v": {
+      "view3d": "3D view",
+      "viewSite": "Site plan",
+      "viewFloor": "Floor plan",
+      "camera": "Camera angle",
+      "cam": {
+        "perspective": "Perspective",
+        "front": "Front",
+        "rear": "Rear",
+        "left": "Left",
+        "right": "Right",
+        "top": "Top"
+      },
+      "layers": "Layers",
+      "measures": "Measurements",
+      "zones": "Setback zones",
+      "context": "Surroundings",
+      "sceneFailed": "3D could not start: showing the simple preview",
+      "noWebgl": "3D graphics are not available on this device: showing the simple preview",
+      "needFootprint": "Enter the building width and depth to place it on the plot.",
+      "loading3d": "Loading 3D…",
+      "summary": "{{floors}}-floor building, {{h}} m high, {{fw}} × {{fd}} m footprint, on the plot. Illustrative only.",
+      "summaryPlotOnly": "Plot {{w}} by {{d}}, no building yet.",
+      "dragHint": "Drag to rotate, scroll to zoom, right-drag or use two fingers to pan.",
+      "sFloors": "Floors",
+      "sHeight": "Height",
+      "sCoverage": "Plot coverage (no limit compared)",
+      "sFloorArea": "Floor area (footprint × floors, estimate)",
+      "assumptions": "How this model was built ({{n}})"
+    },
+    "floor": {
+      "label": "Floor",
+      "all": "All floors",
+      "ground": "Ground",
+      "nth": "Floor {{n}}"
+    },
+    "fp": {
+      "summary": "{{floor}} plan of a {{w}} × {{d}} m building with {{n}} rooms. Illustrative layout.",
+      "road": "Road side",
+      "disclaimer": "Illustrative room layout generated from your footprint. It is not a design, and room sizes are not checked against any rule."
+    },
+    "room": {
+      "living": "Living",
+      "dining": "Dining",
+      "kitchen": "Kitchen",
+      "bedroom": "Bedroom",
+      "toilet": "Toilet",
+      "stair": "Stairs",
+      "passage": "Passage",
+      "lounge": "Lounge",
+      "shop": "Shop",
+      "store": "Store",
+      "hall": "Hall",
+      "office": "Office",
+      "workshop": "Workshop",
+      "classroom": "Classroom"
+    },
+    "stage": {
+      "site": "Site marked out",
+      "foundation": "Foundation",
+      "plinth": "Plinth",
+      "walls": "Floor {{n}} walls",
+      "slab": "Floor {{n}} slab",
+      "roof": "Roof",
+      "openings": "Doors and windows",
+      "finish": "Plaster, paint and railings",
+      "landscape": "Boundary wall and garden"
+    },
+    "h": {
+      "heightAdjusted": "Your height {{h}} m could not be split into floors of 2.4 to 4.6 m, so the model shows {{shown}} m.",
+      "floorHeightDerived": "Each floor is drawn {{fh}} m high (your height divided by the floors, after a 0.45 m plinth).",
+      "floorHeightAssumed": "You gave no height, so floors are drawn {{fh}} m high (total {{h}} m).",
+      "floorsAssumed": "You gave no floor count, so {{n}} floor(s) of about {{fh}} m are drawn from your height.",
+      "oneFloorAssumed": "No floors or height were given: a one-floor, 3 m building is drawn.",
+      "balconyProjection": "Upper-floor balconies project {{d}} m into the front open space. Projections are not checked against the rules.",
+      "roofNotCounted": "The sloping roof rises above the height you entered.",
+      "rooftopNotCounted": "The parapet, stair room and water tank are drawn above the height you entered."
+    },
+    "guestSave": "You are using the workbench as a guest. Everything works; an account lets you save projects and assessments.",
+    "sg": {
+      "far": "What is the maximum floor area on my {{area}} sq m plot?",
+      "front": "What front open space applies on a {{road}} m road?",
+      "floors": "Can I build a {{floors}}-storey house on my {{w}} × {{d}} m plot?",
+      "fee": "What is the permission fee for {{built}} sq m built-up area?",
+      "rear": "What rear open space applies for a {{area}} sq m plot?",
+      "title": "Suggested for your inputs",
+      "recent": "Ask again"
+    },
+    "units": {
+      "label": "Measure in",
+      "ft": "Feet",
+      "m": "Metres"
+    }
+  },
+  "land": {
+    "nav": {
+      "features": "Features",
+      "how": "How it works",
+      "rulebook": "Rulebook",
+      "about": "About",
+      "signin": "Sign in",
+      "dashboard": "Dashboard {{name}}"
+    },
+    "cta": {
+      "start": "Start Planning",
+      "explore": "Explore Features",
+      "signup": "Create free account"
+    },
+    "hero": {
+      "kicker": "Madhya Pradesh building rules",
+      "title1": "Plan Your Building.",
+      "title2": "Understand the Rules.",
+      "title3": "Build with Confidence.",
+      "body": "NirmaanSetu explains the Madhya Pradesh Bhumi Vikas Rules in simple English and Hindi. Ask a question, enter your plot, and see your house take shape in 3D, with every answer pointing to the rule and page it comes from.",
+      "noAccount": "No account needed to try it. Create one only when you want to save your projects.",
+      "signedIn": "You are signed in: your projects and assessments are saved to your account."
+    },
+    "trust": {
+      "t1": "Every answer cites its rule and page",
+      "t2": "English and Hindi, text and voice",
+      "t3": "Guidance, not an approval"
+    },
+    "preview": {
+      "title": "Workbench preview · live 3D, drag to look around",
+      "alt": "A three-storey house being built on a 30 by 40 foot plot in an interactive 3D view",
+      "stage": "Building now: {{stage}}",
+      "plot": "plot",
+      "floors": "floors",
+      "h": "{{h}} m high",
+      "front": "front open space (Rule 56)",
+      "note": "Sample plot, illustrative only. Not a verified design or an approval."
+    },
+    "features": {
+      "kicker": "What you can do",
+      "title": "Everything between a question and a plan",
+      "body": "Four tools that work together, built on the real rulebook and kept honest about what is and is not verified."
+    },
+    "f": {
+      "assistant": {
+        "title": "AI Rule Assistant",
+        "body": "Ask in your own words, in English or Hindi, by typing or speaking, and listen to the answer.",
+        "a": "Plain-language answers, not legal text",
+        "b": "Rule number, page and exact wording as proof",
+        "c": "Asks for what is missing instead of guessing",
+        "cta": "Ask a question"
+      },
+      "assess": {
+        "title": "Plot Assessment",
+        "body": "Enter your plot, road and building details and compare them with the limits in the rules.",
+        "a": "Setbacks and floor-area limits checked",
+        "b": "Possible violations with what to change",
+        "c": "Missing information listed, never assumed",
+        "cta": "Assess a plot"
+      },
+      "visual": {
+        "title": "Building Visualization",
+        "body": "A 3D house generated from your own numbers, on your plot, beside the road.",
+        "a": "Watch it built from foundation to roof",
+        "b": "Rotate, zoom, inspect floor by floor",
+        "c": "Setbacks and dimensions drawn to scale",
+        "cta": "Open the workbench"
+      },
+      "calc": {
+        "title": "Area Calculator",
+        "body": "Plot area, floor-area ratio and open-space limits worked out from the rule tables.",
+        "a": "Area in sq m, sq ft and more",
+        "b": "Maximum floor area and per-floor area",
+        "c": "Front and rear open space for your road",
+        "cta": "Calculate"
+      }
+    },
+    "how": {
+      "title": "How it works",
+      "s1": {
+        "title": "Ask or enter your plot",
+        "body": "Type or speak a question, or fill in plot size, road width, building use, height and floors."
+      },
+      "s2": {
+        "title": "See your building",
+        "body": "The workbench draws the plot and builds your house in 3D, with the open spaces from the rules marked on the ground."
+      },
+      "s3": {
+        "title": "Check the rules",
+        "body": "Get a plain-language answer with the rule and page, and a list of what fits, what may not, and what is still missing."
+      }
+    },
+    "final": {
+      "title": "Ready to plan your building?",
+      "body": "Start with the workbench. It works straight away, and an account lets you keep what you build.",
+      "p1": "Built on the Madhya Pradesh Bhumi Vikas Rules, 2012 (consolidated to March 2025).",
+      "p2": "Every figure points to its rule number and page so you can check it yourself.",
+      "p3": "The rule text is not yet human-verified: results are guidance, never an approval."
+    },
+    "footer": {
+      "tag": "Plain-language help with Madhya Pradesh building rules.",
+      "product": "Product",
+      "resources": "Resources",
+      "account": "Account",
+      "limits": "About and limits",
+      "feedback": "Found a mistake? Use “Report a problem” on any answer inside the app."
+    },
+    "live": {
+      "title": "Live from the rulebook",
+      "q1": "What front open space applies on a 9 m road?",
+      "q2": "What is the maximum floor area on a 200 sq m plot?",
+      "q3": "Can I build a three-storey house on my 30 × 40 ft plot?",
+      "note": "A real answer from the rulebook, fetched just now. Not an approval."
+    },
+    "stats": {
+      "rules": "Rules searchable",
+      "tools": "Planning tools",
+      "langs": "Languages",
+      "cited": "Answers cite a rule"
+    }
+  },
+  "onb": {
+    "open": "Take the quick tour",
+    "kicker": "Quick tour · step {{n}} of {{total}}",
+    "skip": "Skip tour",
+    "back": "Back",
+    "next": "Next",
+    "done": "Open the workbench",
+    "revisit": "You can open this tour again from the ? button at the top.",
+    "progress": "Tour progress",
+    "goto": "Go to step {{n}}",
+    "ask": {
+      "title": "Ask about the rules",
+      "body": "Type or speak a question in English or Hindi, for example “What front open space applies on a 9 m road?”. You get a plain-language answer with the rule number and page.",
+      "tip": "Use the microphone to speak, and the Listen button to hear any answer."
+    },
+    "inputs": {
+      "title": "Enter your plot and building",
+      "body": "Fill in the project inputs: plot width and length, road width, building use, height, floors and where the building sits on the plot.",
+      "tip": "Not sure of a value? Leave it empty. The tool asks for what it needs and never guesses."
+    },
+    "visual": {
+      "title": "See it in 3D",
+      "body": "The workbench builds your house from those numbers. Press Play to watch it go up, drag to rotate, and pick a floor to look inside.",
+      "tip": "The 3D model is an illustration, not a verified design."
+    },
+    "check": {
+      "title": "Check the rules",
+      "body": "Press “Evaluate compliance” to compare your numbers with the setback and floor-area limits, see possible violations, and what to change.",
+      "tip": "Results are guidance. The rule text is not yet human-verified, so the clerk or authority decides."
+    },
+    "close": "Close tour"
+  },
+  "dash": {
+    "kicker": "Your dashboard",
+    "kickerNew": "Welcome to NirmaanSetu",
+    "title": "Welcome back, {{name}}",
+    "titleGuest": "Welcome back",
+    "body": "Pick up where you left off, or start a new plan.",
+    "bodyNew": "Your account is ready. Start with the workbench, or take the quick tour first.",
+    "newProject": "Plan a building",
+    "tour": "Take the quick tour",
+    "actions": "Quick actions",
+    "a": {
+      "workbench": {
+        "title": "3D Workbench",
+        "body": "Enter your plot and watch your house take shape."
+      },
+      "ask": {
+        "title": "AI Rule Assistant",
+        "body": "Ask a question about the rules, by text or voice."
+      },
+      "calc": {
+        "title": "Calculator",
+        "body": "Floor-area and open-space limits for your plot."
+      },
+      "rules": {
+        "title": "Rulebook",
+        "body": "Search the rules and read the source text."
+      }
+    },
+    "open": "Open",
+    "recent": "Recent projects",
+    "allProjects": "All projects",
+    "emptyTitle": "No saved projects yet",
+    "emptyBody": "Projects you save appear here. Start in the workbench and save one when you are ready.",
+    "emptyCta": "Go to the workbench"
+  },
+  "guide": {
+    "capabilities": {
+      "title": "What NirmaanSetu can do for you",
+      "body": "I explain the Madhya Pradesh Bhumi Vikas Rules in plain words, check your plot against them, and show your house in 3D. Ask me anything about the rules or about how to use the app.",
+      "s1": "Ask a rule question in English or Hindi and I answer with the rule number and page.",
+      "s2": "Enter your plot and building details in the Workbench to see your house in 3D and a compliance check.",
+      "s3": "Use the Calculator for permissible floor area and open spaces.",
+      "s4": "Create a free account to save projects and come back to them."
+    },
+    "start": {
+      "title": "How to get started",
+      "body": "The quickest way is the Workbench: type your plot size, then ask a question.",
+      "s1": "Open the Workbench.",
+      "s2": "Enter plot width and length, road width and building height (or press Example).",
+      "s3": "Ask a question, for example “What front open space applies?”.",
+      "s4": "Press Evaluate compliance to compare your numbers with the rule text."
+    },
+    "workbench": {
+      "title": "Using the 3D Workbench",
+      "body": "The Workbench builds your house from the numbers you enter, so every change updates the model.",
+      "s1": "Drag to rotate, scroll to zoom, right-drag to pan; use the Front, Rear, Left, Right and Top buttons for fixed views.",
+      "s2": "Press Play to watch the house being built from the foundation upwards; Replay and Reset restart it.",
+      "s3": "Pick a floor to cut the building open and see an illustrative room layout.",
+      "s4": "Switch to Site plan or Floor plan for 2D drawings with measurements."
+    },
+    "assessment": {
+      "title": "Checking your plot against the rules",
+      "body": "Evaluate compliance compares your front and rear gaps and floor area with limits taken from the rule tables. It never gives a pass mark: it shows possible violations, what is missing and what is not checked.",
+      "s1": "Fill in plot, road and building details.",
+      "s2": "Press Evaluate compliance.",
+      "s3": "Read each item: possible violation, within limit, needs input or not evaluated."
+    },
+    "calculator": {
+      "title": "Calculator",
+      "body": "The Calculator gives the permissible floor area, front and rear open space and the depth left for building, plus a plain plot-area calculator.",
+      "s1": "Enter plot width and length (or area) and the road width.",
+      "s2": "Press Calculate limits.",
+      "s3": "Each number shows the rule it came from."
+    },
+    "account": {
+      "title": "Account and saving projects",
+      "body": "You can ask questions, use the Workbench and the Calculator without an account. An account lets you save projects and assessments.",
+      "s1": "Choose Create account and enter your name, e-mail and a password of at least 8 characters with a letter and a number.",
+      "s2": "Forgot your password? Use “Forgot password?” on the sign-in page to get a reset link by e-mail.",
+      "s3": "Sign out any time from the menu with your name."
+    },
+    "voice": {
+      "title": "Voice: speaking and listening",
+      "body": "Press the microphone to ask by voice, and “Listen” under any answer to hear it read aloud, in English or Hindi.",
+      "s1": "Allow the microphone when the browser asks. Chrome and Edge work best.",
+      "s2": "Use Pause, Resume and Stop while an answer is read.",
+      "s3": "Hindi read-aloud needs a Hindi voice installed on your device."
+    },
+    "language": {
+      "title": "Hindi and English",
+      "body": "The whole app works in Hindi and English. Switch with EN / हिं at the top, or just type or speak your question in Hindi.",
+      "s1": "Questions in Devanagari are answered in Hindi.",
+      "s2": "Rule text is quoted exactly as it appears in the official document, which is in English.",
+      "s3": "Your language choice is remembered in this browser."
+    },
+    "rulebook": {
+      "title": "Rulebook and sources",
+      "body": "Every answer is based on the Madhya Pradesh Bhumi Vikas Rules, 2012 (consolidated to 6 March 2025). You can search the rules and see the source pages.",
+      "s1": "Open Rulebook & sources to search by rule number or words.",
+      "s2": "Each answer shows the rule number and page; tap it to read the exact text.",
+      "s3": "A reported 2026 amendment is listed but not applied, because its official text is not available."
+    },
+    "limits": {
+      "title": "How far to trust an answer",
+      "body": "NirmaanSetu is a guide, not an approval. The rule text has not been checked by a human reviewer yet, so figures should be confirmed on the official page, and the permission authority decides.",
+      "s1": "You always see the rule number and page behind an answer.",
+      "s2": "When the rules do not answer a question, I say so instead of guessing.",
+      "s3": "A 3D model is an illustration of your numbers, not a verified design."
+    },
+    "greeting": {
+      "title": "Hello! I'm your NirmaanSetu assistant",
+      "body": "I explain the Madhya Pradesh building rules in simple words and help you plan your plot. Tell me about your plot, or ask a question like the ones below."
+    },
+    "thanks": {
+      "title": "You're welcome",
+      "body": "Happy to help. If you have another question about your plot or the building rules, just ask."
+    }
+  },
+  "as": {
+    "title": "NirmaanSetu Assistant",
+    "subtitle": "Ask about the building rules or about how to use NirmaanSetu, in English or Hindi.",
+    "placeholder": "Ask anything: a rule, your plot, or how to use the app…",
+    "welcomeTitle": "How can I help?",
+    "welcomeBody": "I answer from the Madhya Pradesh Bhumi Vikas Rules and from how this app works. I will not guess when the rules do not say.",
+    "try": "Try asking",
+    "guideLabel": "App guide",
+    "open": "Open {{page}}",
+    "moreTopics": "More topics",
+    "clear": "Clear conversation",
+    "listen": "Voice and language",
+    "q1": "What can you do?",
+    "q2": "How do I use the 3D workbench?",
+    "q3": "What front open space applies on a 9 m road?",
+    "q4": "Can I build a three-storey house on my 30 × 40 ft plot?",
+    "q5": "How do I save a project?",
+    "q6": "मैं हिंदी में कैसे पूछूँ?",
+    "side": {
+      "live": "Live status",
+      "rules": "Rules available",
+      "server": "Rule engine",
+      "ready": "Ready",
+      "down": "Not reachable",
+      "recent": "Recent questions",
+      "noRecent": "Your questions will appear here.",
+      "projects": "Your projects",
+      "noProjects": "No projects yet.",
+      "newProject": "Start in the Workbench",
+      "signin": "Sign in to save projects",
+      "tour": "Take the quick tour",
+      "all": "All projects"
+    },
+    "newChat": "New chat",
+    "recent": "Recent chats",
+    "group": {
+      "today": "Today",
+      "yesterday": "Yesterday",
+      "earlier": "Earlier"
+    },
+    "noChats": "Your chats appear here. They are saved on this device only.",
+    "deleteChat": "Delete chat: {{title}}",
+    "clearAll": "Clear all chats",
+    "help": "Help",
+    "privacy": "Chats stay on this device. Answers are guidance, not an approval.",
+    "hero": {
+      "t1": "Got a plot in mind?",
+      "t2": "Let's check the rules.",
+      "sub": "Ask about Madhya Pradesh building rules, your plot, or how to use NirmaanSetu. Every answer shows the rule and page it comes from.",
+      "subName": "Hi {{name}}, ask about Madhya Pradesh building rules, your plot, or how to use NirmaanSetu. Every answer shows its rule and page."
+    },
+    "c1": "Ask about a rule",
+    "c2": "Check my plot",
+    "c3": "Floor area & FAR",
+    "c4": "Plan a 3-storey house",
+    "c5": "How it works",
+    "c6": "Ask in Hindi",
+    "qFar": "What is the maximum floor area for a 200 sq m plot?",
+    "tryInstead": "You could ask, for example"
+  },
+  "plain": {
+    "stop": ".",
+    "badge": {
+      "supported": "From the rulebook",
+      "conditional": "From the rulebook, based on what you told me",
+      "pending_verification": "From the rulebook · not yet checked by a person",
+      "insufficient_information": "I need a little more information",
+      "source_conflict": "The sources disagree",
+      "not_established": "Outside what I can help with"
+    },
+    "front": "At the front, leave at least {{v}} m open: the strip between the road and your house.",
+    "rear": "At the back, leave at least {{v}} m open.",
+    "rearNil": "At the back, no open space is required for a plot this small.",
+    "far": "All floors together can have at most {{v}} sq m of built-up area.",
+    "perFloor": "With {{n}} floors that is about {{per}} on each floor, if the floors are the same size.",
+    "side": "On the sides, the space depends on whether your house stands alone or is joined to a neighbour's house. Ask your architect which applies to you.",
+    "whyFront": "The space at the front depends on how wide the road is, and yours is {{road}}.",
+    "whyFrontGeneric": "The space at the front depends on how wide the road in front of your plot is.",
+    "whyRear": "The space at the back depends on the size of your plot, which is {{area}}.",
+    "whyFar": "The rule allows 1.25 times the plot area, so {{area}} × 1.25 = {{v}}.",
+    "s": {
+      "front": "Keep {{v}} open at the front, between the road and your house",
+      "rear": "At the back, keep {{v}} open",
+      "rearNil": "At the back, you do not need to leave any space",
+      "far": "All floors together can be up to {{v}}",
+      "frontUnknown": "The space needed at the front depends on the width of the road, which I do not know yet",
+      "forPlot": "For your plot ({{plot}}):"
+    },
+    "tall": "Your building is {{h}} tall. For buildings taller than 12.5 m the open space is not in the simple table; the rules send you to a different table (Rule 42, Tables 4 and 5), which this tool does not check yet. Please ask your architect or the permission office.",
+    "need": {
+      "title": "To give you an exact answer, I need:",
+      "road_width": "How wide is the road in front of your plot?",
+      "plot_area": "How big is your plot?",
+      "building_height": "How tall will the building be?",
+      "built_up_area": "How much built-up area will there be in total, all floors together?",
+      "floors": "How many floors?",
+      "submit": "Get my exact answer",
+      "empty": "Please fill in at least one answer."
+    },
+    "sources": "Where this comes from",
+    "more": "More details",
+    "moreSteps": "How this was worked out",
+    "guidance": "This is guidance to help you plan, not an approval. Your local permission office decides.",
+    "d": {
+      "title": "What I know about your plot",
+      "clear": "Clear all",
+      "remove": "Forget {{name}}",
+      "plot_area": "Plot",
+      "plot_length": "Plot length",
+      "plot_width": "Plot width",
+      "road_width": "Road",
+      "building_height": "Height",
+      "built_up_area": "Built-up",
+      "floors": "Floors",
+      "building_use": "Use"
+    },
+    "about": "about",
+    "h": {
+      "understood": "What I understood",
+      "answer": "Answer",
+      "means": "What this means for you",
+      "why": "Why"
+    },
+    "snap": {
+      "title": "Your plot at a glance",
+      "front": "Open space at the front",
+      "rear": "Open space at the back",
+      "far": "Total floor area, all floors",
+      "height": "Building height",
+      "needRoad": "Tell me the road width",
+      "needPlot": "Tell me the plot size",
+      "needHeight": "Tell me the building height",
+      "none": "No space needed",
+      "rule42": "Different table applies (Rule 42)",
+      "heightOk": "{{h}}: within the 12.5 m limit for ordinary houses",
+      "heightTall": "Above 12.5 m: extra rules apply"
+    },
+    "sc": {
+      "front": "The space at the front depends on your road:",
+      "rear": "The space at the back depends on your plot size:",
+      "upTo": "If it is up to {{hi}}",
+      "between": "If it is over {{lo}} and up to {{hi}}",
+      "above": "If it is above {{lo}}"
+    },
+    "key": {
+      "title": "Colour key",
+      "ok": "Within the limit",
+      "need": "I need a detail",
+      "fix": "Needs fixing",
+      "na": "Could not check"
+    }
+  },
+  "disp": {
+    "open": "Display settings: text size, theme and contrast",
+    "title": "Display",
+    "textSize": "Text size",
+    "size0": "Standard text",
+    "size1": "Large text",
+    "size2": "Largest text",
+    "theme": "Theme",
+    "light": "Light",
+    "dark": "Dark",
+    "contrast": "High contrast",
+    "reset": "Reset display"
+  }
+}

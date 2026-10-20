@@ -1,0 +1,13 @@
+# Runtime dependencies, pinned to the versions the test suite was run against (Python 3.12).
+fastapi==0.143.0
+uvicorn[standard]==0.54.0
+pydantic==2.14.1
+pydantic-settings==2.15.0
+SQLAlchemy==2.1.4
+alembic==1.20.0
+psycopg[binary]==3.3.6      # PostgreSQL driver (production)
+pymupdf==1.28.2             # PDF page extraction + table candidates
+httpx==0.28.1               # WhatsApp / Twilio / speech-to-text HTTP calls
+anthropic==1.13.0          # OPTIONAL provider; only imported when LLM_PROVIDER=anthropic
+# Optional semantic retrieval (off by default; not installed in the test environment):
+#   sentence-transformers>=3.0   (then SEMANTIC_ENABLED=true)

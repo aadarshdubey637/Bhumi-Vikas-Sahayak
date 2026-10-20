@@ -1,0 +1,32 @@
+{
+  "_comment": "ASSISTANT-PROPOSED labels, NOT human-reviewed. For each sample question, the rule number(s) whose text I read and judged to decide the question (see data/evaluation/sample_questions.md). Use them as a regression signal for retrieval, not as ground truth. A legal reviewer should confirm or correct them (docs/evaluation.md). An empty expect_any means the rules do not answer and the system must abstain.",
+  "labels_status": "unreviewed_assistant_proposed",
+  "cases": [
+    {"id": 1,  "q": "My house faces a 10 m wide street and will be 9 m tall. How much open space do I leave at the front?", "expect_any": ["56"]},
+    {"id": 2,  "q": "I want a farm house on agricultural land. What is the minimum plot size and the maximum FAR?", "expect_any": ["17"]},
+    {"id": 3,  "q": "My development permission was granted in 2023. How long does it stay valid, and how many times can I renew it?", "expect_any": ["23"]},
+    {"id": 4,  "q": "I applied for building permission and the authority has not replied. What happens if they miss the deadline?", "expect_any": ["28"]},
+    {"id": 5,  "q": "How far must my balcony stay from a low-voltage overhead electric line, vertically and horizontally?", "expect_any": ["52"]},
+    {"id": 6,  "q": "Who is allowed to sign and submit my building plans?", "expect_any": ["18", "26"]},
+    {"id": 7,  "q": "What documents go with an application for building permission?", "expect_any": ["16", "14"]},
+    {"id": 8,  "q": "What is the fee for building permission for a residential house?", "expect_any": ["21"]},
+    {"id": 9,  "q": "Can I change my plan after it is sanctioned?", "expect_any": ["24", "19"]},
+    {"id": 10, "q": "What is the minimum rear open space for a 150 sq m residential plot?", "expect_any": ["56"]},
+    {"id": 11, "q": "Do I need separate development permission for a 300 sq m plot that matches the Development Plan?", "expect_any": ["12", "2"]},
+    {"id": 12, "q": "Which rule decides what happens when the Development Plan and these rules disagree?", "expect_any": ["103"]},
+    {"id": 13, "q": "What are the rules for lifts in a building taller than 15 m?", "expect_any": ["83"]},
+    {"id": 14, "q": "मेरा प्लॉट 200 वर्ग मीटर का है और सामने 9 मीटर चौड़ी सड़क है। आगे कितनी जगह खाली छोड़नी होगी?", "expect_any": ["56"]},
+    {"id": 15, "q": "बिल्डिंग परमिशन की फीस कितनी है और किस नियम में लिखी है?", "expect_any": ["21"]},
+    {"id": 16, "q": "How do I pay my property tax online?", "expect_any": []},
+    {"id": 17, "q": "What is the current market rate for land in Kolar Road, Bhopal?", "expect_any": []},
+    {"id": 18, "q": "mere paas 200 square metre ka plot hai aur road 9 metre chaudi hai. aage kitni jagah chhodni hogi?", "expect_any": ["56"]},
+    {"id": 19, "q": "meri permission 2023 me mili thi kitne saal valid rahegi aur kitni baar renew ho sakti hai", "expect_any": ["23"]},
+    {"id": 20, "q": "authority ne jawab nahi diya to kya hoga, kitne din me permission mil jaati hai", "expect_any": ["28"]},
+    {"id": 21, "q": "balcony se bijli ki taar kitni door honi chahiye", "expect_any": ["52"]},
+    {"id": 22, "q": "plan sanction hone ke baad kya main usme badlav kar sakta hoon", "expect_any": ["24", "19"]},
+    {"id": 23, "q": "kaun plan par sign kar sakta hai", "expect_any": ["18", "26"]},
+    {"id": 24, "q": "15 meter se unchi building me lift lagana zaroori hai kya", "expect_any": ["83"]},
+    {"id": 25, "q": "farm house ke liye minimum plot kitna chahiye", "expect_any": ["17"]},
+    {"id": 26, "q": "Sir, mere paas 200 square metre ka plot hai aur road 9 metre chaudi hai. Mujhe ghar banane ke liye kitna setback chhodna hoga aur kitne floors bana sakta hoon?", "expect_any": ["56"]}
+  ]
+}
