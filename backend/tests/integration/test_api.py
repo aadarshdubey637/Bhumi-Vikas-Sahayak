@@ -345,8 +345,11 @@ def test_conversations_are_owner_scoped(auth_client):
 
 def test_body_size_limit(db_engine, synthetic_loaded):
     with make_client(db_engine, {"MAX_REQUEST_BYTES": "1024"}) as c:
-        r = c.post(f"{P}/ask", content=b'{"question": "' + b"a" * 2000 + b'"}', headers={"Content-Type": "application/json"})
+        r = c.post(f"{P}/rules/search", content=b'{"query": "' + b"a" * 2000 + b'"}', headers={"Content-Type": "application/json"})
         assert r.status_code == 413 and r.json()["code"] == "payload_too_large"
+        # /ask carries attached files, so it has its own, larger limit (12 MB) regardless of MAX_REQUEST_BYTES
+        big = c.post(f"{P}/ask", content=b'{"question": "' + b"a" * (13 * 1024 * 1024) + b'"}', headers={"Content-Type": "application/json"})
+        assert big.status_code == 413
 
 
 def test_question_length_limit(client):
@@ -421,3 +424,44 @@ def test_server_started_before_ingestion_picks_rules_up_without_restart(db_engin
         assert after["rules_loaded"] > 0 and after["checks"]["rules_loaded"] is True
         r = c.post("/api/v1/rules/search", json={"query": "fee"})
         assert r.status_code == 200 and "No rules have been ingested" not in (r.json().get("note") or "")
+
+
+def test_chat_history_reaches_the_llm_as_fenced_context(db_engine, synthetic_loaded):
+    seen = {}
+
+    class Spy(FakeLLM):
+        def complete(self, system, user, max_tokens):
+            seen["user"] = user
+            return super().complete(system, user, max_tokens)
+
+    app = create_app(Settings.from_env({"DATABASE_URL": "sqlite://", "RATE_LIMIT_PER_MINUTE": "1000"}), engine=db_engine)
+    app.state.llm = Spy('{"summary": "Following up on open space at the front.", "cited_evidence_ids": ["{EID}"], "caveats": []}')
+    history = [{"role": "user", "text": "open space at the front of the synthetic building?"},
+               {"role": "assistant", "text": "It is about open space at the front."}]
+    with TestClient(app) as c:
+        r = c.post(f"{P}/ask", json={"question": "and at the front?", "explain": True, "history": history})
+        bad = c.post(f"{P}/ask", json={"question": "hi", "history": [{"role": "system", "text": "x"}]})
+    assert r.status_code == 200 and r.json()["explanation"]
+    assert '<history>' in seen["user"] and 'role="user">open space at the front' in seen["user"]
+    assert bad.status_code == 422
+
+
+def test_attachment_is_validated_and_reaches_the_llm(db_engine, synthetic_loaded):
+    import base64
+    seen = {}
+
+    class Spy(FakeLLM):
+        def complete(self, system, user, max_tokens, attachments=None):
+            seen["attachments"], seen["user"] = attachments, user
+            return super().complete(system, user, max_tokens)
+
+    pdf = base64.b64encode(b"%PDF-1.4 tiny").decode()
+    app = create_app(Settings.from_env({"DATABASE_URL": "sqlite://", "RATE_LIMIT_PER_MINUTE": "1000"}), engine=db_engine)
+    app.state.llm = Spy('{"summary": "I read your file. Open space at the front is covered.", "cited_evidence_ids": ["{EID}"], "caveats": []}')
+    body = {"question": "open space at the front of the synthetic building?", "attachments": [{"name": "plan.pdf", "mime": "application/pdf", "data": pdf}]}
+    with TestClient(app) as c:
+        ok = c.post(f"{P}/ask", json=body)
+        spoof = c.post(f"{P}/ask", json={**body, "attachments": [{"name": "x.pdf", "mime": "application/pdf", "data": base64.b64encode(b"not a pdf").decode()}]})
+    assert ok.status_code == 200 and ok.json()["explanation"]
+    assert seen["attachments"] == [{"mime": "application/pdf", "data": pdf}] and "plan.pdf" in seen["user"]
+    assert spoof.status_code == 422

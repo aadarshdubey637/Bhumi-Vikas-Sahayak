@@ -15,6 +15,8 @@ from app.core.logging import new_request_id
 log = logging.getLogger("app.access")
 # Webhooks come from Meta / Twilio addresses shared by every user, so they cannot be limited per IP; they are protected by signatures
 # and by a per-sender throttle inside the channel service instead.
+# /ask may carry up to two attached files (4 MB each, base64): it gets a larger body limit than every other endpoint.
+UPLOAD_PATHS = {"/api/v1/ask": 12 * 1024 * 1024}
 EXEMPT_PATHS = ("/api/v1/health", "/api/v1/ready", "/api/v1/channels/whatsapp/webhook", "/api/v1/channels/voice/")
 
 
@@ -30,9 +32,10 @@ class RequestContextMiddleware:
         rid = new_request_id()
         started, status = time.perf_counter(), {"code": 0}
         headers = dict(scope.get("headers") or [])
+        limit = max(self.max_body, UPLOAD_PATHS.get(scope.get("path", ""), 0))
         declared = headers.get(b"content-length")
-        if declared and declared.isdigit() and int(declared) > self.max_body:
-            resp = error_response(413, "payload_too_large", f"request body exceeds {self.max_body} bytes",
+        if declared and declared.isdigit() and int(declared) > limit:
+            resp = error_response(413, "payload_too_large", f"request body exceeds {limit} bytes",
                                   headers={"X-Request-ID": rid})
             status["code"] = 413
             await resp(scope, receive, send)
@@ -43,7 +46,7 @@ class RequestContextMiddleware:
             msg = await receive()
             if msg["type"] == "http.request":
                 received["n"] += len(msg.get("body", b""))
-                if received["n"] > self.max_body:
+                if received["n"] > limit:
                     raise _TooLarge
             return msg
 
@@ -58,7 +61,7 @@ class RequestContextMiddleware:
         except _TooLarge:
             if not status["code"]:
                 status["code"] = 413
-                await error_response(413, "payload_too_large", f"request body exceeds {self.max_body} bytes",
+                await error_response(413, "payload_too_large", f"request body exceeds {limit} bytes",
                                      headers={"X-Request-ID": rid})(scope, receive, send)
         self._log(scope, status["code"], started)
 

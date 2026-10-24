@@ -16,6 +16,9 @@ from app.repositories import rule_repository as repo
 from app.rules import registry as dep_registry
 from app.rules.calculations import registry as calc_registry
 
+# Tests must not depend on a developer's local .env (e.g. LLM_PROVIDER=google, AUTO_* flags): ignore it.
+Settings.model_config["env_file"] = None
+
 BACKEND = Path(__file__).resolve().parents[1]
 CORPUS = BACKEND / "data/processed/corpus_rules.jsonl"
 AMENDMENTS = BACKEND / "data/pending/amendments_pending.json"

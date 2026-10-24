@@ -84,7 +84,7 @@ def extract_facts(text: str, context: dict[str, Any] | None = None) -> list[Extr
             g = m.groups()
             val, unit = (g[0], g[1]) if g[0] else (g[2], g[3])
             facts.append(_fact("building_height", val, unit, "high"))
-    for m in re.finditer(rf"{_NUM}\s*(?:floors?|storeys?|stories|story|मंजिल)", t, re.IGNORECASE):
+    for m in re.finditer(rf"{_NUM}\s*(?:floors?|storeys?|stories|story|मंजिल|manj[ie]l\w*|manzil\w*)", t, re.IGNORECASE):
         facts.append(_fact("floors", m.group(1), None, "high"))
     # spelled-out counts: "three-storey", "two floors", "G+2" (ground + 2), Hindi "तीन मंजिल"
     if not any(f.name == "floors" for f in facts):

@@ -17,7 +17,7 @@ py -3.12 -m venv .venv
 .\.venv\Scripts\python -m pip install -r requirements-dev.txt
 .\.venv\Scripts\python -m alembic upgrade head
 .\.venv\Scripts\python -m scripts.ingest_jsonl --load-db
-.\.venv\Scripts\python -m uvicorn app.main:app_factory --factory --port 8000      # http://localhost:8000/docs
+.\.venv\Scripts\8000      # http://localhost:8000/docs
 
 # --- frontend (terminal 2) ---
 cd frontend
@@ -31,7 +31,7 @@ macOS/Linux: use `python3.12 -m venv .venv && . .venv/bin/activate` and `cp`. Lo
 ## Checks
 
 ```powershell
-cd backend;  .\.venv\Scripts\python -m pytest -q; .\.venv\Scripts\ruff check app scripts tests
+cd  --port backend;  .\.venv\Scripts\python -m pytest -q; .\.venv\Scripts\ruff check app scripts tests
              .\.venv\Scripts\python -m scripts.validate_rules --db; .\.venv\Scripts\python -m scripts.evaluate_rag --db
 cd frontend; npm run verify         # typecheck, lint, tests, build, bundle scan
              npm run test:contract  # needs the backend running on :8000
@@ -47,3 +47,4 @@ cd frontend; npm run verify         # typecheck, lint, tests, build, bundle scan
 3. Put the Vercel origin into Render's `CORS_ORIGINS`.
 
 Neither deployment has been performed or verified; see the "not verified" notes in the READMEs.
+python -m uvicorn app.main:app_factory --factory

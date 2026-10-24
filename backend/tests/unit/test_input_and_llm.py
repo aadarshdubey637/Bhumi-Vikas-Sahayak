@@ -83,6 +83,7 @@ def test_null_provider_and_factory():
         NullProvider().complete("s", "u", 10)
     assert make_provider(Settings.from_env({})).name == "none"
     assert make_provider(Settings.from_env({"LLM_PROVIDER": "anthropic", "ANTHROPIC_API_KEY": "sk-ant-test-0000000000"})).name == "anthropic"
+    assert make_provider(Settings.from_env({"LLM_PROVIDER": "google", "GOOGLE_API_KEY": "test-key-0000000000"})).name == "google"
 
 
 # ---- auth ---------------------------------------------------------------------------------------------------
@@ -98,3 +99,29 @@ def test_authenticate_maps_key_to_server_side_owner():
 def test_json_dump_of_settings_hides_secrets():
     s = Settings.from_env({"AUTH_MODE": "api_key", "API_KEY_HASHES": "a:" + "b" * 64, "LLM_PROVIDER": "anthropic", "ANTHROPIC_API_KEY": "sk-ant-ZZZ123456789"})
     assert "ZZZ123456789" not in json.dumps(s.model_dump(mode="json")) and "b" * 64 not in repr(s)
+
+
+# ---- chat-style answers: list numbering, evidence ids, general (no-evidence) mode -----------------------------------
+def test_numbered_lists_and_evidence_ids_are_not_treated_as_figures():
+    text = "Short answer.\n1. First point\n2. Second point (see EV-56-000-abcdef12), rear space is 3 m under the 2012 Rules."
+    e = GroundedExplanation(summary=text, cited_evidence_ids=["EV-56-000-abcdef12"])
+    assert validate_explanation(e, [_ev()], [], []) == []
+
+
+def test_general_mode_allows_no_figures_rules_or_citations():
+    ok = GroundedExplanation(summary="Setbacks depend on your road width and plot size. Tell me those two details.")
+    assert validate_explanation(ok, [], [], [], require_citations=False) == []
+    for bad, needle in [("You must leave 3 m in front.", "numbers"), ("Rule 56 covers this.", "rule"),
+                        ("This is allowed and the plan is approved.", "compliance")]:
+        problems = validate_explanation(GroundedExplanation(summary=bad), [], [], [], require_citations=False)
+        assert any(needle in p for p in problems), (bad, problems)
+    cited = GroundedExplanation(summary="General note.", cited_evidence_ids=["EV-1"])
+    assert any("must not cite" in p for p in validate_explanation(cited, [], [], [], require_citations=False))
+
+
+def test_answer_text_must_not_point_at_rule_numbers_when_disallowed():
+    ids = ["EV-56-000-abcdef12"]
+    bad = GroundedExplanation(summary="As per Rule 56(2)(a), the rear space is 3 m.", cited_evidence_ids=ids)
+    assert any("rule/clause numbers" in p for p in validate_explanation(bad, [_ev()], [], [], allow_rule_refs=False))
+    ok = GroundedExplanation(summary="As per the building rules, the rear space is 3 m.", cited_evidence_ids=ids)
+    assert validate_explanation(ok, [_ev()], [], [], allow_rule_refs=False) == []

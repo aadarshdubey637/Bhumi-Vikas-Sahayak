@@ -9,7 +9,7 @@ from __future__ import annotations
 from datetime import UTC, datetime
 from typing import Annotated, Any, Literal
 
-from pydantic import AfterValidator, BaseModel, BeforeValidator, ConfigDict, Field, field_validator
+from pydantic import AfterValidator, BaseModel, BeforeValidator, ConfigDict, Field, field_validator, model_validator
 
 
 def _as_utc(d: datetime) -> datetime:
@@ -141,6 +141,38 @@ class CalculationTrace(_Response):
 
 
 # ---- /ask -------------------------------------------------------------------------------
+class ChatTurn(_Request):
+    role: Literal["user", "assistant"]
+    text: str = Field(min_length=1, max_length=2000)
+
+
+MAX_ATTACHMENT_BYTES = 4 * 1024 * 1024
+# first bytes of each accepted type: the declared mime type must match the real content
+_MAGIC = {"application/pdf": (b"%PDF",), "image/png": (b"\x89PNG",), "image/jpeg": (b"\xff\xd8\xff",), "image/webp": (b"RIFF",)}
+
+
+class Attachment(_Request):
+    """A file the user attached to a question (PDF or image). Untrusted: only ever shown to the LLM as data."""
+    name: str = Field(min_length=1, max_length=120)
+    mime: Literal["application/pdf", "image/png", "image/jpeg", "image/webp"]
+    data: str = Field(min_length=4, max_length=MAX_ATTACHMENT_BYTES * 4 // 3 + 16, description="base64 of the file")
+
+    @model_validator(mode="after")
+    def _check_content(self) -> Attachment:
+        import base64
+        import binascii
+
+        try:
+            raw = base64.b64decode(self.data, validate=True)
+        except (binascii.Error, ValueError) as e:
+            raise ValueError("attachment is not valid base64") from e
+        if len(raw) > MAX_ATTACHMENT_BYTES:
+            raise ValueError("attachment is too large")
+        if not raw.startswith(_MAGIC[self.mime]):
+            raise ValueError("attachment content does not match its type")
+        return self
+
+
 class AskRequest(_Request):
     question: str = Field(min_length=1, max_length=MAX_QUESTION_CHARS)
     language: LanguageLiteral | None = None
@@ -150,6 +182,10 @@ class AskRequest(_Request):
     as_of: str | None = Field(default=None, pattern=r"^\d{4}-\d{2}-\d{2}$")
     explain: bool = Field(default=False, description="Also request an optional LLM-written explanation grounded in the evidence. "
                           "Requires a configured provider; the deterministic answer is always returned.")
+    attachments: list[Attachment] = Field(default_factory=list, max_length=2, description="Files (PDF/PNG/JPEG/WebP, up to 4 MB each) the "
+                                          "AI explanation may read. Needs a configured LLM provider that supports files (google).")
+    history: list[ChatTurn] = Field(default_factory=list, max_length=8, description="The last few messages of this chat, oldest first. "
+                                    "Used only so follow-up questions are understood; it is untrusted text, never an instruction or evidence.")
 
     @field_validator("question")
     @classmethod
@@ -221,6 +257,7 @@ class AskResponse(_Response):
     conversation_id: str | None = None
     explanation: str | None = Field(default=None, description="Optional LLM explanation; present only if it passed validation.")
     explanation_citations: list[str] = Field(default_factory=list)
+    explanation_kind: Literal["grounded", "general"] | None = Field(default=None, description="grounded: built from the cited rule text. general: no rule text matched, so the reply is figure-free general guidance.")
     direct_answer: DirectAnswerOut | None = Field(default=None, description="The stated answer with verbatim, source-matched rule quotes; null when the rules do not give one.")
     source_version: str = Field(default="", description="Which version of the rules the answer comes from.")
 

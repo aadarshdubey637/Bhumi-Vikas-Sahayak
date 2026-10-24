@@ -68,12 +68,13 @@ class Settings(BaseSettings):
     smtp_from: str = "NirmaanSetu <no-reply@localhost>"
     smtp_starttls: bool = True
     # --- LLM (optional)
-    llm_provider: Literal["none", "anthropic"] = "none"
-    llm_model: str = "claude-sonnet-5-5"
+    llm_provider: Literal["none", "anthropic", "google"] = "none"
+    llm_model: str | None = None  # default depends on the provider (see llm_service)
     llm_timeout_seconds: float = Field(default=20.0, gt=0, le=120)
     llm_max_retries: int = Field(default=1, ge=0, le=3)
-    llm_max_output_tokens: int = Field(default=700, ge=64, le=4000)
+    llm_max_output_tokens: int = Field(default=1500, ge=64, le=4000)
     anthropic_api_key: SecretStr | None = Field(default=None, repr=False)
+    google_api_key: SecretStr | None = Field(default=None, repr=False)  # Gemini API key (Google AI Studio)
     # --- channels: WhatsApp assistant ("Rule Dost") and phone assistant ("Nirmaan Helpline"). Everything is optional; with no
     # credentials the webhooks answer 503 and only the clearly-labelled demo mode works.
     # HMAC key used to turn phone numbers / call ids into opaque ids. Phone numbers are never stored or logged.
@@ -164,6 +165,8 @@ class Settings(BaseSettings):
             raise ValueError("PUBLIC_BASE_URL must be https in production")
         if self.llm_provider == "anthropic" and not (self.anthropic_api_key and self.anthropic_api_key.get_secret_value().strip()):
             raise ValueError("LLM_PROVIDER=anthropic requires ANTHROPIC_API_KEY")
+        if self.llm_provider == "google" and not (self.google_api_key and self.google_api_key.get_secret_value().strip()):
+            raise ValueError("LLM_PROVIDER=google requires GOOGLE_API_KEY")
         return self
 
     @property
@@ -227,7 +230,7 @@ class Settings(BaseSettings):
             "SMTP_FROM": "smtp_from", "SMTP_STARTTLS": "smtp_starttls",
             "LLM_PROVIDER": "llm_provider", "LLM_MODEL": "llm_model", "LLM_TIMEOUT_SECONDS": "llm_timeout_seconds",
             "LLM_MAX_RETRIES": "llm_max_retries", "LLM_MAX_OUTPUT_TOKENS": "llm_max_output_tokens",
-            "ANTHROPIC_API_KEY": "anthropic_api_key", "SEMANTIC_ENABLED": "semantic_enabled", "AUTO_MIGRATE": "auto_migrate", "AUTO_INGEST": "auto_ingest",
+            "ANTHROPIC_API_KEY": "anthropic_api_key", "GOOGLE_API_KEY": "google_api_key", "SEMANTIC_ENABLED": "semantic_enabled", "AUTO_MIGRATE": "auto_migrate", "AUTO_INGEST": "auto_ingest",
             "PII_HASH_SECRET": "pii_hash_secret", "WHATSAPP_VERIFY_TOKEN": "whatsapp_verify_token",
             "WHATSAPP_APP_SECRET": "whatsapp_app_secret", "WHATSAPP_ACCESS_TOKEN": "whatsapp_access_token",
             "WHATSAPP_PHONE_NUMBER_ID": "whatsapp_phone_number_id", "WHATSAPP_API_VERSION": "whatsapp_api_version",
