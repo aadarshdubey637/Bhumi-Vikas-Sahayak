@@ -1,10 +1,11 @@
-import { ArrowRight, Check, ChevronDown, CircleAlert, CircleHelp, Info, Search } from "lucide-react";
+import { Check, ChevronDown, CircleAlert, CircleHelp } from "lucide-react";
 import { useEffect, useMemo, useState, type FormEvent } from "react";
 import { useTranslation } from "react-i18next";
 import { areaMeasurement, floorsSchema, lengthMeasurement } from "@/api/schemas";
 import type { AskResponse } from "@/api/types";
 import { WarningsList } from "@/components/ask/WarningsList";
 import { CopyButton } from "@/components/common/CopyButton";
+import { Markdown } from "@/components/common/Markdown";
 import { useEvidenceDrawer } from "@/components/evidence/EvidenceDrawerContext";
 import { buildAnswerView, type Tr } from "@/lib/answerView";
 import type { NeedField } from "@/lib/plainAnswer";
@@ -93,7 +94,6 @@ function NeedForm({ fields, tr, onSubmit }: { fields: NeedField[]; tr: Tr; onSub
       })}
       <button type="submit" className="inline-flex min-h-tap items-center gap-2 rounded-xl bg-brand px-4 text-sm font-bold text-white hover:bg-brand-dark">
         {tr("plain.need.submit")}
-        <ArrowRight aria-hidden="true" className="h-4 w-4" />
       </button>
     </form>
   );
@@ -156,20 +156,24 @@ export function AnswerBubble({
   const quotes = response.direct_answer?.quotes ?? [];
   const detailCount = v.applied.length + quotes.length + response.warnings.length + v.cautions.length;
   const fieldSteps = onProvide ? [] : v.next.filter((n) => n.field);
+  // A written (LLM) answer is shown as flowing chat text, like a chat assistant. The structured blocks below it
+  // (headline, scenarios, points, why, steps) are only for the deterministic answer, which is the fallback.
+  const chat = !!response.explanation;
+  const general = response.explanation_kind === "general";
+  const spoken = chat ? response.explanation! : v.speech;
 
   return (
-    <article lang={v.lang} aria-label={tr("wb.a.label")} className={`space-y-4 rounded-2xl border border-line bg-surface p-4 sm:p-5 ${selected ? "ring-2 ring-brand/30" : ""}`}>
+    <article lang={v.lang} aria-label={tr("wb.a.label")} className={`min-w-0 space-y-4 break-words ${selected ? "" : ""}`}>
       <span className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 text-xs font-semibold ${BADGE_TONE[response.status] ?? BADGE_TONE.not_established}`}>{v.badge}</span>
 
-      {response.explanation ? (
-        <section className="rounded-xl border border-info-line bg-info-tint p-3 text-sm">
-          <h4 className="font-semibold">{tr("wb.a.aiTitle")}</h4>
-          <p className="mt-1 whitespace-pre-wrap">{response.explanation}</p>
-          <p className="mt-1 text-xs text-ink-soft">{tr("wb.a.aiCaveat")}</p>
-        </section>
+      {chat ? (
+        <div className="text-sm leading-relaxed">
+          <Markdown text={response.explanation!} />
+          {general ? <p className="mt-3 text-sm italic text-ink-soft">{tr("askx.chatGeneral")}</p> : null}
+        </div>
       ) : null}
 
-      {v.understood.length ? (
+      {!chat && v.understood.length ? (
         <section aria-label={tr("plain.h.understood")}>
           <h4 className={HEAD}>{tr("plain.h.understood")}</h4>
           <ul className="mt-1.5 flex flex-wrap gap-1.5">
@@ -182,14 +186,16 @@ export function AnswerBubble({
         </section>
       ) : null}
 
-      <section aria-label={tr("plain.h.answer")}>
-        <h4 className={HEAD}>{tr("plain.h.answer")}</h4>
-        <p className="mt-1 whitespace-pre-wrap text-xl font-medium leading-relaxed">
-          <Reveal text={v.headline} animate={animate} />
-        </p>
-      </section>
+      {chat ? null : (
+        <section aria-label={tr("plain.h.answer")}>
+          <h4 className={HEAD}>{tr("plain.h.answer")}</h4>
+          <p className="mt-1 whitespace-pre-wrap text-base font-medium leading-relaxed">
+            <Reveal text={v.headline} animate={animate} />
+          </p>
+        </section>
+      )}
 
-      {v.scenarios.map((sc) => (
+      {(chat ? [] : v.scenarios).map((sc) => (
         <section key={sc.key} aria-label={sc.title} className="overflow-hidden rounded-2xl border border-pending-line bg-pending-tint">
           <h4 className="px-3.5 pt-3 text-sm font-semibold">{sc.title}</h4>
           <dl className="mt-1.5 divide-y divide-pending-line/60 px-3.5 pb-1.5">
@@ -203,7 +209,7 @@ export function AnswerBubble({
         </section>
       ))}
 
-      {v.snapshot ? (
+      {!chat && v.snapshot ? (
         <section aria-label={tr("plain.snap.title")} className="overflow-hidden rounded-2xl border border-line">
           <h4 className="border-b border-line bg-surface-sunken px-3.5 py-2 text-xs font-bold uppercase tracking-wide text-ink-soft">{tr("plain.snap.title")}</h4>
           <dl className="divide-y divide-line">
@@ -220,18 +226,17 @@ export function AnswerBubble({
         </section>
       ) : null}
 
-      {v.points.length ? (
-        <ul className="space-y-2 text-base leading-relaxed" aria-label={tr("plain.h.means")}>
+      {!chat && v.points.length ? (
+        <ul className="list-disc space-y-2 pl-5 text-base leading-relaxed" aria-label={tr("plain.h.means")}>
           {v.points.map((p, i) => (
-            <li key={i} className="flex gap-2.5">
-              <Check aria-hidden="true" className="mt-1 h-4 w-4 shrink-0 text-info" />
-              <span className="whitespace-pre-wrap">{p}</span>
+            <li key={i} className="whitespace-pre-wrap">
+              {p}
             </li>
           ))}
         </ul>
       ) : null}
 
-      {v.why.length ? (
+      {!chat && v.why.length ? (
         <section aria-label={tr("plain.h.why")}>
           <h4 className={HEAD}>{tr("plain.h.why")}</h4>
           <div className="mt-1.5 space-y-1.5 rounded-xl bg-surface-sunken px-3.5 py-3 text-sm leading-relaxed text-ink-soft">
@@ -256,15 +261,12 @@ export function AnswerBubble({
         </div>
       ) : null}
 
-      {v.steps.length ? (
+      {!chat && v.steps.length ? (
         <section aria-label={tr("wb.a.nextTitle")}>
           <h4 className={HEAD}>{tr("wb.a.nextTitle")}</h4>
-          <ul className="mt-1.5 space-y-1.5 text-sm">
+          <ul className="mt-1.5 list-disc space-y-1.5 pl-5 text-sm">
             {v.steps.map((s, i) => (
-              <li key={i} className="flex gap-2.5">
-                <ArrowRight aria-hidden="true" className="mt-0.5 h-4 w-4 shrink-0 text-brand" />
-                {s}
-              </li>
+              <li key={i}>{s}</li>
             ))}
           </ul>
         </section>
@@ -289,10 +291,7 @@ export function AnswerBubble({
         </section>
       ) : null}
 
-      <p className="flex items-start gap-2 text-xs leading-relaxed text-ink-faint">
-        <Info aria-hidden="true" className="mt-0.5 h-3.5 w-3.5 shrink-0" />
-        {v.guidance}
-      </p>
+      <p className="text-xs leading-relaxed text-ink-faint">{v.guidance}</p>
 
       {detailCount > 0 ? (
         <details className="group rounded-xl border border-line">
@@ -341,11 +340,10 @@ export function AnswerBubble({
       ) : null}
 
       <footer className="flex flex-wrap items-center gap-2 border-t border-line pt-3">
-        <SpeakButton id={`turn-${turnId}`} text={v.speech} lang={v.lang} />
-        <CopyButton text={v.speech} label={tr("wb.a.copy")} compact />
+        <SpeakButton id={`turn-${turnId}`} text={spoken} lang={v.lang} />
+        <CopyButton text={spoken} label={tr("wb.a.copy")} compact />
         {response.evidence.length ? (
           <button type="button" className="inline-flex min-h-tap items-center gap-1.5 rounded-lg px-2 text-sm font-semibold text-brand hover:underline" onClick={onInspect}>
-            <Search aria-hidden="true" className="h-4 w-4" />
             {tr("wb.a.inspect")}
           </button>
         ) : null}

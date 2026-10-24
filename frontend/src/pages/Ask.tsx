@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { MessageSquareText, Sparkles } from "lucide-react";
+import { MessageSquareText } from "lucide-react";
 import { LogoMark } from "@/components/brand/Logo";
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { useTranslation } from "react-i18next";
@@ -7,18 +7,15 @@ import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { listProjects } from "@/api/endpoints/projects";
 import { buildInputs, emptyPlotForm, questionSchema } from "@/api/schemas";
 import type { Language } from "@/api/types";
-import { AnswerCard } from "@/components/ask/AnswerCard";
-import { EvidencePanel } from "@/components/ask/EvidencePanel";
+import { ChatAnswer } from "@/components/ask/ChatAnswer";
 import { ErrorState } from "@/components/common/ErrorState";
 import { PageHeader } from "@/components/common/PageHeader";
-import { InfoBox, LoadingSkeleton } from "@/components/common/States";
 import { VoiceButton } from "@/components/common/VoiceButton";
 import { usePingDisclaimer } from "@/components/layout/DisclaimerContext";
 import { useFeedbackDialog } from "@/components/forms/FeedbackDialogContext";
 import { PlotInputsForm } from "@/components/forms/PlotInputsForm";
 import { useAskConversation } from "@/hooks/useAskConversation";
 import { useRateLimitCountdown } from "@/hooks/useCountdown";
-import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { queryTerms } from "@/lib/highlight";
 import { SAMPLE_QUESTIONS } from "@/lib/samples";
 import { btn, btnPrimary, input, label as labelCls } from "@/lib/ui";
@@ -44,17 +41,17 @@ export default function Ask() {
   const [formErrors, setFormErrors] = useState<Record<string, string>>({});
   const [projectId, setProjectId] = useState(params.get("project") ?? "");
   const [asOf, setAsOf] = useState("");
-  const [explain, setExplain] = useState(false);
+  // On by default: the chat answers in full, natural sentences. It falls back to the cited rule pointers by itself when the
+  // server has no AI provider configured (see useAskConversation).
+  const [explain, setExplain] = useState(true);
   const [qError, setQError] = useState<string | undefined>();
   const endRef = useRef<HTMLDivElement>(null);
-  const wide = useMediaQuery("(min-width: 1280px)");
 
   const projects = useQuery({
     queryKey: ["projects", { limit: 100, offset: 0 }],
     queryFn: ({ signal }) => listProjects({ limit: 100 }, signal),
   });
   const last = conv.turns[conv.turns.length - 1];
-  const lastAnswer = [...conv.turns].reverse().find((x) => x.response)?.response;
   // A question typed on the dashboard arrives with autoSend. The send is deferred to a timer that cleanup cancels, so React
   // StrictMode's simulated unmount (which aborts in-flight requests) cannot drop it or double it. The navigation state is then
   // cleared so pressing Back does not send the question again.
@@ -101,158 +98,155 @@ export default function Ask() {
           {t("ask.newConversation")}
         </button>
       </PageHeader>
-      <div className={wide ? "grid grid-cols-[minmax(0,1fr)_21rem] items-start gap-6" : ""}>
-        <div className="min-w-0">
-          <InfoBox tone="muted">{t("ask.historyNote")}</InfoBox>
-          <div className="mt-4 space-y-5" aria-live="polite">
-            {conv.turns.length === 0 ? (
-              <section className="glass-strong rounded-3xl p-5 sm:p-7">
-                <span aria-hidden="true" className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-navy text-[#9DB8FF]">
-                  <Sparkles className="h-5 w-5" />
-                </span>
-                <h2 className="mt-3 text-lg font-semibold">{t("askx.welcomeTitle")}</h2>
-                <p className="mt-1 max-w-xl text-sm text-ink-soft">{t("askx.welcomeBody")}</p>
-                <p className="mb-2 mt-4 text-sm font-semibold text-ink-soft">{t("ask.tryExample")}</p>
-                <ul className="grid gap-2 sm:grid-cols-2">
-                  {SAMPLE_QUESTIONS.map((q) => (
-                    <li key={q}>
-                      <button
-                        type="button"
-                        className="h-full min-h-tap w-full rounded-2xl border border-line bg-white/80 px-3.5 py-3 text-left text-sm transition-[border-color,background-color,transform] hover:border-brand-ring hover:bg-brand-tint motion-safe:hover:-translate-y-0.5"
-                        onClick={() => setText(q)}
-                      >
-                        {q}
-                      </button>
-                    </li>
-                  ))}
-                </ul>
-              </section>
-            ) : null}
-            {conv.turns.map((turn) => (
-              <div key={turn.id} className="space-y-3">
-                <p
-                  className="ml-auto max-w-[85%] whitespace-pre-wrap rounded-3xl rounded-br-lg bg-gradient-to-br from-navy-700 to-navy px-4 py-3 text-sm text-white shadow-glow"
-                  lang={/[ऀ-ॿ]/.test(turn.question) ? "hi" : undefined}
-                >
-                  {turn.question}
-                </p>
-                {turn.noteKey ? <InfoBox tone="info">{t(turn.noteKey)}</InfoBox> : null}
-                <div className="flex items-start gap-2.5">
-                  <LogoMark className="mt-1 h-8 w-8 shrink-0" />
-                  <div className="min-w-0 flex-1">
-                    {!turn.response && !turn.error ? (
-                      <div className="glass rounded-2xl p-4">
-                        <LoadingSkeleton lines={3} label={t("ask.searching")} />
-                      </div>
-                    ) : null}
-                    {turn.error ? <ErrorState error={turn.error} /> : null}
-                    {turn.response ? (
-                      <AnswerCard
-                        response={turn.response}
-                        terms={queryTerms(turn.question)}
-                        onReport={(evidenceId) =>
-                          openFeedback({
-                            category: evidenceId ? "incorrect_citation" : "incorrect_answer",
-                            evidenceId,
-                          })
-                        }
-                      />
-                    ) : null}
-                  </div>
+      <div className="mx-auto min-w-0 max-w-3xl">
+        <div className="space-y-8 pb-6" aria-live="polite">
+          {conv.turns.length === 0 ? (
+            <section className="py-8 text-center sm:py-12">
+              <h2 className="text-2xl font-semibold">{t("askx.welcomeTitle")}</h2>
+              <p className="mx-auto mt-2 max-w-xl text-sm text-ink-soft">{t("askx.welcomeBody")}</p>
+              <ul className="mt-6 flex flex-wrap justify-center gap-2">
+                {SAMPLE_QUESTIONS.map((q) => (
+                  <li key={q}>
+                    <button
+                      type="button"
+                      className="min-h-tap rounded-full border border-line px-4 py-2 text-left text-sm transition-colors hover:border-brand-ring hover:bg-brand-tint"
+                      onClick={() => setText(q)}
+                    >
+                      {q}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          ) : null}
+          {conv.turns.map((turn) => (
+            <div key={turn.id} className="space-y-5">
+              <p
+                className="ml-auto w-fit max-w-[85%] whitespace-pre-wrap rounded-3xl bg-surface-sunken px-4 py-2.5 text-[0.9375rem] text-ink"
+                lang={/[ऀ-ॿ]/.test(turn.question) ? "hi" : undefined}
+              >
+                {turn.question}
+              </p>
+              {turn.noteKey ? <p className="text-sm text-ink-soft">{t(turn.noteKey)}</p> : null}
+              <div className="flex items-start gap-3">
+                <LogoMark className="mt-0.5 h-8 w-8 shrink-0" />
+                <div className="min-w-0 flex-1">
+                  {!turn.response && !turn.error ? (
+                    <p className="flex items-center gap-2 py-1 text-sm text-ink-soft" role="status">
+                      <span aria-hidden="true" className="flex gap-1">
+                        <span className="h-2 w-2 rounded-full bg-ink-faint motion-safe:animate-bounce" />
+                        <span className="h-2 w-2 rounded-full bg-ink-faint motion-safe:animate-bounce [animation-delay:150ms]" />
+                        <span className="h-2 w-2 rounded-full bg-ink-faint motion-safe:animate-bounce [animation-delay:300ms]" />
+                      </span>
+                      {t("askx.chatThinking")}
+                    </p>
+                  ) : null}
+                  {turn.error ? <ErrorState error={turn.error} /> : null}
+                  {turn.response ? (
+                    <ChatAnswer
+                      response={turn.response}
+                      terms={queryTerms(turn.question)}
+                      onReport={(evidenceId) =>
+                        openFeedback({
+                          category: evidenceId ? "incorrect_citation" : "incorrect_answer",
+                          evidenceId,
+                        })
+                      }
+                    />
+                  ) : null}
                 </div>
               </div>
-            ))}
-            <div ref={endRef} />
-          </div>
-          <form
-            onSubmit={submit}
-            className="glass-strong sticky bottom-3 z-10 mt-5 space-y-3 rounded-3xl p-3 shadow-pop sm:p-4"
-          >
-            <label htmlFor="ask-q" className={labelCls}>
+            </div>
+          ))}
+          <div ref={endRef} />
+        </div>
+        <form onSubmit={submit} className="sticky bottom-3 z-10 space-y-2">
+          <div className="rounded-2xl border border-line-strong bg-surface p-1.5 shadow-card focus-within:border-brand focus-within:ring-4 focus-within:ring-brand/15">
+            <label htmlFor="ask-q" className="sr-only">
               {t("ask.questionLabel")}
             </label>
-            <div className="flex items-start gap-2">
-              <textarea
-                id="ask-q"
-                rows={2}
-                maxLength={1000}
-                className={`${input} min-w-0 flex-1 resize-y !rounded-2xl`}
-                value={text}
-                aria-invalid={!!qError}
-                onChange={(e) => setText(e.target.value)}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" && !e.shiftKey) submit(e);
-                }}
-              />
-              <VoiceButton onText={(v) => setText((cur) => (cur ? `${cur} ${v}` : v).slice(0, 1000))} />
-            </div>
-            <div className="flex flex-wrap items-center justify-between gap-2 text-xs text-ink-soft">
-              <span className="tabular">{t("ask.counter", { n: text.length })}</span>
-              {qError ? <span className="text-danger">{t(qError)}</span> : null}
-            </div>
-            <details className="rounded-lg border border-line bg-surface-page">
-              <summary className="flex min-h-tap cursor-pointer items-center px-3 text-sm font-semibold text-ink-soft">
-                {t("askx.options")}
-              </summary>
-              <div className="space-y-3 border-t border-line p-3">
-                <div className="flex flex-wrap items-end gap-3">
-                  <div>
-                    <label htmlFor="ask-lang" className={labelCls}>
-                      {t("ask.language")}
-                    </label>
-                    <select id="ask-lang" className={input} value={lang} onChange={(e) => setLang(e.target.value as "auto" | Language)}>
-                      {LANGS.map((l) => (
-                        <option key={l.v} value={l.v}>
-                          {t(l.key)}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                  <div>
-                    <label htmlFor="ask-project" className={labelCls}>
-                      {t("ask.project")}
-                    </label>
-                    <select id="ask-project" className={input} value={projectId} onChange={(e) => setProjectId(e.target.value)}>
-                      <option value="">{t("ask.noProject")}</option>
-                      {projects.data?.items.map((p) => (
-                        <option key={p.id} value={p.id}>
-                          {p.name}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                  <div>
-                    <label htmlFor="ask-asof" className={labelCls}>
-                      {t("ask.asOf")}
-                    </label>
-                    <input id="ask-asof" type="date" className={input} value={asOf} onChange={(e) => setAsOf(e.target.value)} />
-                  </div>
-                  {conv.explainAvailable ? (
-                    <label className="flex min-h-tap items-center gap-2 text-sm">
-                      <input type="checkbox" checked={explain} onChange={(e) => setExplain(e.target.checked)} />
-                      {t("ask.explainToggle")}
-                    </label>
-                  ) : null}
-                  <button type="button" className={btn} aria-expanded={showCtx} onClick={() => setShowCtx((s) => !s)}>
-                    {t("ask.knownFacts")}
-                  </button>
-                </div>
-                {showCtx ? (
-                  <div>
-                    <p className="mb-2 text-xs text-ink-soft">{t("ask.knownFactsHelp")}</p>
-                    <PlotInputsForm idPrefix="ask" value={form} onChange={setForm} errors={Object.fromEntries(Object.entries(formErrors))} />
-                  </div>
-                ) : null}
+            <textarea
+              id="ask-q"
+              rows={1}
+              maxLength={1000}
+              placeholder={t("askx.chatPlaceholder")}
+              className="block max-h-48 min-h-[2.5rem] w-full resize-none bg-transparent px-3 py-2 text-sm text-ink placeholder:text-ink-faint focus:outline-none"
+              value={text}
+              aria-invalid={!!qError}
+              onChange={(e) => setText(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" && !e.shiftKey) submit(e);
+              }}
+            />
+            <div className="flex items-center justify-between gap-2 px-1 pb-1">
+              <span className="tabular text-xs text-ink-soft">
+                {qError ? <span className="text-danger">{t(qError)}</span> : t("ask.counter", { n: text.length })}
+              </span>
+              <div className="flex items-center gap-2">
+                <VoiceButton onText={(v) => setText((cur) => (cur ? `${cur} ${v}` : v).slice(0, 1000))} />
+                <button type="submit" className={btnPrimary} disabled={conv.pending || countdown > 0 || text.trim() === ""}>
+                  {countdown > 0 ? t("common.waitSeconds", { seconds: countdown }) : conv.pending ? t("common.sending") : t("ask.send")}
+                </button>
               </div>
-            </details>
-            <div className="flex justify-end">
-              <button type="submit" className={btnPrimary} disabled={conv.pending || countdown > 0 || text.trim() === ""}>
-                {countdown > 0 ? t("common.waitSeconds", { seconds: countdown }) : conv.pending ? t("common.sending") : t("ask.send")}
-              </button>
             </div>
-          </form>
-        </div>
-        {wide ? <EvidencePanel response={lastAnswer} /> : null}
+          </div>
+          <details className="rounded-2xl border border-line bg-surface-page">
+            <summary className="flex min-h-tap cursor-pointer items-center px-3 text-sm font-semibold text-ink-soft">
+              {t("askx.options")}
+            </summary>
+            <div className="space-y-3 border-t border-line p-3">
+              <div className="flex flex-wrap items-end gap-3">
+                <div>
+                  <label htmlFor="ask-lang" className={labelCls}>
+                    {t("ask.language")}
+                  </label>
+                  <select id="ask-lang" className={input} value={lang} onChange={(e) => setLang(e.target.value as "auto" | Language)}>
+                    {LANGS.map((l) => (
+                      <option key={l.v} value={l.v}>
+                        {t(l.key)}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div>
+                  <label htmlFor="ask-project" className={labelCls}>
+                    {t("ask.project")}
+                  </label>
+                  <select id="ask-project" className={input} value={projectId} onChange={(e) => setProjectId(e.target.value)}>
+                    <option value="">{t("ask.noProject")}</option>
+                    {projects.data?.items.map((p) => (
+                      <option key={p.id} value={p.id}>
+                        {p.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div>
+                  <label htmlFor="ask-asof" className={labelCls}>
+                    {t("ask.asOf")}
+                  </label>
+                  <input id="ask-asof" type="date" className={input} value={asOf} onChange={(e) => setAsOf(e.target.value)} />
+                </div>
+                {conv.explainAvailable ? (
+                  <label className="flex min-h-tap items-center gap-2 text-sm">
+                    <input type="checkbox" checked={explain} onChange={(e) => setExplain(e.target.checked)} />
+                    {t("ask.explainToggle")}
+                  </label>
+                ) : null}
+                <button type="button" className={btn} aria-expanded={showCtx} onClick={() => setShowCtx((s) => !s)}>
+                  {t("ask.knownFacts")}
+                </button>
+              </div>
+              {showCtx ? (
+                <div>
+                  <p className="mb-2 text-xs text-ink-soft">{t("ask.knownFactsHelp")}</p>
+                  <PlotInputsForm idPrefix="ask" value={form} onChange={setForm} errors={Object.fromEntries(Object.entries(formErrors))} />
+                </div>
+              ) : null}
+            </div>
+          </details>
+          <p className="text-center text-xs text-ink-soft">{t("ask.historyNote")}</p>
+        </form>
       </div>
     </>
   );

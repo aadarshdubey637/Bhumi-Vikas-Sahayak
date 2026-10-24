@@ -1,4 +1,4 @@
-import { cleanup, screen, waitFor, within } from "@testing-library/react";
+import { act, cleanup, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { http, HttpResponse } from "msw";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
@@ -7,6 +7,7 @@ import type { AskResponse } from "@/api/types";
 import { askNotEstablished, askPending } from "@/test/fixtures";
 import { BASE } from "@/test/msw/handlers";
 import { server } from "@/test/msw/server";
+import { sendWbCommand } from "@/lib/wbEvents";
 import { renderPage } from "@/test/utils";
 import Workbench from "./Workbench";
 
@@ -52,13 +53,13 @@ describe("Workbench", () => {
   it("shows an empty canvas message, then draws the plot from the typed inputs", async () => {
     const user = userEvent.setup();
     renderPage(<Workbench />);
-    expect(screen.getAllByText("Enter the plot width and plot length to draw the plot.").length).toBeGreaterThan(0);
+    expect(screen.getAllByText("No plot drawn yet").length).toBeGreaterThan(0);
     await user.click(screen.getByRole("button", { name: "Example" }));
-    const svg = await screen.findByRole("img", { name: /Plot 9\.14 m wide by 18\.29 m deep, road 9\.14 m at the front, building 6\.71 × 12\.19 m, height 9\.14 m/ });
+    const svg = await screen.findByRole("img", { name: /Plot 10 m wide by 20 m deep, road 9 m at the front, building 7 × 12 m, height 9 m/ });
     expect(svg).toBeInTheDocument();
     expect(screen.getAllByText("Illustrative preview · not a verified design").length).toBeGreaterThan(0);
-    await user.click(screen.getByRole("button", { name: "2D plan" }));
-    expect(screen.getByRole("button", { name: "2D plan" })).toHaveAttribute("aria-pressed", "true");
+    await user.click(screen.getByRole("tab", { name: "2D Plan" }));
+    expect(screen.getByRole("tab", { name: "2D Plan" })).toHaveAttribute("aria-selected", "true");
   });
 
   it("validates input and leaves invalid values out of the question", async () => {
@@ -71,13 +72,13 @@ describe("Workbench", () => {
       }),
     );
     renderPage(<Workbench />);
-    await type(user, "Width of the road", "abc");
-    await type(user, "Width of your plot", "10");
+    await type(user, "Width of street facing the plot", "abc");
+    await type(user, "Width / frontage", "10");
     expect(await screen.findByText("Enter a number such as 12 or 12.5.")).toBeInTheDocument();
     await user.type(screen.getByRole("textbox", { name: "Your question" }), "front open space");
     await user.click(screen.getByRole("button", { name: "Ask" }));
     await screen.findByRole("article", { name: "Answer" });
-    expect(body).toMatchObject({ question: "front open space", context: { plot_width: { value: "10", unit: "ft" } } });
+    expect(body).toMatchObject({ question: "front open space", context: { plot_width: { value: "10", unit: "m" } } });
     expect(JSON.stringify(body)).not.toContain("road_width");
   });
 
@@ -123,10 +124,9 @@ describe("Workbench", () => {
     const user = userEvent.setup();
     server.use(http.post(`${BASE}/ask`, () => HttpResponse.json(direct)));
     renderPage(<Workbench />);
-    await user.click(screen.getByRole("button", { name: "Metres" }));
     await user.click(screen.getByRole("button", { name: "Example" }));
-    await type(user, "Space between the road side", "2");
-    await user.click(screen.getByRole("button", { name: "Check my plot" }));
+    await type(user, "Front gap", "2");
+    await user.click(screen.getByRole("button", { name: /Evaluate Compliance/ }));
     const verdict = await screen.findByRole("region", { name: "Overall result" });
     await waitFor(() => expect(within(verdict).getByText("Something needs fixing")).toBeInTheDocument());
     expect(screen.getByText(/Your front gap 2 m \(7 ft\) is less than the stated minimum 3 m \(10 ft\)/)).toBeInTheDocument();
@@ -144,7 +144,7 @@ describe("Workbench", () => {
     first.unmount();
     renderPage(<Workbench />);
     expect(await screen.findByRole("article", { name: "Answer" })).toBeInTheDocument();
-    await user.click(screen.getAllByRole("button", { name: "Reset" })[0]!);
+    act(() => sendWbCommand("reset")); // the Reset button lives in the application header
     await user.click(screen.getByRole("button", { name: "Yes, reset" }));
     await waitFor(() => expect(screen.queryByRole("article", { name: "Answer" })).not.toBeInTheDocument());
   });
@@ -160,7 +160,7 @@ describe("Workbench", () => {
     );
     await i18n.changeLanguage("hi");
     renderPage(<Workbench />);
-    expect(screen.getByText("आपकी जानकारी")).toBeInTheDocument();
+    expect(screen.getByText("प्रोजेक्ट इनपुट")).toBeInTheDocument();
     await user.type(screen.getByRole("textbox", { name: "आपका प्रश्न" }), "सामने की खुली जगह");
     await user.click(screen.getByRole("button", { name: "पूछें" }));
     const art = await screen.findByRole("article", { name: "उत्तर" });

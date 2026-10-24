@@ -1,4 +1,4 @@
-import { Calculator, FolderKanban, Hammer, Home, Ruler, Scale, type LucideIcon } from "lucide-react";
+import { Hammer, Scale, type LucideIcon } from "lucide-react";
 
 export interface NavItem {
   to: string;
@@ -16,24 +16,15 @@ export interface NavGroup {
 }
 
 /**
- * The core workflow only. Everything else keeps its route and stays reachable from where it is used:
- * Sources and Amendments from the Rulebook page, Feedback from every answer's "Report a problem", WhatsApp/Phone and About
- * from the sidebar footer. (Checked before removal: no page depends on a nav entry, only on its route.)
+ * The core workflow only: the workbench and the rule book (saved projects are in the account menu). Everything else keeps its route and stays
+ * reachable from where it is used (Sources and Amendments from the Rulebook page, Feedback from every answer's "Report a problem").
  */
 export const NAV_GROUPS: NavGroup[] = [
   {
     labelKey: "nav.groupWork",
     items: [
-      { to: "/dashboard", key: "home", icon: Home, account: true },
-      { to: "/assistant", key: "home", icon: Home, guestOnly: true },
       { to: "/workbench", key: "workbench", icon: Hammer },
-      { to: "/plot-check", key: "plotCheck", icon: Ruler },
-      { to: "/calculator", key: "calculator", icon: Calculator },
-      { to: "/projects", key: "projects", icon: FolderKanban },
+      { to: "/rules", key: "rules", icon: Scale },
     ],
-  },
-  {
-    labelKey: "nav.groupReference",
-    items: [{ to: "/rules", key: "rules", icon: Scale }],
   },
 ];

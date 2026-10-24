@@ -1,15 +1,15 @@
-import { LogOut, Plus } from "lucide-react";
+import { Clock3, Database, RotateCcw } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { Link, useLocation } from "react-router-dom";
-import { useHomePath } from "@/hooks/useHomePath";
-import { useApiKey } from "@/auth/useApiKey";
+import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
+import type { ReadyOut } from "@/api/types";
 import type { BackendState } from "@/hooks/useBackendReadiness";
-import { Breadcrumbs } from "./Breadcrumbs";
-import { LogoMark } from "@/components/brand/Logo";
+import { LogoMark, Wordmark } from "@/components/brand/Logo";
+import { sendWbCommand } from "@/lib/wbEvents";
 import { AccountMenu } from "./AccountMenu";
-import { DisplayControls } from "./DisplayControls";
 import { LanguageToggle } from "./LanguageToggle";
 import { MobileNav } from "./MobileNav";
+import { NAV_GROUPS } from "./navItems";
+import { VoiceGuide } from "./VoiceGuide";
 
 const DOT: Record<BackendState, string> = {
   ok: "bg-verified",
@@ -19,51 +19,72 @@ const DOT: Record<BackendState, string> = {
   unreachable: "bg-danger",
 };
 const PILL: Record<BackendState, string> = {
-  ok: "border-verified-line bg-verified-tint text-verified",
+  ok: "border-line bg-surface text-ink-soft",
   warming: "border-pending-line bg-pending-tint text-pending",
   not_ready: "border-pending-line bg-pending-tint text-pending",
   no_rules: "border-pending-line bg-pending-tint text-pending",
   unreachable: "border-danger-line bg-danger-tint text-danger",
 };
 
-/** Application header: new chat, language and account. Server status appears only when something is wrong. */
-export function TopBar({ state }: { state: BackendState }) {
+const tab = (active: boolean) =>
+  `inline-flex h-8 shrink-0 items-center gap-2 whitespace-nowrap rounded-lg px-3 text-sm font-semibold transition-colors ${active ? "bg-surface-sunken text-ink ring-1 ring-inset ring-line-strong" : "text-ink-soft hover:bg-surface-sunken hover:text-ink"}`;
+const ghost = "inline-flex h-[2.125rem] shrink-0 items-center gap-2 whitespace-nowrap rounded-lg border border-line px-3 text-sm font-semibold text-ink transition-colors hover:border-line-strong hover:bg-surface-sunken";
+
+/** Application header: brand, where the rules apply, the core pages, then reset, language, rule count and the voice guide. */
+export function TopBar({ state, ready }: { state: BackendState; ready?: ReadyOut }) {
   const { t } = useTranslation();
-  const { hasKey, signOut } = useApiKey();
-  const { home, newChat } = useHomePath();
+  const navigate = useNavigate();
   const { pathname } = useLocation();
-  const onHome = pathname === home || pathname === "/dashboard" || pathname === "/assistant";
+  const onBench = pathname === "/workbench";
+  const items = NAV_GROUPS.flatMap((g) => g.items);
+  // History lives in the workbench's inspector: go there first when needed, then ask it to open the list
+  const openHistory = () => {
+    if (!onBench) navigate("/workbench");
+    window.setTimeout(() => sendWbCommand("history"), onBench ? 0 : 120);
+  };
   return (
-    <header className="theme-dark sticky top-0 z-30 border-b border-[var(--nav-line)] bg-[var(--top-bg)] text-ink before:absolute before:inset-x-0 before:top-0 before:h-[3px] before:bg-[linear-gradient(90deg,#ff9933_0_33.3%,#ffffff_33.3%_66.6%,#138808_66.6%)] print:hidden">
-      <div className="flex items-center gap-2 px-3 py-2 sm:gap-3 sm:px-6">
+    <header className="sticky top-0 z-30 border-b border-line bg-[var(--top-bg)] text-ink print:hidden">
+      <div className="flex h-[3.75rem] items-center gap-2 px-3 sm:gap-3 sm:px-5">
         <MobileNav />
-        <Link to="/" aria-label={t("app.name")} className="lg:hidden">
-          <LogoMark className="h-8 w-8" />
-        </Link>
-        <button
-          type="button"
-          onClick={newChat}
-          className="inline-flex min-h-tap shrink-0 items-center gap-2 rounded-full bg-white px-4 text-sm font-semibold text-[#0b2a5b] shadow transition-colors hover:bg-white/90"
-        >
-          <Plus aria-hidden="true" className="h-4 w-4" />
-          {t("as.newChat")}
-        </button>
-        <div className="min-w-0 flex-1">{onHome ? null : <Breadcrumbs />}</div>
-        {state !== "ok" ? (
-          <span role="status" className={`inline-flex shrink-0 items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs font-semibold ${PILL[state]}`}>
-            <span aria-hidden="true" className={`h-2 w-2 rounded-full ${DOT[state]}`} />
-            <span className="sr-only sm:not-sr-only">{t(`backend.state.${state}`)}</span>
+        <Link to="/" aria-label={t("app.name")} className="flex shrink-0 items-center gap-2.5 rounded-lg">
+          <LogoMark className="h-9 w-9" />
+          <span className="hidden sm:block">
+            <Wordmark compact />
           </span>
-        ) : null}
-        {hasKey ? (
-          <button type="button" onClick={signOut} className="inline-flex min-h-tap shrink-0 items-center gap-1.5 rounded-lg px-2 text-sm font-semibold text-ink-soft hover:bg-white/10 hover:text-white">
-            <LogOut aria-hidden="true" className="h-4 w-4" />
-            <span className="sr-only sm:not-sr-only">{t("auth.signOut")}</span>
+        </Link>
+        <span className="hidden shrink-0 items-center gap-2 whitespace-nowrap rounded-full border border-line bg-surface px-3 py-1 text-xs font-semibold text-ink 2xl:inline-flex">
+          <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-verified" />
+          {t("header.location")}
+        </span>
+        <nav aria-label={t("nav.main")} className="mx-auto hidden shrink-0 items-center gap-1 rounded-xl border border-line bg-surface p-1 lg:flex">
+          {items.map(({ to, key, icon: Icon }) => (
+            <NavLink key={to} to={to} className={({ isActive }) => tab(isActive)}>
+              <Icon aria-hidden="true" className="h-4 w-4" />
+              {t(`nav.${key}`)}
+            </NavLink>
+          ))}
+          <button type="button" className={tab(false)} onClick={openHistory}>
+            <Clock3 aria-hidden="true" className="h-4 w-4" />
+            {t("nav.history")}
           </button>
-        ) : null}
-        <LanguageToggle />
-        <DisplayControls />
-        <AccountMenu />
+        </nav>
+        <div className="ml-auto flex items-center gap-2 lg:ml-0">
+          {onBench ? (
+            <button type="button" className={ghost} onClick={() => sendWbCommand("reset")} aria-label={t("wb.reset")}>
+              <RotateCcw aria-hidden="true" className="h-4 w-4" />
+              <span className="hidden 2xl:inline">{t("wb.reset")}</span>
+            </button>
+          ) : null}
+          <LanguageToggle tone="light" long />
+          {state !== "ok" || ready ? (
+            <span role={state === "ok" ? undefined : "status"} className={`hidden shrink-0 items-center gap-2 h-[2.125rem] rounded-lg border px-3 text-sm font-medium whitespace-nowrap 2xl:inline-flex ${PILL[state]}`}>
+              {state === "ok" ? <Database aria-hidden="true" className="h-3.5 w-3.5" /> : <span aria-hidden="true" className={`h-2 w-2 rounded-full ${DOT[state]}`} />}
+              {state === "ok" && ready ? t("header.rules", { n: ready.rules_loaded }) : t(`backend.state.${state}`)}
+            </span>
+          ) : null}
+          <VoiceGuide />
+          <AccountMenu />
+        </div>
       </div>
     </header>
   );

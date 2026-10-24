@@ -52,18 +52,14 @@ describe("MobileNav drawer", () => {
     );
     await user.click(screen.getByRole("button", { name: "Open menu" }));
     const dlg = await screen.findByRole("dialog", { name: "Main navigation" });
-    // the simplified core workflow plus two secondary links; Feedback and Amendment Tracker are no longer in the main navigation
+    // the core workflow (workbench, rule book) plus two secondary links; Feedback and Amendment Tracker are no longer in the main navigation
     expect(within(dlg).getAllByRole("link").slice(1).map((l) => l.textContent?.trim())).toEqual([
-      "Home",
-      "Workbench",
-      "Plot Assessment",
-      "Calculator",
-      "Projects",
-      "Rulebook & sources",
+      "Workbench / नक्शा",
+      "Rule Book",
       "About",
       "WhatsApp & Phone",
     ]);
-    await user.click(within(dlg).getByRole("link", { name: "Calculator" }));
+    await user.click(within(dlg).getByRole("link", { name: "Rule Book" }));
     await waitFor(() => expect(screen.queryByRole("dialog")).not.toBeInTheDocument());
   });
 

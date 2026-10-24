@@ -21,6 +21,9 @@ describe("product guide matching", () => {
     ["धन्यवाद", "thanks"],
     ["प्रोजेक्ट कैसे सहेजूँ?", "account"],
     ["3D वर्कबेंच कैसे इस्तेमाल करूँ?", "workbench"],
+    ["I want to build a home from scratch so what I do", "journey"],
+    ["how do I build a house", "journey"],
+    ["मुझे नया घर बनाना है, क्या करूँ?", "journey"],
   ])("%s -> %s", (q, id) => expect(matchGuide(q)?.id).toBe(id));
 
   it("leaves regulation questions to the rules backend", () => {

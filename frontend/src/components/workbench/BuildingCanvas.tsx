@@ -81,7 +81,7 @@ function Plan({ x, frontMin, rearMin, flags }: { x: Metrics; frontMin?: number; 
         {x.roadW !== undefined ? t("wb.cv.road", { w: m(x.roadW) }) : t("wb.cv.roadUnknown")}
       </Label>
       {/* plot */}
-      <polygon points={pts([P(0, 0), P(pw, 0), P(pw, pd), P(0, pd)])} fill="#EEF3E6" stroke="#0A2342" strokeWidth={2.2} />
+      <polygon points={pts([P(0, 0), P(pw, 0), P(pw, pd), P(0, pd)])} fill="#EEF3E6" stroke="#1C1F26" strokeWidth={2.2} />
       {frontMin !== undefined && frontMin > 0 ? (
         <g>
           <rect x={X(0)} y={Y(frontMin)} width={pw * s} height={frontMin * s} fill="#E8A317" fillOpacity={0.2} stroke="#8F5300" strokeDasharray="6 4" />
@@ -102,12 +102,12 @@ function Plan({ x, frontMin, rearMin, flags }: { x: Metrics; frontMin?: number; 
       {place ? (
         <g>
           <rect x={X(place.x0)} y={Y(place.y0 + place.d)} width={place.w * s} height={place.d * s} fill={bad ? "#C44242" : "#3465DC"} fillOpacity={0.42} stroke={stroke} strokeWidth={2.2} strokeDasharray={place.assumedX || place.assumedY ? "7 4" : undefined} />
-          <Label x={X(place.x0 + place.w / 2)} y={Y(place.y0 + place.d / 2) + 4} size={14} color="#0A2342">
+          <Label x={X(place.x0 + place.w / 2)} y={Y(place.y0 + place.d / 2) + 4} size={14} color="#1C1F26">
             {`${fmtNum(place.w)} × ${fmtNum(place.d)} m`}
           </Label>
           {/* gaps */}
-          <Dim a={P(place.x0 + place.w / 2, 0)} b={P(place.x0 + place.w / 2, place.y0)} text={t("wb.cv.gapFront", { v: m(place.y0) })} minPx={22} offset={0} color={place.assumedY ? "#5B6B80" : "#0A2342"} />
-          <Dim a={P(0, place.y0 + place.d / 2)} b={P(place.x0, place.y0 + place.d / 2)} text={m(place.x0)} minPx={26} color={place.assumedX ? "#5B6B80" : "#0A2342"} />
+          <Dim a={P(place.x0 + place.w / 2, 0)} b={P(place.x0 + place.w / 2, place.y0)} text={t("wb.cv.gapFront", { v: m(place.y0) })} minPx={22} offset={0} color={place.assumedY ? "#5B6B80" : "#1C1F26"} />
+          <Dim a={P(0, place.y0 + place.d / 2)} b={P(place.x0, place.y0 + place.d / 2)} text={m(place.x0)} minPx={26} color={place.assumedX ? "#5B6B80" : "#1C1F26"} />
           <Dim a={P(place.x0 + place.w, place.y0 + place.d / 2)} b={P(pw, place.y0 + place.d / 2)} text={m(place.rightGap)} minPx={26} color="#5B6B80" />
           <Dim a={P(place.x0 + place.w / 2, place.y0 + place.d)} b={P(place.x0 + place.w / 2, pd)} text={t("wb.cv.gapRear", { v: m(place.rearGap) })} minPx={22} color="#5B6B80" />
         </g>
@@ -116,8 +116,8 @@ function Plan({ x, frontMin, rearMin, flags }: { x: Metrics; frontMin?: number; 
       <Dim a={P(0, pd)} b={P(pw, pd)} text={m(pw)} offset={-16} />
       <Dim a={P(0, 0)} b={P(0, pd)} text={m(pd)} offset={-16} />
       <g transform={`translate(${W - 44} 22)`} aria-hidden="true">
-        <path d="M0 14 L6 -4 L12 14 L6 10 Z" fill="#0A2342" />
-        <text x={6} y={-8} textAnchor="middle" fontSize={11} fontWeight={700} fill="#0A2342">
+        <path d="M0 14 L6 -4 L12 14 L6 10 Z" fill="#1C1F26" />
+        <text x={6} y={-8} textAnchor="middle" fontSize={11} fontWeight={700} fill="#1C1F26">
           N
         </text>
       </g>
@@ -181,13 +181,13 @@ function Scene3D({ x, cam, frontMin, rearMin, flags }: { x: Metrics; cam: Cam; f
         const b = to(v(pw + pad, -roadDraw / 2));
         return <line x1={a.x} y1={a.y} x2={b.x} y2={b.y} stroke="#fff" strokeWidth={2} strokeDasharray="10 8" />;
       })()}
-      <polygon points={poly(scene.plot)} fill="#EEF3E6" stroke="#0A2342" strokeWidth={2.2} />
+      <polygon points={poly(scene.plot)} fill="#EEF3E6" stroke="#1C1F26" strokeWidth={2.2} />
       {frontMin !== undefined && frontMin > 0 ? <polygon points={band(0, frontMin)} fill="#E8A317" fillOpacity={0.28} stroke="#8F5300" strokeDasharray="6 4" /> : null}
       {rearMin !== undefined && rearMin > 0 ? <polygon points={band(pd - rearMin, pd)} fill="#E8A317" fillOpacity={0.28} stroke="#8F5300" strokeDasharray="6 4" /> : null}
       {place && h <= 0 ? <polygon points={poly([v(place.x0, place.y0, 0.03), v(place.x0 + place.w, place.y0, 0.03), v(place.x0 + place.w, place.y0 + place.d, 0.03), v(place.x0, place.y0 + place.d, 0.03)])} fill="#3465DC" fillOpacity={0.4} stroke="#1D4ED8" strokeWidth={2} /> : null}
       {faces.map((f) => (
         <g key={f.id}>
-          <polygon points={poly(f.pts)} fill={shade(bad ? RED : BLUE, f.kind === "roof" ? 1 : f.light)} fillOpacity={f.kind === "roof" ? 0.82 : 0.9} stroke="#0A2342" strokeWidth={1.2} strokeLinejoin="round" />
+          <polygon points={poly(f.pts)} fill={shade(bad ? RED : BLUE, f.kind === "roof" ? 1 : f.light)} fillOpacity={f.kind === "roof" ? 0.82 : 0.9} stroke="#1C1F26" strokeWidth={1.2} strokeLinejoin="round" />
           {f.kind === "wall" && floors
             ? Array.from({ length: floors - 1 }, (_, i) => {
                 const z = ((i + 1) * h) / floors;
@@ -201,7 +201,7 @@ function Scene3D({ x, cam, frontMin, rearMin, flags }: { x: Metrics; cam: Cam; f
         </g>
       ))}
       {nearest && h > 0 ? (
-        <Dim a={corner(nearest.x, nearest.y, 0)} b={corner(nearest.x, nearest.y, h)} text={m(h)} offset={-14} color="#0A2342" />
+        <Dim a={corner(nearest.x, nearest.y, 0)} b={corner(nearest.x, nearest.y, h)} text={m(h)} offset={-14} color="#1C1F26" />
       ) : null}
       {(() => {
         const a = to(v(0, 0));
@@ -364,7 +364,7 @@ export function BuildingCanvas({ metrics, frontMin, rearMin, flags, guidesStale,
             {mode === "3d" ? <Scene3D x={metrics} cam={cam} frontMin={frontMin} rearMin={rearMin} flags={flags} /> : <Plan x={metrics} frontMin={frontMin} rearMin={rearMin} flags={flags} />}
           </svg>
         ) : (
-          <div className="flex min-h-[240px] w-full items-center justify-center px-6 py-10 text-center text-sm text-ink-soft sm:min-h-[320px]">
+          <div className="flex min-h-[15rem] w-full items-center justify-center px-6 py-10 text-center text-sm text-ink-soft sm:min-h-[20rem]">
             {t("wb.cv.empty")}
           </div>
         )}

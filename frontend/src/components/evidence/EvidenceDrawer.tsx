@@ -65,7 +65,7 @@ export function EvidenceDrawerProvider({ children }: { children: ReactNode }) {
           <Dialog.Overlay className="fixed inset-0 z-40 bg-ink/40 print:hidden" />
           <Dialog.Content
             aria-describedby={undefined}
-            className="fixed inset-x-0 bottom-0 z-50 max-h-[85vh] overflow-y-auto rounded-t-lg bg-surface-page p-4 shadow-xl md:inset-y-0 md:left-auto md:right-0 md:max-h-none md:w-[520px] md:rounded-none print:hidden"
+            className="fixed inset-x-0 bottom-0 z-50 max-h-[85vh] overflow-y-auto rounded-t-lg bg-surface-page p-4 shadow-xl md:inset-y-0 md:left-auto md:right-0 md:max-h-none md:w-[32.5rem] md:rounded-none print:hidden"
           >
             <div className="mb-3 flex items-center justify-between">
               <Dialog.Title className="text-lg font-semibold">{t("evidence.drawerTitle")}</Dialog.Title>

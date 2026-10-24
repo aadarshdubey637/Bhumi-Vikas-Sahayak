@@ -1,8 +1,8 @@
-import { Component, lazy, Suspense, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import { Component, lazy, Suspense, useMemo, type ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 import { BuildingCanvas } from "@/components/workbench/BuildingCanvas";
-import { AnimController, webglAvailable } from "@/lib/anim";
-import { buildHouse, type HouseParams } from "@/lib/house";
+import { webglAvailable } from "@/lib/anim";
+import type { HouseParams } from "@/lib/house";
 import type { Metrics } from "@/lib/workbench";
 
 const HouseScene = lazy(() => import("@/components/workbench3d/HouseScene"));
@@ -21,32 +21,10 @@ class Boundary extends Component<{ fallback: ReactNode; children: ReactNode }, {
   }
 }
 
-/** Live, draggable 3D preview of the workbench that loops the construction animation. */
+/** Live, draggable 3D preview of the workbench scene. */
 export function HeroPreview() {
   const { t } = useTranslation();
-  const reduced = typeof window !== "undefined" && window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
-  const ctrlRef = useRef<AnimController>();
-  if (!ctrlRef.current) ctrlRef.current = new AnimController(reduced ? 1 : 0, 18);
-  const ctrl = ctrlRef.current;
   const gl = useMemo(() => webglAvailable(), []);
-  const model = useMemo(() => buildHouse(SAMPLE), []);
-  const [stage, setStage] = useState(model.stageAt(ctrl.progress));
-
-  useEffect(() => {
-    if (reduced) return;
-    let timer: number | undefined;
-    const start = window.setTimeout(() => ctrl.play(), 900);
-    const off = ctrl.subscribe(() => {
-      const s = ctrl.getSnapshot();
-      setStage(model.stageAt(s.progress));
-      if (s.progress >= 1 && !s.playing && timer === undefined) timer = window.setTimeout(() => { timer = undefined; ctrl.replay(); }, 4200);
-    });
-    return () => {
-      window.clearTimeout(start);
-      if (timer !== undefined) window.clearTimeout(timer);
-      off();
-    };
-  }, [ctrl, model, reduced]);
 
   const flat = <BuildingCanvas metrics={SAMPLE_METRICS} flags={{ front: false, rear: false, outside: false }} />;
   return (
@@ -59,17 +37,16 @@ export function HeroPreview() {
           <span aria-hidden="true" className="h-2.5 w-2.5 rounded-full bg-[#4ade80]" />
           <span className="ml-2 truncate text-xs font-semibold text-white/80">{t("land.preview.title")}</span>
         </div>
-        <div className="relative h-[320px] bg-[#d9e6f5] sm:h-[400px]" role="img" aria-label={t("land.preview.alt")}>
+        <div className="relative h-[20rem] bg-white sm:h-[25rem]" role="img" aria-label={t("land.preview.alt")}>
           {gl ? (
             <Boundary fallback={flat}>
               <Suspense fallback={<div className="flex h-full items-center justify-center text-sm text-slate-600">{t("wb.v.loading3d")}</div>}>
-                <HouseScene plotW={SAMPLE.plotW} plotD={SAMPLE.plotD} roadW={SAMPLE.roadW} house={SAMPLE} ctrl={ctrl} floorView="all" show={{ measures: false, context: true, zones: false }} guides={{}} flags={{ front: false, rear: false, outside: false }} preset={{ name: "perspective", nonce: 0 }} tt={(k, p) => t(k, p) as string} />
+                <HouseScene neighbours plotW={SAMPLE.plotW} plotD={SAMPLE.plotD} roadW={SAMPLE.roadW} house={SAMPLE} floorView="all" show={{ measures: true, zones: false }} guides={{}} flags={{ front: false, rear: false, outside: false }} preset={{ name: "perspective", nonce: 0 }} tt={(k, p) => t(k, p) as string} />
               </Suspense>
             </Boundary>
           ) : (
             flat
           )}
-          <div className="pointer-events-none absolute left-3 top-3 rounded-full border border-white/60 bg-white/80 px-3 py-1 text-xs font-semibold text-slate-800">{t("land.preview.stage", { stage: t(stage.label.key, stage.label.params) })}</div>
         </div>
         <div className="grid grid-cols-3 divide-x divide-white/15 border-t border-white/15 text-center text-xs text-white/80">
           <p className="px-2 py-2.5">

@@ -34,6 +34,9 @@ export interface ComplianceReport {
   /** limits to draw on the canvas (metres), when the rule text gave them */
   frontMin?: number;
   rearMin?: number;
+  /** rule numbers the two limits come from (for the drawing labels) */
+  frontRule?: string;
+  rearRule?: string;
   /** items whose value breaks a limit, by id, for colouring the drawing */
   flags: { front: boolean; rear: boolean; outside: boolean };
   unverified: boolean;
@@ -201,5 +204,5 @@ export function evaluateCompliance(args: {
   const verdict: Verdict = counts.violation > 0 ? "violations" : regWithin > 0 ? "preliminary_ok" : "cannot_evaluate";
   const missing = [...new Set(items.flatMap((i) => (i.status === "needs_input" ? i.missing : [])))];
   const unverified = !answer || answer.evidence.length === 0 || answer.evidence.some((e) => e.verification_status !== "verified");
-  return { verdict, items, counts, regWithin, missing, frontMin, rearMin, flags, unverified, amendmentFlag: !!da?.amendment_flag || !!da?.caveats.length };
+  return { verdict, items, counts, regWithin, missing, frontMin, rearMin, frontRule: frontReq?.rule, rearRule: rearReq?.rule, flags, unverified, amendmentFlag: !!da?.amendment_flag || !!da?.caveats.length };
 }

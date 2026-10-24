@@ -145,6 +145,19 @@ export interface AskRequest {
   context?: InputMap;
   as_of?: string;
   explain?: boolean;
+  /** Last few messages of this chat (oldest first) so follow-up questions are understood. */
+  history?: ChatMessage[];
+  /** PDF / image files the AI answer may read (base64, up to 4 MB each, at most 2). */
+  attachments?: Attachment[];
+}
+export interface Attachment {
+  name: string;
+  mime: "application/pdf" | "image/png" | "image/jpeg" | "image/webp";
+  data: string;
+}
+export interface ChatMessage {
+  role: "user" | "assistant";
+  text: string;
 }
 export interface RejectedEvidence {
   evidence_id: string;
@@ -168,6 +181,8 @@ export interface AskResponse {
   conversation_id: string | null;
   explanation: string | null;
   explanation_citations: string[];
+  /** "grounded": built from the cited rule text; "general": no rule text matched, so figure-free guidance. */
+  explanation_kind?: "grounded" | "general" | null;
   /** The stated answer with verbatim, source-matched rule quotes; null when the rules give none. */
   direct_answer?: DirectAnswer | null;
   /** Which version of the rules the answer comes from. */

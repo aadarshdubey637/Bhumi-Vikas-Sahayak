@@ -31,6 +31,14 @@ export const GUIDE: GuideTopic[] = [
     actions: [{ to: "/workbench", label: "nav.workbench" }, { to: "/calculator", label: "nav.calculator" }],
   },
   {
+    id: "journey",
+    // "I want to build a home from scratch, what do I do?": the whole path, not one rule. (Questions like "Can I build a three-storey house on my plot?" are rule questions and go to the rulebook.)
+    match: [/from scratch|start(ing)? (to )?(build|construct)|begin(ning)? (to )?(build|construct)|how (do|to|can) i (build|construct)|what (should |do )?i do|build(ing)? (a |my |an )?(new )?(home|house)\b|new (home|house)|नया घर|घर (बनाना|बनाने|बनवाना|बनवाने)|मकान (बनाना|बनाने|बनवाना|बनवाने)|कहाँ से शुरू|क्या करूँ|क्या करना/],
+    steps: 5,
+    actions: [{ to: "/workbench", label: "nav.workbench" }],
+    ask: EXAMPLES,
+  },
+  {
     id: "start",
     match: [/how (do|to|can) i (start|begin)|get(ting)? started|where (do|to) (i )?start|first step|(use|using) (the )?(app|this|nirmaan|website|site)\b|kaise (shuru|start)|शुरू|(ऐप|एप|वेबसाइट).*(कैसे|इस्तेमाल|उपयोग)|कहाँ से/],
     steps: 4,

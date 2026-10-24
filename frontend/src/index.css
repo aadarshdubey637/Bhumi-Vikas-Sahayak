@@ -9,48 +9,73 @@
 
 @layer base {
   :root {
-    --c-ink: 15 23 42; --c-ink-soft: 51 65 85; --c-ink-faint: 85 98 118;
-    --c-surface: 255 255 255; --c-surface-sunken: 238 242 248; --c-surface-page: 244 246 250;
-    --c-line: 211 218 230; --c-line-strong: 118 131 154; --c-glassline: 255 255 255;
-    --c-brand: 11 79 168; --c-brand-dark: 8 47 107; --c-brand-tint: 226 236 250; --c-brand-ring: 120 160 220;
-    --c-accent-text: 138 95 0;
-    --c-pending: 138 85 0; --c-pending-tint: 255 244 220; --c-pending-line: 232 194 122;
-    --c-verified: 10 112 56; --c-verified-tint: 226 245 233; --c-verified-line: 134 205 160;
-    --c-danger: 160 30 30; --c-danger-tint: 252 232 232; --c-danger-line: 228 160 160;
-    --c-info: 22 70 150; --c-info-tint: 226 236 250; --c-info-line: 160 188 232;
-    --c-muted: 75 85 99; --c-muted-tint: 238 240 244; --c-muted-line: 196 204 214;
-    --nav-bg: #0b2a5b; --top-bg: #0b2a5b; --nav-line: rgba(255, 255, 255, 0.14);
+    --c-ink: 241 243 248; --c-ink-soft: 190 196 210; --c-ink-faint: 148 154 172;
+    --c-surface: 19 23 34; --c-surface-sunken: 28 33 47; --c-surface-page: 13 16 25;
+    --c-line: 40 46 62; --c-line-strong: 96 104 126; --c-glassline: 190 196 210;
+    --c-brand: 245 179 1; --c-brand-dark: 255 205 64; --c-brand-tint: 44 39 22; --c-brand-ring: 150 112 20;
+    --c-accent-text: 245 179 1;
+    --c-pending: 246 192 104; --c-pending-tint: 48 42 28; --c-pending-line: 112 88 44;
+    --c-verified: 112 222 162; --c-verified-tint: 26 44 38; --c-verified-line: 42 108 78;
+    --c-danger: 255 152 152; --c-danger-tint: 58 33 36; --c-danger-line: 130 64 70;
+    --c-info: 152 192 255; --c-info-tint: 28 38 60; --c-info-line: 64 82 124;
+    --c-muted: 178 184 200; --c-muted-tint: 30 34 46; --c-muted-line: 66 72 90;
+    --nav-bg: #0f121b; --top-bg: #0f121b; --nav-line: #232836;
     --text-scale: 1;
+    color-scheme: dark;
   }
-  html[data-theme="dark"] { --nav-bg: #0a1830; --top-bg: #0a1830; --nav-line: #26385a; }
+  html[data-theme="dark"] { --nav-bg: #0f121b; --top-bg: #0f121b; --nav-line: #232836; }
   /* Dark palette for the header, sidebar and the two side panels of the workbench. Every token-based utility flips with it. */
   .theme-dark {
-    --c-ink: 232 238 248; --c-ink-soft: 180 192 212; --c-ink-faint: 142 156 180;
-    --c-surface: 17 31 54; --c-surface-sunken: 12 24 44; --c-surface-page: 9 19 36;
-    --c-line: 38 56 88; --c-line-strong: 104 124 158; --c-glassline: 150 175 220;
-    --c-brand: 112 160 255; --c-brand-dark: 176 202 255; --c-brand-tint: 24 44 80; --c-brand-ring: 78 112 186;
-    --c-pending: 246 192 104; --c-pending-tint: 52 42 20; --c-pending-line: 112 88 44;
-    --c-verified: 112 222 162; --c-verified-tint: 17 50 38; --c-verified-line: 42 108 78;
-    --c-danger: 255 152 152; --c-danger-tint: 66 28 34; --c-danger-line: 130 64 70;
-    --c-info: 152 192 255; --c-info-tint: 24 44 80; --c-info-line: 58 88 154;
-    --c-muted: 178 190 208; --c-muted-tint: 24 36 58; --c-muted-line: 64 80 110;
+    --c-ink: 241 243 248; --c-ink-soft: 190 196 210; --c-ink-faint: 148 154 172;
+    --c-surface: 19 23 34; --c-surface-sunken: 28 33 47; --c-surface-page: 13 16 25;
+    --c-line: 40 46 62; --c-line-strong: 96 104 126; --c-glassline: 190 196 210;
+    --c-brand: 245 179 1; --c-brand-dark: 255 205 64; --c-brand-tint: 44 39 22; --c-brand-ring: 150 112 20;
     --c-accent-text: 245 179 1;
+    --c-pending: 246 192 104; --c-pending-tint: 48 42 28; --c-pending-line: 112 88 44;
+    --c-verified: 112 222 162; --c-verified-tint: 26 44 38; --c-verified-line: 42 108 78;
+    --c-danger: 255 152 152; --c-danger-tint: 58 33 36; --c-danger-line: 130 64 70;
+    --c-info: 152 192 255; --c-info-tint: 28 38 60; --c-info-line: 64 82 124;
+    --c-muted: 178 184 200; --c-muted-tint: 30 34 46; --c-muted-line: 66 72 90;
     color: rgb(var(--c-ink));
     color-scheme: dark;
   }
-  .theme-dark .text-brand { color: rgb(140 180 255); }
+  .bg-brand, .bg-brand:hover { color: #10131c; }
+  .theme-dark .text-brand { color: rgb(var(--c-brand)); }
   /* High contrast: pure ink on pure surface, strong borders, no pastel fills. Works in both themes. */
   html.hc:not([data-theme="dark"]),
   html.hc [data-theme="light"] { --c-ink: 0 0 0; --c-ink-soft: 20 25 35; --c-ink-faint: 45 55 70; --c-line: 90 100 120; --c-line-strong: 30 40 60; --c-brand: 0 50 130; --c-surface-sunken: 232 236 242; }
   html.hc .theme-dark { --c-ink: 255 255 255; --c-ink-soft: 238 241 248; --c-ink-faint: 210 216 228; --c-line: 150 160 180; --c-line-strong: 210 218 232; }
   .theme-dark .border-brand-ring { border-color: rgb(var(--c-brand-ring)); }
+  /* Light scope: the white drawing canvas (2D plan, floor plan) keeps dark-on-white ink. */
+  .theme-light {
+    --c-ink: 17 24 39; --c-ink-soft: 55 65 81; --c-ink-faint: 90 100 118;
+    --c-surface: 255 255 255; --c-surface-sunken: 240 242 246; --c-surface-page: 247 248 250;
+    --c-line: 222 226 232; --c-line-strong: 120 128 140;
+    --c-brand: 29 78 216; --c-brand-dark: 30 64 175; --c-brand-tint: 233 240 254; --c-brand-ring: 147 177 240;
+    --c-pending: 138 85 0; --c-pending-tint: 255 244 220; --c-pending-line: 232 194 122;
+    --c-verified: 10 112 56; --c-verified-tint: 226 245 233; --c-verified-line: 134 205 160;
+    --c-danger: 160 30 30; --c-danger-tint: 252 232 232; --c-danger-line: 228 160 160;
+    --c-info: 30 64 175; --c-info-tint: 233 240 254; --c-info-line: 170 192 240;
+    --c-muted: 75 85 99; --c-muted-tint: 241 243 245; --c-muted-line: 205 210 218;
+    color: rgb(var(--c-ink));
+    color-scheme: light;
+  }
+  /* No scrollbar lines anywhere: panels still scroll with wheel, touch and keys. */
+  * { scrollbar-width: none; }
+  *::-webkit-scrollbar { display: none; }
   html {
     @apply bg-surface-page text-ink font-sans antialiased;
     -webkit-text-size-adjust: 100%;
-    font-size: calc(100% * var(--text-scale, 1));
+    /* The whole interface is drawn at 90 % of the usual size (what looked right at 90 % browser zoom), so it looks that way at 100 %. */
+    font-size: calc(90% * var(--text-scale, 1));
   }
   /* Devanagari reads smaller than Latin at the same size, so Hindi gets a little more. */
-  html[lang="hi"] { font-size: calc(106.25% * var(--text-scale, 1)); }
+  html[lang="hi"] { font-size: calc(95.5% * var(--text-scale, 1)); }
+  /* Screens under ~1536 px (typical laptops, or 1920 px at 150 % scaling) go one step smaller so the three-panel workbench fits. */
+  @media (max-width: 1535px) {
+    html { font-size: calc(84.4% * var(--text-scale, 1)); }
+    html[lang="hi"] { font-size: calc(90% * var(--text-scale, 1)); }
+  }
   body {
     line-height: 1.6;
     overflow-wrap: break-word; /* long citations, rule ids and Devanagari strings must wrap, never overflow */
@@ -92,6 +117,10 @@
   .app-bg {
     background-color: rgb(var(--c-surface-page));
   }
+  html[data-theme="dark"] .app-bg {
+    background-image: none;
+    background-repeat: no-repeat;
+  }
   /* Blueprint drafting grid, used only inside hero/feature panels (never behind body text on the page). */
   .blueprint {
     background-image:
@@ -103,8 +132,8 @@
   }
   .blueprint-light {
     background-image:
-      linear-gradient(rgba(29, 78, 216, 0.07) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(29, 78, 216, 0.07) 1px, transparent 1px);
+      linear-gradient(rgba(245, 179, 1, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(245, 179, 1, 0.05) 1px, transparent 1px);
     background-size: 24px 24px;
   }
 }
@@ -116,11 +145,11 @@
     backdrop-filter: none;
   }
   .panel-dark {
-    background-color: #0d1829;
+    background-color: rgb(var(--c-surface));
     backdrop-filter: none;
   }
   .glass-dark {
-    background-color: #0a2342;
+    background-color: #131722;
     backdrop-filter: none;
   }
 }
@@ -142,20 +171,31 @@
   body {
     background: #fff;
   }
+  /* The printed report is dark ink on white paper whatever the screen theme is. */
+  :root,
+  .theme-dark {
+    --c-ink: 17 24 39; --c-ink-soft: 55 65 81; --c-ink-faint: 90 100 118;
+    --c-surface: 255 255 255; --c-surface-sunken: 243 244 246; --c-surface-page: 255 255 255;
+    --c-line: 209 213 219; --c-line-strong: 120 128 140;
+    --c-verified: 10 112 56; --c-verified-tint: 226 245 233; --c-verified-line: 134 205 160;
+    --c-danger: 160 30 30; --c-danger-tint: 252 232 232; --c-danger-line: 228 160 160;
+    --c-pending: 138 85 0; --c-pending-tint: 255 244 220; --c-pending-line: 232 194 122;
+    --c-info: 30 64 175; --c-info-tint: 233 240 254; --c-info-line: 170 192 240;
+    --c-muted: 75 85 99; --c-muted-tint: 241 243 245; --c-muted-line: 205 210 218;
+    color-scheme: light;
+  }
   .report {
     border: 0;
   }
 }
 
 @layer components {
-  /* Landing and sign-in screens: deep navy with soft colour glows and a faint drafting grid. */
+  /* Landing and sign-in screens: deep graphite with a soft glow and a faint drafting grid. */
   .landing-bg {
+    /* Flat graphite with one soft amber glow in the top-right corner (the look of the workbench hero panel). */
     background:
-      radial-gradient(900px 520px at 85% -5%, rgba(46, 98, 255, 0.35), transparent 60%),
-      radial-gradient(760px 480px at -5% 25%, rgba(245, 179, 1, 0.14), transparent 60%),
-      radial-gradient(900px 600px at 50% 110%, rgba(20, 184, 166, 0.18), transparent 60%),
-      linear-gradient(180deg, #070e1b 0%, #0a1527 55%, #0b1a30 100%);
-    background-color: #070e1b;
+      radial-gradient(760px 460px at 100% 0%, rgba(245, 179, 1, 0.14) 0%, rgba(245, 179, 1, 0.06) 38%, transparent 72%),
+      #0f121b;
   }
   .landing-bg::before {
     content: "";
@@ -163,9 +203,9 @@
     inset: 0;
     pointer-events: none;
     background-image:
-      linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+      linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
     background-size: 56px 56px;
-    mask-image: linear-gradient(to bottom, black, transparent 75%);
+    mask-image: linear-gradient(to bottom, black, transparent 60%);
   }
 }

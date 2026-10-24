@@ -23,7 +23,7 @@
     "skip": "Skip to content",
     "dashboard": "Dashboard",
     "ask": "AI Rule Assistant",
-    "rules": "Rulebook & sources",
+    "rules": "Rule Book",
     "calculator": "Calculator",
     "plotCheck": "Plot Assessment",
     "projects": "Projects",
@@ -36,8 +36,9 @@
     "open": "Open menu",
     "close": "Close menu",
     "amendments": "Amendment Tracker",
-    "workbench": "Workbench",
-    "home": "Home"
+    "workbench": "Workbench / नक्शा",
+    "home": "Home",
+    "history": "History"
   },
   "footer": {
     "apiVersion": "Server version {{version}}"
@@ -794,6 +795,11 @@
     "description": "Amendments held in the register, with dates exactly as recorded. Nothing is treated as law until it has been verified."
   },
   "askx": {
+    "chatPlaceholder": "Ask anything about the building rules…",
+    "chatThinking": "Thinking…",
+    "chatSources": "Sources and rule text",
+    "chatGeneral": "General guidance. It is not taken from the rule text, so please confirm it with the rules or the clerk.",
+    "chatAiNote": "AI-written from the cited rule text. Always check the sources.",
     "panelTitle": "Evidence for this answer",
     "panelEmpty": "Rule references and source pages for your latest answer will appear here.",
     "noEvidence": "No supporting rule text was found, so there is nothing to cite.",
@@ -885,7 +891,7 @@
     "resetConfirm": "Clear inputs, conversation and results?",
     "resetYes": "Yes, reset",
     "resetNo": "Cancel",
-    "evaluate": "Check my plot",
+    "evaluate": "Evaluate Compliance · नियम जांचें",
     "evaluating": "Checking…",
     "needInputs": "Enter at least one plot or building value first.",
     "pane": {
@@ -898,29 +904,29 @@
     "inputs": {
       "title": "Your details",
       "example": "Example",
-      "plot": "Your plot",
-      "road": "The road",
-      "building": "Your house",
-      "footprint": "House position",
+      "plot": "Plot dimensions",
+      "road": "Road details",
+      "building": "Building type & use",
+      "footprint": "Proposed footprint",
       "optional": "Optional",
       "notSpecified": "Not specified",
-      "roadHint": "The wider the road, the more space you must leave at the front.",
+      "roadHint": "Determines front setback & FAR limits",
       "builtUpHint": "Add up the area of every floor.",
       "footprintHint": "Only needed to draw the house on your plot and check the spaces around it.",
       "areaDerived": "I worked out your plot area from width × length: {{area}} sq m. Type an area above to use your own number.",
       "errors": "{{count}} input(s) need fixing. They are left out until corrected."
     },
     "f": {
-      "plot_area": "Plot area (only if you know it)",
-      "plot_length": "Length of your plot (going back from the road)",
-      "plot_width": "Width of your plot (the side facing the road)",
-      "road_width": "Width of the road in front of your plot",
-      "building_height": "Height of your house",
-      "built_up_area": "Total built-up area (all floors added together)",
-      "building_width": "House width (the side facing the road)",
-      "building_length": "House length (going back)",
-      "gap_front": "Space between the road side and your house",
-      "gap_left": "Space between the left boundary and your house",
+      "plot_area": "Plot area",
+      "plot_length": "Depth",
+      "plot_width": "Width / frontage",
+      "road_width": "Width of street facing the plot",
+      "building_height": "Building height",
+      "built_up_area": "Total built-up area",
+      "building_width": "Building width",
+      "building_length": "Building length",
+      "gap_front": "Front gap",
+      "gap_left": "Left gap",
       "floors": "Number of floors",
       "building_use": "What is the house used for?",
       "location": "Location (optional)"
@@ -934,7 +940,7 @@
     },
     "chat": {
       "title": "Assistant",
-      "placeholder": "Ask in English or Hindi, e.g. “What front open space applies on a 9 m road?”",
+      "placeholder": "Ask in English or Hindi / नियम पूछें — e.g. “Front open space on a 9 m road?”",
       "usingInputs": "Your question uses {{n}} project input(s).",
       "noInputs": "No project inputs yet; answers will be general.",
       "skipped": "{{n}} invalid input(s) not used",
@@ -1007,7 +1013,7 @@
       "listening": "Listening… speak your question."
     },
     "cv": {
-      "title": "Plot and building canvas",
+      "title": "Rule-to-Geometry Canvas",
       "view": "View",
       "view3d": "3D view",
       "view2d": "2D plan",
@@ -1028,7 +1034,7 @@
       "assumedPos": "Building position assumed",
       "outside": "Building is outside the plot",
       "summary": "Plot {{pw}} wide by {{pd}} deep, road {{road}} at the front, building {{b}}, height {{h}}. Illustrative only.",
-      "empty": "Enter the plot width and plot length to draw the plot.",
+      "empty": "Enter the plot width and depth in Project Inputs. NirmaanSetu never infers dimensions from plot area alone.",
       "dragHint": "Drag to rotate, scroll or use + / − to zoom, arrow keys to turn.",
       "disclaimer": "Drawn from your inputs only. It shows the numbers you typed; it is not a verified design and not an official approval.",
       "road": "Road {{w}}",
@@ -1039,7 +1045,9 @@
       "gapRear": "Rear {{v}}",
       "plotW": "Plot width {{v}}",
       "plotD": "Plot depth {{v}}",
-      "height": "Height {{v}}"
+      "height": "Height {{v}}",
+      "proposed": "Proposed building · illustrative · {{h}}",
+      "street": "Street {{w}}"
     },
     "c": {
       "areaConsistency": "Plot dimensions match the stated area",
@@ -1113,10 +1121,23 @@
       "moveForward": "Or move the building {{by}} towards the road (the front gap stays at or above its minimum).",
       "reduceArea": "Reduce the total built-up area by at least {{by}} (to {{limit}} or less)."
     },
+    "auto": {
+      "understood": "What I understood",
+      "none": "Describe your plot above, for example “30 x 40 ft plot, 9 m road, 2 floors”, and the house builds itself.",
+      "assumed": "The 3D sketch assumed:",
+      "edit": "Edit details by hand",
+      "k": {
+        "plotShape": "plot shape",
+        "floors": "number of floors",
+        "height": "height",
+        "setbacks": "gaps around the house",
+        "footprint": "house size"
+      }
+    },
     "hero": {
       "kicker": "Building rules, made simple",
       "title": "What do you want to build on your plot?",
-      "body": "Ask in English or Hindi, enter your plot, and watch your house take shape in 3D, checked against the Madhya Pradesh Bhumi Vikas Rules.",
+      "body": "Describe your plot in a sentence, in English or Hindi. The house builds itself in 3D and is checked against the Madhya Pradesh Bhumi Vikas Rules.",
       "examples": "Example questions"
     },
     "ex5": "Can I build a three-storey house on my 30 × 40 ft plot?",
@@ -1146,9 +1167,9 @@
       "noModel": "Enter the building width and depth to see it built."
     },
     "v": {
-      "view3d": "3D view",
-      "viewSite": "Site plan",
-      "viewFloor": "Floor plan",
+      "view3d": "3D View",
+      "viewSite": "2D Plan",
+      "viewFloor": "Floor Plan",
       "camera": "Camera angle",
       "cam": {
         "perspective": "Perspective",
@@ -1173,7 +1194,16 @@
       "sHeight": "Height",
       "sCoverage": "Plot coverage (no limit compared)",
       "sFloorArea": "Floor area (footprint × floors, estimate)",
-      "assumptions": "How this model was built ({{n}})"
+      "assumptions": "How this model was built ({{n}})",
+      "resetView": "Reset View",
+      "legend": "Legend",
+      "lgTitle": "Visual mapping legend",
+      "lgOk": "Verified setback (Rule-linked)",
+      "lgNeed": "Unresolved / Needs inputs",
+      "lgBad": "Below statutory minimum",
+      "lgMass": "Proposed building massing",
+      "lgNote": "Visual explanation only — not a building approval.",
+      "noPlotTitle": "No plot drawn yet"
     },
     "floor": {
       "label": "Floor",
@@ -1237,6 +1267,41 @@
       "label": "Measure in",
       "ft": "Feet",
       "m": "Metres"
+    },
+    "ui": {
+      "inputsTitle": "Project inputs",
+      "canvasTitle": "Rule-to-Geometry Canvas",
+      "inspectorTitle": "Regulation inspector",
+      "explain": "Explain with AI",
+      "askLabel": "Ask a question",
+      "new": "New check",
+      "answer": "Answer",
+      "params": "Inputs & Parameters",
+      "target": "Target requirement",
+      "tAll": "All open spaces (front, rear, side)",
+      "tFront": "Front open space",
+      "tRear": "Rear open space",
+      "tFar": "Floor area ratio (FAR)",
+      "hWidth": "Along the road",
+      "hArea": "Optional if width and depth are given",
+      "calcArea": "Calculated Area (W × D):",
+      "statutory": "Statutory evaluation",
+      "required": "Requirement evaluated: {{target}}",
+      "calcDone": "Calculation completed",
+      "verified": "Verified",
+      "notVerified": "Not yet verified",
+      "computedBy": "Compared with the limits stated in the rule text for your inputs. Preliminary guidance, not an approval.",
+      "ruleResults": "Rule-to-geometry results",
+      "explainFirst": "Ask a question or evaluate a requirement first. Explain with AI then explains that result in plain language.",
+      "explainReady": "Explains the result on screen in plain language.",
+      "explainOff": "AI explanations are not available on this server.",
+      "print": "Print / Export report",
+      "back": "Back to result",
+      "noAssessTitle": "No Assessment Evaluated",
+      "noAssessBody": "Ask a question in English or Hindi, or enter project inputs and click Evaluate Compliance.",
+      "engineReady": "Rule engine ready",
+      "collapse": "Close panel",
+      "expand": "Open panel"
     }
   },
   "land": {
@@ -1508,9 +1573,25 @@
     "thanks": {
       "title": "You're welcome",
       "body": "Happy to help. If you have another question about your plot or the building rules, just ask."
+    },
+    "journey": {
+      "title": "Building a home from scratch: where to start",
+      "body": "Here is a simple path with this app. It is guidance to help you plan, not an approval: your local permission office decides.",
+      "s1": "Enter your plot width, depth and the width of the road in front of it (left panel), or just describe the plot in the question box.",
+      "s2": "Press Evaluate Compliance to see the open-space and floor-area limits that apply to your plot, each with its rule number and page.",
+      "s3": "Add the house you have in mind (height, floors, footprint) to see it on your plot in 3D and what to change.",
+      "s4": "Ask me about any rule in English or Hindi, for example open space, floor area or fees.",
+      "s5": "Print the report and take it to your local permission office. They tell you the documents needed and give the approval."
     }
   },
   "as": {
+    "attach": "Attach a PDF or image",
+    "attachRemove": "Remove file",
+    "attachInvalid": "Only PDF, PNG, JPG or WebP files up to 4 MB, and at most 2 files.",
+    "attachNeedsAi": "Reading files needs the AI to be switched on (Google).",
+    "edit": "Edit",
+    "editSave": "Save and resend",
+    "editCancel": "Cancel",
     "title": "NirmaanSetu Assistant",
     "subtitle": "Ask about the building rules or about how to use NirmaanSetu, in English or Hindi.",
     "placeholder": "Ask anything: a rule, your plot, or how to use the app…",
@@ -1674,5 +1755,14 @@
     "dark": "Dark",
     "contrast": "High contrast",
     "reset": "Reset display"
+  },
+  "vguide": {
+    "start": "Voice guide",
+    "stop": "Stop",
+    "script": "Welcome to NirmaanSetu. On the left, enter your plot size, road width and building details. You can also type or speak a question in the box at the top, in English or Hindi. The middle shows your plot and house in three dimensions. On the right, press Check my plot to see which rules apply, with the rule number and page as proof. This is guidance only. The clerk decides."
+  },
+  "header": {
+    "location": "Madhya Pradesh · Bhumi Vikas Rules",
+    "rules": "{{n}} rules loaded"
   }
 }

@@ -85,12 +85,12 @@ export function PlotSketch({ form }: { form: PlotFormValues }) {
         </text>
         {/* dimension labels */}
         {lenLabel ? (
-          <text x={px + pw / 2} y={py - 7} textAnchor="middle" fontSize="10.5" fill="#0A2342" fontWeight="600">
+          <text x={px + pw / 2} y={py - 7} textAnchor="middle" fontSize="10.5" fill="#1C1F26" fontWeight="600">
             {lenLabel}
           </text>
         ) : null}
         {widLabel ? (
-          <text x={px + pw + 7} y={py + ph / 2} fontSize="10.5" fill="#0A2342" fontWeight="600" transform={`rotate(90 ${px + pw + 7} ${py + ph / 2})`} textAnchor="middle">
+          <text x={px + pw + 7} y={py + ph / 2} fontSize="10.5" fill="#1C1F26" fontWeight="600" transform={`rotate(90 ${px + pw + 7} ${py + ph / 2})`} textAnchor="middle">
             {widLabel}
           </text>
         ) : null}
@@ -109,7 +109,7 @@ export function PlotSketch({ form }: { form: PlotFormValues }) {
           <text x="22" y="-8" textAnchor="middle" fontSize="9.5" fill="#5B6B80">
             {t("sketch.sideView")}
           </text>
-          <line x1="-4" y1="132" x2="48" y2="132" stroke="#0A2342" strokeWidth="2" />
+          <line x1="-4" y1="132" x2="48" y2="132" stroke="#1C1F26" strokeWidth="2" />
           {floors > 0
             ? Array.from({ length: floors }, (_, i) => {
                 const fh = Math.min(116 / floors, 26);
@@ -118,7 +118,7 @@ export function PlotSketch({ form }: { form: PlotFormValues }) {
             : null}
           {floors === 0 ? <rect x="2" y="104" width="40" height="28" rx="1.5" fill="none" stroke="#A3BDE8" strokeDasharray="4 3" /> : null}
           {heightLabel ? (
-            <text x="22" y="148" textAnchor="middle" fontSize="9.5" fill="#0A2342" fontWeight="600">
+            <text x="22" y="148" textAnchor="middle" fontSize="9.5" fill="#1C1F26" fontWeight="600">
               {heightLabel}
             </text>
           ) : null}

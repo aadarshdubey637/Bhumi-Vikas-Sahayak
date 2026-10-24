@@ -12,7 +12,7 @@ export function MobileNav() {
     <Dialog.Root open={open} onOpenChange={setOpen}>
       <Dialog.Trigger
         aria-label={t("nav.open")}
-        className="inline-flex min-h-tap min-w-tap items-center justify-center rounded-lg text-ink hover:bg-white/10 lg:hidden"
+        className="inline-flex min-h-tap min-w-tap items-center justify-center rounded-lg text-ink hover:bg-surface-sunken lg:hidden"
       >
         <Menu aria-hidden="true" className="h-6 w-6" />
       </Dialog.Trigger>
@@ -20,14 +20,14 @@ export function MobileNav() {
         <Dialog.Overlay className="fixed inset-0 z-40 bg-ink/50 motion-safe:animate-fade-in lg:hidden" />
         <Dialog.Content
           aria-describedby={undefined}
-          className="theme-dark fixed inset-y-0 left-0 z-50 flex w-72 max-w-[85vw] flex-col border-r border-[var(--nav-line)] bg-[var(--nav-bg)] p-3 shadow-pop motion-safe:animate-slide-in-left lg:hidden"
+          className="fixed inset-y-0 left-0 z-50 flex w-72 max-w-[85vw] flex-col border-r border-line bg-surface p-3 shadow-pop motion-safe:animate-slide-in-left lg:hidden"
         >
           <Dialog.Title className="sr-only">{t("nav.main")}</Dialog.Title>
           <div className="mb-6 flex items-center justify-between">
             <BrandBlock />
             <Dialog.Close
               aria-label={t("nav.close")}
-              className="inline-flex min-h-tap min-w-tap items-center justify-center rounded-lg text-ink-soft hover:bg-white/10 hover:text-white"
+              className="inline-flex min-h-tap min-w-tap items-center justify-center rounded-lg text-ink-soft hover:bg-surface-sunken hover:text-ink"
             >
               <X aria-hidden="true" className="h-5 w-5" />
             </Dialog.Close>

@@ -29,7 +29,7 @@ export function FloorPlanView({ model, floor }: { model: HouseModel; floor: numb
   return (
     <figure className="m-0">
       <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label={t("wb.fp.summary", { floor: label, w: fmtNum(fp.w), d: fmtNum(fp.d), n: rooms.length })} className="block h-auto w-full bg-gradient-to-b from-surface to-surface-sunken" style={{ maxHeight: "62vh" }}>
-        <rect x={X(0)} y={Yb(fp.d)} width={fp.w * s} height={fp.d * s} fill="#fff" stroke="#0A2342" strokeWidth={4} />
+        <rect x={X(0)} y={Yb(fp.d)} width={fp.w * s} height={fp.d * s} fill="#fff" stroke="#1C1F26" strokeWidth={4} />
         {rooms.map((r) => {
           const rx = X(wallT + r.x);
           const ry = Yb(wallT + r.y + r.d);
@@ -38,7 +38,7 @@ export function FloorPlanView({ model, floor }: { model: HouseModel; floor: numb
           const big = rw > 62 && rh > 34;
           return (
             <g key={r.id}>
-              <rect x={rx} y={ry} width={rw} height={rh} fill={FILL[r.kind] ?? "#ddd"} stroke="#0A2342" strokeWidth={1.4} />
+              <rect x={rx} y={ry} width={rw} height={rh} fill={FILL[r.kind] ?? "#ddd"} stroke="#1C1F26" strokeWidth={1.4} />
               {r.kind === "stair" ? Array.from({ length: Math.max(3, Math.floor(rh / 9)) }, (_, i) => <line key={i} x1={rx + 3} x2={rx + rw - 3} y1={ry + 5 + i * 9} y2={ry + 5 + i * 9} stroke="#6b5b95" strokeWidth={1} />) : null}
               {big ? (
                 <text x={rx + rw / 2} y={ry + rh / 2 - 2} textAnchor="middle" fontSize={13} fontWeight={700} fill="#0F1B2D" stroke="#fff" strokeWidth={3} paintOrder="stroke">

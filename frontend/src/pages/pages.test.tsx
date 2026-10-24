@@ -125,7 +125,7 @@ describe("Ask", () => {
     );
     const user = userEvent.setup();
     renderPage(<Ask />);
-    await user.click(screen.getByLabelText("Add AI explanation (experimental)"));
+    // explain is on by default, so the first request asks for it and the fallback retries without it
     await ask(user, "fees");
     expect(await screen.findByText(/AI explanation isn't available/)).toBeInTheDocument();
     expect(bodies).toHaveLength(2);
@@ -537,6 +537,6 @@ describe("i18n rendering", () => {
     renderPage(<Ask />);
     await ask(user, "बिल्डिंग परमिशन की फीस कितनी है?");
     await waitFor(() => expect(bodies).toHaveLength(1));
-    expect(bodies[0]).toEqual({ question: "बिल्डिंग परमिशन की फीस कितनी है?" });
+    expect(bodies[0]).toEqual({ question: "बिल्डिंग परमिशन की फीस कितनी है?", explain: true });
   });
 });

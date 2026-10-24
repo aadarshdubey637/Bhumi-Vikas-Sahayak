@@ -1,7 +1,7 @@
 // Client-side mirror of the backend request constraints. The server stays authoritative.
 // Zod issue messages are i18n keys (see src/i18n), so the UI translates them with t().
 import { z } from "zod";
-import type { AskRequest, FeedbackCreate, InputMap, Language, Measurement } from "./types";
+import type { AskRequest, Attachment, ChatMessage, FeedbackCreate, InputMap, Language, Measurement } from "./types";
 import {
   AREA_UNITS,
   FLOORS_FIELD,
@@ -137,6 +137,8 @@ export interface AskFormValues {
   context?: InputMap;
   asOf?: string;
   explain?: boolean;
+  history?: ChatMessage[];
+  attachments?: Attachment[];
 }
 
 export function buildAskRequest(v: AskFormValues): AskRequest {
@@ -147,6 +149,8 @@ export function buildAskRequest(v: AskFormValues): AskRequest {
   if (v.context && Object.keys(v.context).length > 0) body.context = v.context;
   if (v.asOf && AS_OF_RE.test(v.asOf)) body.as_of = v.asOf;
   if (v.explain) body.explain = true;
+  if (v.history && v.history.length > 0) body.history = v.history;
+  if (v.attachments && v.attachments.length > 0) body.attachments = v.attachments;
   return body;
 }
 

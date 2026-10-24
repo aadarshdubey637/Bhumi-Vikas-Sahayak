@@ -9,7 +9,6 @@ import { LogoMark, Wordmark } from "@/components/brand/Logo";
 import { HeroPreview } from "@/components/landing/HeroPreview";
 import { LiveAnswerCard } from "@/components/landing/LiveAnswerCard";
 import { CountUp, Reveal } from "@/components/landing/Reveal";
-import { DisplayControls } from "@/components/layout/DisplayControls";
 import { LanguageToggle } from "@/components/layout/LanguageToggle";
 
 const cta = "inline-flex min-h-tap items-center justify-center gap-2 rounded-xl px-6 py-2.5 text-[0.9375rem] font-bold transition-[background-color,transform,border-color] motion-safe:active:scale-[0.98]";
@@ -32,11 +31,9 @@ export default function Landing() {
   const { status, user } = useAccount();
   const ready = useQuery({ queryKey: ["landing-ready"], queryFn: ({ signal }) => getReady(signal), retry: 0, staleTime: 5 * 60_000 });
   const [menu, setMenu] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
   const [scrollY, setScrollY] = useState(0);
   useEffect(() => {
     const on = () => {
-      setScrolled(window.scrollY > 8);
       setScrollY(Math.min(window.scrollY, 700));
     };
     on();
@@ -51,7 +48,7 @@ export default function Landing() {
     { to: "/rules", label: t("land.nav.rulebook") },
     { to: "/about", label: t("land.nav.about") },
   ];
-  const linkCls = "inline-flex min-h-tap items-center rounded-lg px-3 text-sm font-semibold text-white/80 transition-colors hover:text-white";
+  const linkCls = "inline-flex h-8 items-center whitespace-nowrap rounded-lg px-3.5 text-sm font-semibold text-ink-soft transition-colors hover:bg-surface-sunken hover:text-ink";
 
   return (
     <div className="theme-dark landing-bg relative min-h-screen overflow-x-hidden text-ink">
@@ -59,13 +56,13 @@ export default function Landing() {
         {t("nav.skip")}
       </a>
       {/* ------------------------------------------------------------------ navbar */}
-      <header className={`sticky top-0 z-40 border-b transition-colors ${scrolled ? "border-white/10 bg-navy-night/85 backdrop-blur-xl" : "border-transparent bg-transparent"}`}>
-        <nav aria-label={t("nav.main")} className="mx-auto flex max-w-7xl items-center gap-2 px-4 py-2.5 sm:px-8">
-          <Link to="/" className="flex items-center gap-2.5 rounded-lg" aria-label={t("app.name")}>
+      <header className="sticky top-0 z-40 border-b border-line bg-[var(--top-bg)]">
+        <nav aria-label={t("nav.main")} className="mx-auto flex h-[3.75rem] max-w-7xl items-center gap-3 px-4 sm:px-8">
+          <Link to="/" className="flex shrink-0 items-center gap-2.5 rounded-lg" aria-label={t("app.name")}>
             <LogoMark className="h-9 w-9" />
-            <Wordmark tone="light" />
+            <Wordmark compact />
           </Link>
-          <div className="ml-6 hidden items-center gap-1 lg:flex">
+          <div className="mx-auto hidden items-center gap-1 rounded-xl border border-line bg-surface p-1 lg:flex">
             {links.map((l) =>
               "to" in l ? (
                 <Link key={l.label} to={l.to!} className={linkCls}>
@@ -78,30 +75,29 @@ export default function Landing() {
               ),
             )}
           </div>
-          <div className="ml-auto flex items-center gap-2">
-            <LanguageToggle />
-            <DisplayControls />
+          <div className="ml-auto flex items-center gap-2 lg:ml-0">
+            <LanguageToggle tone="light" long />
             {signedIn ? (
-              <Link to="/dashboard" className={`${ctaPrimary} hidden !px-4 sm:inline-flex`}>
+              <Link to="/dashboard" className={`${ctaPrimary} hidden !h-[2.125rem] !min-h-0 !px-4 !text-sm sm:inline-flex`}>
                 {t("land.nav.dashboard", { name: user?.name.split(" ")[0] ?? "" })}
               </Link>
             ) : (
               <>
-                <Link to="/login" className={`${linkCls} hidden sm:inline-flex`}>
+                <Link to="/login" className="hidden h-[2.125rem] items-center whitespace-nowrap rounded-lg border border-line px-4 text-sm font-semibold text-ink hover:border-line-strong hover:bg-surface-sunken sm:inline-flex">
                   {t("land.nav.signin")}
                 </Link>
-                <Link to={start} className={`${ctaPrimary} hidden !px-4 md:inline-flex`}>
+                <Link to={start} className={`${ctaPrimary} hidden !h-[2.125rem] !min-h-0 !px-4 !text-sm md:inline-flex`}>
                   {t("land.cta.start")}
                 </Link>
               </>
             )}
-            <button type="button" onClick={() => setMenu((m) => !m)} aria-expanded={menu} aria-controls="land-menu" aria-label={menu ? t("nav.close") : t("nav.open")} className="inline-flex min-h-tap min-w-tap items-center justify-center rounded-lg text-white hover:bg-white/10 lg:hidden">
+            <button type="button" onClick={() => setMenu((m) => !m)} aria-expanded={menu} aria-controls="land-menu" aria-label={menu ? t("nav.close") : t("nav.open")} className="inline-flex min-h-tap min-w-tap items-center justify-center rounded-lg text-ink hover:bg-surface-sunken lg:hidden">
               {menu ? <X aria-hidden="true" className="h-6 w-6" /> : <Menu aria-hidden="true" className="h-6 w-6" />}
             </button>
           </div>
         </nav>
         {menu ? (
-          <div id="land-menu" className="border-t border-white/10 bg-navy-night/95 px-4 pb-4 pt-2 backdrop-blur-xl lg:hidden">
+          <div id="land-menu" className="border-t border-line bg-[var(--top-bg)] px-4 pb-4 pt-2 lg:hidden">
             <ul className="space-y-1">
               {links.map((l) => (
                 <li key={l.label}>
@@ -135,39 +131,41 @@ export default function Landing() {
         <div aria-hidden="true" style={{ transform: `translateY(${scrollY * 0.25}px) scale(1.08)` }} className="pointer-events-none absolute inset-x-0 top-0 h-[44rem] bg-[url('/img/site.jpg')] bg-cover bg-center opacity-[0.22] will-change-transform [mask-image:linear-gradient(to_bottom,black_30%,transparent)]" />
         
         {/* ---------------------------------------------------------------- hero */}
-        <section aria-labelledby="land-h1" className="mx-auto grid max-w-7xl items-center gap-12 px-4 pb-16 pt-10 sm:px-8 sm:pt-16 lg:grid-cols-[1.05fr_1fr] lg:pb-24">
-          <div className="motion-safe:animate-fade-up">
-            <p className="inline-flex items-center gap-2 rounded-full border border-accent/40 bg-accent/10 px-3.5 py-1.5 text-xs font-bold uppercase tracking-[0.14em] text-accent">
-              <Sparkles aria-hidden="true" className="h-3.5 w-3.5" />
-              {t("land.hero.kicker")}
-            </p>
-            <h1 id="land-h1" className="mt-5 text-4xl font-semibold leading-[1.08] tracking-tight text-white sm:text-5xl xl:text-[3.5rem]">
-              {t("land.hero.title1")} <span className="bg-gradient-to-r from-accent to-[#ffe08a] bg-clip-text text-transparent">{t("land.hero.title2")}</span> {t("land.hero.title3")}
-            </h1>
-            <p className="mt-5 max-w-xl text-lg leading-relaxed text-white/75">{t("land.hero.body")}</p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <Link to={start} className={ctaPrimary}>
-                {t("land.cta.start")}
-                <ArrowRight aria-hidden="true" className="h-4 w-4" />
-              </Link>
-              <a href="#features" className={ctaGhost}>
-                {t("land.cta.explore")}
-              </a>
+        <section aria-labelledby="land-h1" className="mx-auto max-w-7xl px-4 pb-10 pt-10 sm:px-8 sm:pt-14 lg:pb-14">
+          <div className="grid items-center gap-10 lg:grid-cols-[1fr_1.05fr] lg:gap-12">
+            <div className="motion-safe:animate-fade-up">
+              <p className="inline-flex items-center gap-2 rounded-full border border-accent/40 bg-accent/10 px-3.5 py-1.5 text-xs font-bold uppercase tracking-[0.14em] text-accent">
+                <Sparkles aria-hidden="true" className="h-3.5 w-3.5" />
+                {t("land.hero.kicker")}
+              </p>
+              <h1 id="land-h1" className="mt-5 text-4xl font-semibold leading-[1.08] tracking-tight text-white sm:text-5xl xl:text-[3.5rem]">
+                {t("land.hero.title1")} <span className="bg-gradient-to-r from-accent to-[#ffe08a] bg-clip-text text-transparent">{t("land.hero.title2")}</span> {t("land.hero.title3")}
+              </h1>
+              <p className="mt-5 max-w-xl text-lg leading-relaxed text-white/75">{t("land.hero.body")}</p>
+              <div className="mt-8 flex flex-wrap gap-3">
+                <Link to={start} className={ctaPrimary}>
+                  {t("land.cta.start")}
+                  <ArrowRight aria-hidden="true" className="h-4 w-4" />
+                </Link>
+                <a href="#features" className={ctaGhost}>
+                  {t("land.cta.explore")}
+                </a>
+              </div>
+              <p className="mt-4 text-sm text-white/60">{signedIn ? t("land.hero.signedIn") : t("land.hero.noAccount")}</p>
             </div>
-            <p className="mt-4 text-sm text-white/60">{signedIn ? t("land.hero.signedIn") : t("land.hero.noAccount")}</p>
-            <div className="mt-8 max-w-xl">
-              <LiveAnswerCard />
-            </div>
-            <ul className="mt-8 grid max-w-xl grid-cols-2 gap-3 text-sm text-white/80 sm:grid-cols-3">
+            <HeroPreview />
+          </div>
+          <div className="mt-10 grid items-start gap-6 lg:grid-cols-[1fr_1.05fr] lg:gap-12">
+            <LiveAnswerCard />
+            <ul className="grid gap-3 text-sm text-white/80 sm:grid-cols-3">
               {(["t1", "t2", "t3"] as const).map((k) => (
-                <li key={k} className="flex items-start gap-2">
+                <li key={k} className="flex items-start gap-2 rounded-2xl border border-white/10 bg-white/5 p-4">
                   <ShieldCheck aria-hidden="true" className="mt-0.5 h-4 w-4 shrink-0 text-accent" />
                   {t(`land.trust.${k}`)}
                 </li>
               ))}
             </ul>
           </div>
-          <HeroPreview />
         </section>
 
         {ready.data?.rules_loaded ? (

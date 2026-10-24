@@ -25,11 +25,11 @@ export function VoiceInputButton({ onText }: { onText: (text: string) => void })
         aria-pressed={sp.listening}
         aria-label={label}
         title={sp.supported ? `${label} — ${t("voice.privacy")}` : label}
-        className={`inline-flex min-h-tap min-w-tap items-center justify-center rounded-xl border transition-colors disabled:cursor-not-allowed disabled:opacity-50 ${
-          sp.listening ? "border-danger-line bg-danger-tint text-danger motion-safe:animate-pulse" : "border-line-strong bg-surface/60 text-ink-soft hover:border-brand-ring hover:text-brand"
+        className={`inline-flex h-9 w-9 items-center justify-center rounded-lg transition-colors disabled:cursor-not-allowed disabled:opacity-50 ${
+          sp.listening ? "bg-danger-tint text-danger motion-safe:animate-pulse" : "text-ink-soft hover:bg-surface-sunken hover:text-ink"
         }`}
       >
-        {sp.listening || !sp.supported ? <MicOff aria-hidden="true" className="h-5 w-5" /> : <Mic aria-hidden="true" className="h-5 w-5" />}
+        {sp.listening || !sp.supported ? <MicOff aria-hidden="true" className="h-[1.125rem] w-[1.125rem]" /> : <Mic aria-hidden="true" className="h-[1.125rem] w-[1.125rem]" />}
       </button>
       <span role="status" aria-live="polite" className={msg ? "basis-full text-xs text-ink-soft" : "sr-only"}>
         {msg}

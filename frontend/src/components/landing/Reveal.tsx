@@ -16,10 +16,14 @@ export function Reveal({ children, delay = 0, as: Tag = "div", className = "" }:
           io.disconnect();
         }
       },
-      { threshold: 0.12, rootMargin: "0px 0px -6% 0px" },
+      { threshold: 0, rootMargin: "0px 0px 12% 0px" },
     );
     io.observe(el);
-    return () => io.disconnect();
+    const fallback = window.setTimeout(() => setOn(true), 2500); // never leave a section blank, whatever the browser does
+    return () => {
+      io.disconnect();
+      window.clearTimeout(fallback);
+    };
   }, [on]);
   return (
     <Tag ref={ref} style={{ transitionDelay: on ? `${delay}ms` : "0ms" }} className={`transition-[opacity,transform] duration-700 ease-out ${on ? "translate-y-0 opacity-100" : "translate-y-7 opacity-0"} ${className}`}>

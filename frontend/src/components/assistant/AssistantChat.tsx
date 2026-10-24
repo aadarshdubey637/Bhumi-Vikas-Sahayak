@@ -1,27 +1,35 @@
-import { ArrowRight, ArrowUp, BookOpen, Building2, Calculator, CircleHelp, Languages, Ruler, Scale, X, type LucideIcon } from "lucide-react";
-import { useCallback, useEffect, useMemo, useRef, useState, useSyncExternalStore, type FormEvent, type KeyboardEvent } from "react";
+import { ArrowUp, Plus, X } from "lucide-react";
+import { useCallback, useEffect, useMemo, useRef, useState, type FormEvent, type KeyboardEvent } from "react";
 import { useTranslation } from "react-i18next";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { questionSchema } from "@/api/schemas";
 import { useAccount } from "@/auth/useAccount";
 import { LogoMark } from "@/components/brand/Logo";
 import { ErrorState } from "@/components/common/ErrorState";
-import { LoadingSkeleton } from "@/components/common/States";
 import { useEvidenceDrawer } from "@/components/evidence/EvidenceDrawerContext";
 import { useFeedbackDialog } from "@/components/forms/FeedbackDialogContext";
-import { LanguageToggle } from "@/components/layout/LanguageToggle";
 import { AnswerBubble, type Provided } from "@/components/workbench/AnswerBubble";
-import { SpeakButton } from "@/components/workbench/SpeakButton";
 import { VoiceInputButton } from "@/components/workbench/VoiceInputButton";
 import { useAskConversation } from "@/hooks/useAskConversation";
 import { useRateLimitCountdown } from "@/hooks/useCountdown";
 import { stopSpeech } from "@/hooks/useSpeechOutput";
 import { chatDataKey, chatDetailsKey, chatGuideKey, chatStore } from "@/lib/chatStore";
-import { displayStore } from "@/lib/display";
-import type { InputMap } from "@/api/types";
-import { GUIDE, guideById, matchGuide, type GuideTopic } from "@/lib/guide";
+import type { Attachment, InputMap } from "@/api/types";
+import { GUIDE, guideById, matchGuide } from "@/lib/guide";
+import { Examples, GuideAnswer } from "./GuideAnswer";
 
 const DEVANAGARI = /[ऀ-ॿ]/;
+
+const ATTACH_MIME = ["application/pdf", "image/png", "image/jpeg", "image/webp"] as const;
+const MAX_FILE_BYTES = 4 * 1024 * 1024;
+const MAX_FILES = 2;
+const readBase64 = (f: File) =>
+  new Promise<string>((resolve, reject) => {
+    const r = new FileReader();
+    r.onload = () => resolve(String(r.result).split(",")[1] ?? "");
+    r.onerror = () => reject(r.error);
+    r.readAsDataURL(f);
+  });
 
 interface GuideItem {
   key: string;
@@ -52,53 +60,15 @@ function loadDetails(id: string): Details {
   }
 }
 
-type Chip = { key: string; icon: LucideIcon; tone: string; question?: string; to?: string };
+type Chip = { key: string; question?: string; to?: string };
 const CHIPS: Chip[] = [
-  { key: "c1", icon: Scale, tone: "text-brand", question: "as.q3" },
-  { key: "c2", icon: Ruler, tone: "text-brand", to: "/workbench" },
-  { key: "c3", icon: Calculator, tone: "text-brand", question: "as.qFar" },
-  { key: "c4", icon: Building2, tone: "text-brand", question: "as.q4" },
-  { key: "c5", icon: CircleHelp, tone: "text-brand", question: "as.q1" },
-  { key: "c6", icon: Languages, tone: "text-brand", question: "wb.ex4" },
+  { key: "c1", question: "as.q3" },
+  { key: "c2", to: "/workbench" },
+  { key: "c3", question: "as.qFar" },
+  { key: "c4", question: "as.q4" },
+  { key: "c5", question: "as.q1" },
+  { key: "c6", question: "wb.ex4" },
 ];
-
-function GuideAnswer({ topic, lang, id, onAsk }: { topic: GuideTopic; lang: "en" | "hi"; id: string; onAsk: (q: string) => void }) {
-  const { i18n } = useTranslation();
-  const tr = (k: string, p?: Record<string, string | number>) => i18n.t(k, { ...p, lng: lang }) as string;
-  const steps = Array.from({ length: topic.steps }, (_, i) => tr(`guide.${topic.id}.s${i + 1}`));
-  const speech = [tr(`guide.${topic.id}.title`), tr(`guide.${topic.id}.body`), ...steps].join("\n");
-  return (
-    <article lang={lang} aria-label={tr("as.guideLabel")} className="space-y-3 rounded-2xl border border-line bg-surface p-4">
-      <span className="inline-flex items-center gap-1.5 rounded-full border border-accent/40 bg-accent/10 px-2.5 py-0.5 text-xs font-bold text-accent-text">
-        <BookOpen aria-hidden="true" className="h-3.5 w-3.5" />
-        {tr("as.guideLabel")}
-      </span>
-      <h3 className="text-base font-semibold">{tr(`guide.${topic.id}.title`)}</h3>
-      <p className="text-[0.9375rem] leading-relaxed">{tr(`guide.${topic.id}.body`)}</p>
-      {steps.length ? (
-        <ol className="list-decimal space-y-1.5 pl-5 text-sm text-ink-soft marker:font-semibold marker:text-accent-text">
-          {steps.map((s, i) => (
-            <li key={i}>{s}</li>
-          ))}
-        </ol>
-      ) : null}
-      {topic.ask?.length ? <Examples keys={topic.ask} lang={lang} onAsk={onAsk} /> : null}
-      {topic.actions.length ? (
-        <div className="flex flex-wrap gap-2">
-          {topic.actions.map((a) => (
-            <Link key={a.to} to={a.to} className="inline-flex min-h-tap items-center gap-1.5 rounded-xl border border-accent/50 bg-accent/10 px-3 text-sm font-semibold text-accent-text transition-colors hover:bg-accent/20">
-              {tr("as.open", { page: tr(a.label) })}
-              <ArrowRight aria-hidden="true" className="h-4 w-4" />
-            </Link>
-          ))}
-        </div>
-      ) : null}
-      <footer className="border-t border-line pt-3">
-        <SpeakButton id={id} text={speech} lang={lang} />
-      </footer>
-    </article>
-  );
-}
 
 /**
  * The assistant. Product questions ("how do I use the 3D workbench?", "can I speak in Hindi?") are answered from the in-app guide; everything
@@ -107,7 +77,6 @@ function GuideAnswer({ topic, lang, id, onAsk }: { topic: GuideTopic; lang: "en"
  */
 export function AssistantChat({ chatId }: { chatId: string }) {
   const { t, i18n } = useTranslation();
-  const display = useSyncExternalStore(displayStore.subscribe, displayStore.getSnapshot);
   const navigate = useNavigate();
   const { user } = useAccount();
   const { open } = useEvidenceDrawer();
@@ -117,6 +86,8 @@ export function AssistantChat({ chatId }: { chatId: string }) {
   const [details, setDetails] = useState<Details>(() => loadDetails(chatId));
   const [text, setText] = useState("");
   const [qError, setQError] = useState<string | undefined>();
+  const [files, setFiles] = useState<Attachment[]>([]);
+  const fileRef = useRef<HTMLInputElement>(null);
   const seen = useRef(new Set(conv.turns.map((x) => x.id))); // answers already on screen when the chat opened are shown at once
   const endRef = useRef<HTMLDivElement>(null);
   const boxRef = useRef<HTMLTextAreaElement>(null);
@@ -152,8 +123,23 @@ export function AssistantChat({ chatId }: { chatId: string }) {
     endRef.current?.scrollIntoView?.({ block: "end", behavior: "smooth" });
   }, [conv.turns.length, guide.length, conv.pending]);
 
+  const pickFiles = async (list: FileList | null) => {
+    if (!list || list.length === 0) return;
+    const next: Attachment[] = [...files];
+    for (const f of Array.from(list)) {
+      if (next.length >= MAX_FILES || f.size > MAX_FILE_BYTES || !(ATTACH_MIME as readonly string[]).includes(f.type)) {
+        setQError("as.attachInvalid");
+        continue;
+      }
+      next.push({ name: f.name.slice(0, 120), mime: f.type as Attachment["mime"], data: await readBase64(f) });
+      setQError(undefined);
+    }
+    setFiles(next);
+    if (fileRef.current) fileRef.current.value = "";
+  };
+
   const send = useCallback(
-    (question: string) => {
+    (question: string, replaceFrom?: number) => {
       const q = questionSchema.safeParse(question);
       if (!q.success) return setQError(q.error.issues[0]?.message);
       setQError(undefined);
@@ -164,9 +150,10 @@ export function AssistantChat({ chatId }: { chatId: string }) {
         setGuide((g) => [...g, { key: `${Date.now()}-${g.length}`, q: question.trim(), topic: topic.id, after: conv.turns.length }].slice(-20));
         return;
       }
-      void conv.send({ question, language: DEVANAGARI.test(question) || i18n.language === "hi" ? "hi" : undefined, context: details as InputMap, explain: false });
+      void conv.send({ question, language: DEVANAGARI.test(question) || i18n.language === "hi" ? "hi" : undefined, context: details as InputMap, explain: true, attachments: files.length ? files : undefined }, replaceFrom);
+      setFiles([]);
     },
-    [conv, i18n.language, chatId, details],
+    [conv, i18n.language, chatId, details, files],
   );
   const submit = (e?: FormEvent) => {
     e?.preventDefault();
@@ -181,7 +168,17 @@ export function AssistantChat({ chatId }: { chatId: string }) {
   const provide = (question: string, values: Provided) => {
     const merged: Details = { ...details, ...(values as Details) };
     setDetails(merged);
-    void conv.send({ question, language: DEVANAGARI.test(question) || i18n.language === "hi" ? "hi" : undefined, context: merged as InputMap, explain: false });
+    void conv.send({ question, language: DEVANAGARI.test(question) || i18n.language === "hi" ? "hi" : undefined, context: merged as InputMap, explain: true });
+  };
+  // editing a question you already sent: it and every message after it are replaced by the new question and its answer
+  const [editing, setEditing] = useState<{ id: number; text: string } | null>(null);
+  const saveEdit = () => {
+    if (!editing || conv.pending || countdown > 0) return;
+    const idx = conv.turns.findIndex((x) => x.id === editing.id);
+    if (idx < 0 || editing.text.trim() === "") return;
+    setGuide((g) => g.filter((x) => x.after <= idx));
+    setEditing(null);
+    send(editing.text, editing.id);
   };
   const asked = useMemo(() => new Set(guide.map((g) => g.topic)), [guide]);
   const moreTopics = GUIDE.filter((g) => !asked.has(g.id)).slice(0, 4);
@@ -209,13 +206,55 @@ export function AssistantChat({ chatId }: { chatId: string }) {
       k: `a${turn.id}`,
       node: (
         <>
-          <Bubble q={turn.question} />
-          {turn.noteKey ? <p className="rounded-xl border border-info-line bg-info-tint p-3 text-sm">{t(turn.noteKey)}</p> : null}
+          {editing?.id === turn.id ? (
+            <div className="ml-auto w-full max-w-[88%] space-y-2 rounded-3xl bg-surface-sunken p-3">
+              <label htmlFor={`edit-${turn.id}`} className="sr-only">
+                {t("as.edit")}
+              </label>
+              <textarea
+                id={`edit-${turn.id}`}
+                autoFocus
+                rows={3}
+                maxLength={1000}
+                value={editing.text}
+                onChange={(e) => setEditing({ id: turn.id, text: e.target.value })}
+                onKeyDown={(e) => {
+                  if (e.key === "Escape") setEditing(null);
+                  if (e.key === "Enter" && !e.shiftKey && !e.nativeEvent.isComposing) {
+                    e.preventDefault();
+                    saveEdit();
+                  }
+                }}
+                className="block w-full resize-none rounded-2xl border border-line-strong bg-surface px-3 py-2 text-[0.9375rem] text-ink focus:border-brand focus:outline-none"
+              />
+              <div className="flex justify-end gap-2">
+                <button type="button" onClick={() => setEditing(null)} className="min-h-tap rounded-xl px-4 text-sm font-semibold text-ink-soft hover:bg-surface">
+                  {t("as.editCancel")}
+                </button>
+                <button
+                  type="button"
+                  onClick={saveEdit}
+                  disabled={conv.pending || countdown > 0 || editing.text.trim() === ""}
+                  className="min-h-tap rounded-xl bg-brand px-4 text-sm font-semibold text-white hover:bg-brand-dark disabled:opacity-40"
+                >
+                  {t("as.editSave")}
+                </button>
+              </div>
+            </div>
+          ) : (
+            <Bubble q={turn.question} files={turn.files} onEdit={conv.pending ? undefined : () => setEditing({ id: turn.id, text: turn.question })} editLabel={t("as.edit")} />
+          )}
+          {turn.noteKey ? <p className="text-sm text-ink-soft">{t(turn.noteKey)}</p> : null}
           <Reply>
             {!turn.response && !turn.error ? (
-              <div className="rounded-2xl border border-line bg-surface p-4">
-                <LoadingSkeleton lines={3} label={t("ask.searching")} />
-              </div>
+              <p className="flex items-center gap-2 py-1 text-sm text-ink-soft" role="status">
+                <span aria-hidden="true" className="flex gap-1">
+                  <span className="h-2 w-2 rounded-full bg-ink-faint motion-safe:animate-bounce" />
+                  <span className="h-2 w-2 rounded-full bg-ink-faint motion-safe:animate-bounce [animation-delay:150ms]" />
+                  <span className="h-2 w-2 rounded-full bg-ink-faint motion-safe:animate-bounce [animation-delay:300ms]" />
+                </span>
+                {t("askx.chatThinking")}
+              </p>
             ) : null}
             {turn.error ? <ErrorState error={turn.error} /> : null}
             {turn.response ? (
@@ -264,36 +303,60 @@ export function AssistantChat({ chatId }: { chatId: string }) {
           </li>
         </ul>
       ) : null}
-      <div className="rounded-3xl border border-line-strong bg-surface p-3 transition-colors focus-within:border-brand">
-        <label htmlFor="as-q" className="sr-only">
-          {t("ask.questionLabel")}
-        </label>
-        <textarea
-          id="as-q"
-          ref={boxRef}
-          rows={empty ? 3 : 2}
-          maxLength={1000}
-          value={text}
-          onKeyDown={onKey}
-          onChange={(e) => setText(e.target.value)}
-          placeholder={t("as.placeholder")}
-          aria-invalid={!!qError}
-          className="block w-full resize-none bg-transparent px-2 py-1.5 text-[0.9375rem] leading-relaxed text-ink placeholder:text-ink-faint focus:outline-none"
-        />
-        <div className="mt-1 flex flex-wrap items-center gap-2">
-          <LanguageToggle tone={display.theme === "dark" ? "dark" : "light"} />
+      <div className="rounded-2xl border border-line-strong bg-surface px-1.5 py-1 shadow-card transition-[border-color] focus-within:border-ink-faint">
+        {files.length ? (
+          <ul className="flex flex-wrap gap-1.5 px-1.5 pb-1 pt-1" aria-label={t("as.attach")}>
+            {files.map((f, i) => (
+              <li key={`${f.name}-${i}`} className="inline-flex max-w-[14rem] items-center gap-1 rounded-lg bg-surface-sunken py-0.5 pl-2.5 pr-1 text-xs font-semibold">
+                <span className="truncate">{f.name}</span>
+                <button type="button" aria-label={`${t("as.attachRemove")}: ${f.name}`} onClick={() => setFiles((p) => p.filter((_, j) => j !== i))} className="inline-flex h-6 w-6 items-center justify-center rounded-md text-ink-faint hover:bg-surface hover:text-ink">
+                  <X aria-hidden="true" className="h-3.5 w-3.5" />
+                </button>
+              </li>
+            ))}
+          </ul>
+        ) : null}
+        <div className="flex items-end gap-1">
+          <input ref={fileRef} type="file" multiple hidden accept={ATTACH_MIME.join(",")} onChange={(e) => void pickFiles(e.target.files)} data-testid="attach-input" />
+          <button
+            type="button"
+            aria-label={t("as.attach")}
+            title={t("as.attach")}
+            onClick={() => fileRef.current?.click()}
+            disabled={files.length >= MAX_FILES}
+            className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-ink-soft transition-colors hover:bg-surface-sunken hover:text-ink disabled:cursor-not-allowed disabled:opacity-40"
+          >
+            <Plus aria-hidden="true" className="h-5 w-5" />
+          </button>
+          <label htmlFor="as-q" className="sr-only">
+            {t("ask.questionLabel")}
+          </label>
+          <textarea
+            id="as-q"
+            ref={boxRef}
+            rows={1}
+            maxLength={1000}
+            value={text}
+            onKeyDown={onKey}
+            onChange={(e) => setText(e.target.value)}
+            placeholder={t("as.placeholder")}
+            aria-invalid={!!qError}
+            className="block max-h-32 min-h-[2.25rem] min-w-0 flex-1 resize-none bg-transparent px-1.5 py-1.5 text-sm leading-normal text-ink placeholder:text-ink-faint focus:outline-none"
+          />
           <VoiceInputButton onText={(v) => setText((cur) => (cur ? `${cur} ${v}` : v).slice(0, 1000))} />
-          <span className="ml-auto text-xs text-ink-faint">{countdown > 0 ? t("common.waitSeconds", { seconds: countdown }) : conv.pending ? t("common.sending") : ""}</span>
           <button
             type="submit"
             aria-label={t("ask.send")}
             disabled={conv.pending || countdown > 0 || text.trim() === ""}
-            className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-brand text-white shadow transition-[opacity,transform] hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40 motion-safe:active:scale-95"
+            className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-brand text-white transition-[opacity,transform] hover:bg-brand-dark disabled:cursor-not-allowed disabled:opacity-40 motion-safe:active:scale-95"
           >
-            <ArrowUp aria-hidden="true" className="h-5 w-5" />
+            <ArrowUp aria-hidden="true" className="h-[1.125rem] w-[1.125rem]" strokeWidth={2.25} />
           </button>
         </div>
       </div>
+      {countdown > 0 || conv.pending ? (
+        <p className="mt-1 text-right text-xs text-ink-faint">{countdown > 0 ? t("common.waitSeconds", { seconds: countdown }) : t("common.sending")}</p>
+      ) : null}
       {qError ? (
         <p role="alert" className="mt-1.5 text-sm text-danger">
           {t(qError)}
@@ -325,7 +388,6 @@ export function AssistantChat({ chatId }: { chatId: string }) {
                 onClick={() => (c.to ? navigate(c.to) : send(t(c.question!)))}
                 className="flex min-h-[3.25rem] w-full items-center gap-3 rounded-full border border-line-strong bg-surface/60 px-5 text-left text-[0.9375rem] font-medium transition-colors hover:border-ink-faint hover:bg-surface"
               >
-                <c.icon aria-hidden="true" className={`h-5 w-5 shrink-0 ${c.tone}`} />
                 <span className="truncate">{t(`as.${c.key}`)}</span>
               </button>
             </li>
@@ -363,31 +425,19 @@ export function AssistantChat({ chatId }: { chatId: string }) {
   );
 }
 
-/** Tappable example questions: so an answer never ends in a dead end. */
-function Examples({ keys, lang, onAsk, label = "as.try" }: { keys: string[]; lang: "en" | "hi"; onAsk: (q: string) => void; label?: string }) {
-  const { i18n } = useTranslation();
-  const tr = (k: string) => i18n.t(k, { lng: lang }) as string;
+function Bubble({ q, files, onEdit, editLabel }: { q: string; files?: string[]; onEdit?: () => void; editLabel?: string }) {
   return (
-    <div className="space-y-2">
-      <p className="text-xs font-bold uppercase tracking-wide text-ink-faint">{tr(label)}</p>
-      <ul className="flex flex-wrap gap-2">
-        {keys.map((k) => (
-          <li key={k}>
-            <button type="button" lang={lang} onClick={() => onAsk(tr(k))} className="min-h-tap rounded-full border border-line-strong bg-surface-sunken px-3.5 text-left text-sm transition-colors hover:border-ink-faint hover:bg-surface">
-              {tr(k)}
-            </button>
-          </li>
-        ))}
-      </ul>
+    <div className="group ml-auto flex w-fit max-w-[88%] flex-col items-end gap-1">
+      {files?.length ? <p className="max-w-full truncate text-xs font-semibold text-ink-faint">{files.join(", ")}</p> : null}
+      <p className="whitespace-pre-wrap rounded-3xl rounded-br-lg bg-surface-sunken px-4 py-2.5 text-[0.9375rem] text-ink" lang={DEVANAGARI.test(q) ? "hi" : undefined}>
+        {q}
+      </p>
+      {onEdit ? (
+        <button type="button" onClick={onEdit} className="min-h-tap px-2 text-xs font-semibold text-ink-faint hover:text-ink hover:underline focus-visible:opacity-100 sm:opacity-0 sm:group-hover:opacity-100">
+          {editLabel}
+        </button>
+      ) : null}
     </div>
-  );
-}
-
-function Bubble({ q }: { q: string }) {
-  return (
-    <p className="ml-auto w-fit max-w-[88%] whitespace-pre-wrap rounded-3xl rounded-br-lg bg-surface-sunken px-4 py-2.5 text-[0.9375rem] text-ink" lang={DEVANAGARI.test(q) ? "hi" : undefined}>
-      {q}
-    </p>
   );
 }
 function Reply({ children }: { children: React.ReactNode }) {

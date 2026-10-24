@@ -361,7 +361,7 @@ export default function Channels() {
             aria-controls={`panel-${x.id}`}
             onClick={() => setTab(x.id)}
             className={`min-h-tap rounded-xl px-4 text-sm font-semibold transition-colors ${
-              tab === x.id ? "bg-gradient-to-b from-[#2858E6] to-brand text-white shadow-glow" : "text-ink-soft hover:bg-white/80"
+              tab === x.id ? "bg-brand text-white shadow-glow" : "text-ink-soft hover:bg-white/80"
             }`}
           >
             {x.label}

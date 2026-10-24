@@ -25,7 +25,7 @@ export function DisplayControls() {
     };
   }, [open]);
 
-  const seg = (on: boolean) => `inline-flex min-h-tap min-w-tap flex-1 items-center justify-center gap-1.5 rounded-lg px-3 font-semibold transition-colors ${on ? "bg-white text-[#0b2a5b]" : "text-ink-soft hover:bg-white/10 hover:text-ink"}`;
+  const seg = (on: boolean) => `inline-flex min-h-tap min-w-tap flex-1 items-center justify-center gap-1.5 rounded-lg px-3 font-semibold transition-colors ${on ? "bg-white text-[#1c1f26]" : "text-ink-soft hover:bg-white/10 hover:text-ink"}`;
   const set = (p: Partial<Display>) => displayStore.set(p);
 
   return (

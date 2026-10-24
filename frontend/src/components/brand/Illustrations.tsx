@@ -2,7 +2,7 @@
 
 /** Isometric massing study on a drafting plot: three blocks, a dashed plot boundary, a road strip and dimension ticks. */
 export function HeroBlueprint({ className = "" }: { className?: string }) {
-  const edge = "#9DB8FF";
+  const edge = "#F5B301";
   return (
     <svg viewBox="0 0 520 420" aria-hidden="true" className={className} fill="none" strokeLinecap="round" strokeLinejoin="round">
       {/* plot boundary + road */}
@@ -38,8 +38,8 @@ export function MiniPlot({ className = "" }: { className?: string }) {
       <path d="M20 126H200" stroke="#A3BDE8" strokeDasharray="10 8" />
       <rect x="34" y="14" width="152" height="84" rx="2" fill="#E8EEFD" stroke="#1D4ED8" strokeWidth="2" />
       <rect x="62" y="34" width="96" height="44" rx="1.5" fill="#fff" stroke="#1D4ED8" strokeDasharray="4 3" />
-      <path d="M34 8H186M34 4v8M186 4v8" stroke="#0A2342" strokeWidth="1.2" />
-      <path d="M200 14V98M196 14h8M196 98h8" stroke="#0A2342" strokeWidth="1.2" />
+      <path d="M34 8H186M34 4v8M186 4v8" stroke="#1C1F26" strokeWidth="1.2" />
+      <path d="M200 14V98M196 14h8M196 98h8" stroke="#1C1F26" strokeWidth="1.2" />
       <path d="M110 100v10M106 104l4-4 4 4" stroke="#0A7A3D" strokeWidth="1.4" />
     </svg>
   );

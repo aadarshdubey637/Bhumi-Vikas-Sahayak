@@ -1,8 +1,21 @@
 import { useTranslation } from "react-i18next";
 import { FieldError } from "@/components/common/FieldError";
-import { input, label as labelCls } from "@/lib/ui";
 
-/** A number and its unit as one joined control, with an optional plain-language hint under it. */
+/** Small caption above a field, led by a gold dot (shared by the measurement fields and the selects next to them). */
+export const fieldLabel = "mb-2 flex items-center gap-2 whitespace-nowrap text-sm font-semibold text-ink";
+export const fieldBox =
+  "h-10 w-full rounded-lg border border-line bg-surface-page px-3 text-base font-medium text-ink placeholder:text-ink-faint transition-[border-color,box-shadow] hover:border-line-strong focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/25";
+
+export function FieldCaption({ htmlFor, children }: { htmlFor: string; children: React.ReactNode }) {
+  return (
+    <label htmlFor={htmlFor} className={fieldLabel}>
+      <span aria-hidden="true" className="h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
+      {children}
+    </label>
+  );
+}
+
+/** A number with its unit as a small chip inside the same box, and an optional plain-language hint under it. */
 export function MeasurementField({
   id,
   label,
@@ -29,16 +42,14 @@ export function MeasurementField({
   const { t } = useTranslation();
   return (
     <div>
-      <label htmlFor={id} className={labelCls}>
-        {label}
-      </label>
-      <div className="flex">
+      <FieldCaption htmlFor={id}>{label}</FieldCaption>
+      <div className="relative">
         <input
           id={id}
           inputMode="decimal"
           autoComplete="off"
           placeholder={placeholder ? t("forms.eg", { value: placeholder }) : undefined}
-          className={`${input} min-w-0 !rounded-r-none tabular`}
+          className={`${fieldBox} tabular pr-14`}
           value={value}
           disabled={disabled}
           aria-invalid={!!error}
@@ -47,7 +58,7 @@ export function MeasurementField({
         />
         <select
           aria-label={t("forms.unitFor", { field: label })}
-          className={`${input} !w-[6.5rem] shrink-0 !rounded-l-none !border-l-0 bg-surface-sunken font-semibold text-ink-soft`}
+          className="absolute right-2 top-1/2 h-6 -translate-y-1/2 cursor-pointer appearance-none rounded-md bg-navy px-2 text-center text-xs font-bold text-white focus:outline-none focus:ring-2 focus:ring-accent/40"
           value={unit}
           disabled={disabled}
           onChange={(e) => onChange({ value, unit: e.target.value })}
